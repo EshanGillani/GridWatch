@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
 
 
 base = declarative_base()
@@ -12,6 +13,6 @@ class User(base):
     email = Column(String)
     password = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
-    
+
     
     
