@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GridWatch | Predictions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --taupe: #C8C0B8; --salmon: #FF8B80; --charcoal: #484848;
+      --cream: #F5F4F0; --cream2: #ECEAE4; --paper: #FAF9F6;
+      --taupe-d: #9a9188; --taupe-l: #dedad5; --salmon-d: #e56b5f;
+      --mint: #8EE07A;
+    }
+    body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; margin: 0; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      height: 56px; background: var(--charcoal);
+      border-bottom: 3px solid var(--salmon);
+      display: flex; align-items: center; padding: 0 6vw; gap: 2px;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 22px; color: var(--cream); margin-right: 40px; flex-shrink: 0; }
+    .nav-logo em { color: var(--salmon); font-style: normal; }
+    .nav-btn {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--taupe);
+      padding: 6px 18px; cursor: pointer; background: transparent; border: none;
+      border-bottom: 2px solid transparent; transition: color .15s;
+    }
+    .nav-btn:hover { color: var(--cream); }
+    .nav-btn.active { color: var(--salmon); border-bottom-color: var(--salmon); }
+    .live { display: flex; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--taupe); }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); animation: pulse 1.4s infinite; }
+
+    .content { padding: 72px 6vw; }
+    h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(40px, 7vw, 80px); line-height: 1; letter-spacing: -.02em; margin-bottom: 16px; }
+    h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--taupe-d); margin-bottom: 12px; }
+    p { font-size: 14px; line-height: 1.85; color: var(--taupe-d); max-width: 520px; }
+
+    footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 20px 6vw; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 16px; color: var(--cream); }
+    .footer-logo em { color: var(--salmon); font-style: normal; }
+    .footer-copy { font-family: 'Syne Mono', monospace; font-size: 9px; color: var(--taupe); letter-spacing: .1em; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Grid<em>Watch</em></div>
+    <button class="nav-btn" onclick="location.href='main.html'"> Home</button>
+    <button class="nav-btn active" onclick="location.href='predictions.html'">Predictions</button>
+    <button class="nav-btn" onclick="location.href='map.html'">Outage Map</button>
+    <button class="nav-btn" onclick="location.href='about.html'">About </button>
+  </nav>
+
+  <div class="content">
+    <h1>GridWatch Predictions</h1>
+    <h3>Welcome to the Predictions page. Use the map below to find outage predictions for your area.</h3>
+    <p>Or, use the buttons in the bar above to navigate to different pages.</p>
+  </div>
+
+  <footer>
+    <div class="footer-logo">GRID<em>WATCH</em></div>
+    <div class="footer-copy">GRIDWATCH SYSTEMS © 2026</div>
+  </footer>
+</body>
+</html>
