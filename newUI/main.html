@@ -11,7 +11,8 @@
       --taupe-d: #9a9188; --taupe-l: #dedad5; --salmon-d: #e56b5f;
       --mint: #8EE07A;
     }
-    body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; margin: 0; }
+    body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+    
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
     nav {
@@ -20,10 +21,7 @@
       border-bottom: 3px solid var(--salmon);
       display: flex; align-items: center; padding: 0 6vw; gap: 2px;
     }
-    .nav-logo {
-      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 22px;
-      color: var(--cream); margin-right: 40px; flex-shrink: 0;
-    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 22px; color: var(--cream); margin-right: 40px; flex-shrink: 0; }
     .nav-logo em { color: var(--salmon); font-style: normal; }
 
     .nav-btn {
@@ -38,16 +36,41 @@
     .live { display: flex; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--taupe); }
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); animation: pulse 1.4s infinite; }
 
-    .content { padding: 72px 6vw; }
+    .main-content { flex: 1; padding: 72px 6vw; }
+
     h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(40px, 7vw, 80px); line-height: 1; letter-spacing: -.02em; margin-bottom: 16px; }
     h1 em { color: var(--salmon); font-style: normal; }
-    h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--taupe-d); margin-bottom: 12px; }
-    p { font-size: 14px; line-height: 1.85; color: var(--taupe-d); max-width: 520px; }
+    h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--taupe-d); margin-bottom: 24px; }
+    
+    .member-card {
+      background: var(--paper);
+      border: 3px solid var(--charcoal);
+      padding: 20px;
+      box-shadow: 8px 8px 0px var(--taupe);
+      transition: all 0.25s ease;
+      max-width: 800px;
+      margin: 40px 0;
+    }
+    .member-card:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 12px 12px 0px var(--salmon);
+      border-color: var(--salmon);
+    }
+    .member-card img { width: 100%; height: auto; display: block; }
 
-    footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 20px 6vw; display: flex; justify-content: space-between; align-items: center; }
+    .description-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--taupe-d);
+      max-width: 800px;
+      margin-bottom: 80px;
+      white-space: pre-line;
+    }
+
+    footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 30px 6vw; display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 16px; color: var(--cream); }
     .footer-logo em { color: var(--salmon); font-style: normal; }
-    .footer-copy { font-family: 'Syne Mono', monospace; font-size: 9px; color: var(--taupe); letter-spacing: .1em; }
   </style>
 </head>
 <body>
@@ -57,20 +80,26 @@
     <button class="nav-btn" onclick="location.href='predictions.html'">Predictions</button>
     <button class="nav-btn" onclick="location.href='map.html'">Outage Map</button>
     <button class="nav-btn" onclick="location.href='about.html'">About</button>
+
   </nav>
 
-  <div class="content">
-    <h1>Grid<em>Watch</em> </h1>
+  <div class="main-content">
+    <h1>Grid<em>Watch</em></h1>
     <h3>A system for detecting and predicting power outages around the world.</h3>
-    
+
+    <div class="member-card">
+      <img src="Untitled drawing (1).png" alt="Map View Illustration">
+    </div>
+
+    <div class="description-text">
+      <strong>What you're seeing:</strong>
+      🔴 Large red circle (Wolf Trap/Beulah Rd area) — Active major outage. The larger radius indicates a high number of customers affected, likely thousands of homes across that suburban grid zone.
+      🔴 Smaller red circle (Electric Ave, Vienna) — A second active outage, more contained but confirmed down. The irony of "Electric Ave" losing power is not lost.
+      🟡 Yellow circle (Lawyers Rd NW, Vienna) — Few outages. Most houses still have power, but a few have reported outages. This serves as a warning for other houses in the circle to prepare for potential upcoming outages within a few hours.
+    </div>
   </div>
-<div class="example" style=" padding: 20px 20px 12px 20px; box-shadow: 8px 8px 0px #C8C0B8; display: flex; flex-direction: column; align-items: center;">
-       <div class="member-card" style="background: #FAF9F6; border: 3px solid #484848; padding: 20px 20px 12px 20px; box-shadow: 8px 8px 0px #C8C0B8; display: flex; flex-direction: column; align-items: center;">
-      <img src="Untitled drawing (1).png" alt="3" style="width: 750px; height: 750px; object-fit: cover; display: block; margin-bottom: 14px;">
-    </div>
-    </div>
+
   <footer>
-    <div class="footer-logo">GRID<em>WATCH</em></div>
   </footer>
 </body>
 </html>
