@@ -1,0 +1,30 @@
+{
+"type":"FeatureCollection",
+"features":[
+
+{
+"type":"Feature",
+"properties":{
+"county":"Fairfax County",
+"customers":1200
+},
+"geometry":{
+"type":"Point",
+"coordinates":[-77.30,38.85]
+}
+},
+
+{
+"type":"Feature",
+"properties":{
+"county":"Arlington County",
+"customers":300
+},
+"geometry":{
+"type":"Point",
+"coordinates":[-77.10,38.88]
+}
+}
+
+]
+}
