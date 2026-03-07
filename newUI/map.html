@@ -1,151 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GridWatch | Outage Map</title>
+<title>GridWatch | Outage Map</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 
-  <!-- Leaflet Map Library -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --taupe: #C8C0B8; --salmon: #FF8B80; --charcoal: #484848;
-      --cream: #F5F4F0; --cream2: #ECEAE4; --paper: #FAF9F6;
-      --taupe-d: #9a9188; --taupe-l: #dedad5; --salmon-d: #e56b5f;
-      --mint: #8EE07A; --red: #d94040;
-    }
+<style>
 
-    body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; margin: 0; }
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
 
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+:root{
+--taupe:#C8C0B8;
+--salmon:#FF8B80;
+--charcoal:#484848;
+--cream:#F5F4F0;
+--taupe-l:#dedad5;
+--red:#d94040;
+}
 
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      height: 56px; background: var(--charcoal);
-      border-bottom: 3px solid var(--salmon);
-      display: flex; align-items: center; padding: 0 6vw; gap: 2px;
-    }
+body{
+background:var(--cream);
+font-family:'DM Sans',sans-serif;
+color:var(--charcoal);
+}
 
-    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 22px; color: var(--cream); margin-right: 40px; flex-shrink: 0; }
-    .nav-logo em { color: var(--salmon); font-style: normal; }
+nav{
+position:sticky;
+top:0;
+height:56px;
+background:var(--charcoal);
+border-bottom:3px solid var(--salmon);
+display:flex;
+align-items:center;
+padding:0 6vw;
+}
 
-    .nav-btn {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase; color: var(--taupe);
-      padding: 6px 18px; cursor: pointer; background: transparent; border: none;
-      border-bottom: 2px solid transparent; transition: color .15s;
-    }
+.nav-logo{
+font-family:'Playfair Display',serif;
+font-weight:900;
+font-size:22px;
+color:white;
+margin-right:40px;
+}
 
-    .nav-btn:hover { color: var(--cream); }
-    .nav-btn.active { color: var(--salmon); border-bottom-color: var(--salmon); }
+.nav-logo em{
+color:var(--salmon);
+font-style:normal;
+}
 
-    .live { display: flex; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--taupe); }
-    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); animation: pulse .9s infinite; }
+.nav-btn{
+font-family:'Syne',sans-serif;
+font-size:11px;
+font-weight:700;
+letter-spacing:.12em;
+text-transform:uppercase;
+color:#c8c0b8;
+padding:6px 18px;
+cursor:pointer;
+background:transparent;
+border:none;
+}
 
-    .content { padding: 72px 6vw; }
+.content{
+padding:72px 6vw;
+}
 
-    h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(40px, 7vw, 80px); line-height: 1; letter-spacing: -.02em; margin-bottom: 16px; }
-    h1 em { color: var(--salmon); font-style: normal; }
+h1{
+font-family:'Playfair Display',serif;
+font-weight:900;
+font-size:60px;
+margin-bottom:20px;
+}
 
-    h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--taupe-d); margin-bottom: 12px; }
+h1 em{
+color:var(--salmon);
+font-style:normal;
+}
 
-    p { font-size: 14px; line-height: 1.85; color: var(--taupe-d); max-width: 520px; }
+#map{
+height:600px;
+width:100%;
+margin-top:40px;
+border:3px solid var(--taupe-l);
+}
 
-    /* Added only map container styling */
-    #map {
-      height: 600px;
-      width: 100%;
-      margin-top: 40px;
-      border: 3px solid var(--taupe-l);
-    }
+footer{
+background:var(--charcoal);
+border-top:3px solid var(--salmon);
+padding:20px 6vw;
+margin-top:40px;
+}
 
-    footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 20px 6vw; display: flex; justify-content: space-between; align-items: center; }
+.footer-logo{
+font-family:'Playfair Display',serif;
+font-weight:900;
+color:white;
+}
 
-    .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 16px; color: var(--cream); }
-    .footer-logo em { color: var(--salmon); font-style: normal; }
+.footer-logo em{
+color:var(--salmon);
+font-style:normal;
+}
 
-    .footer-copy { font-family: 'Syne Mono', monospace; font-size: 9px; color: var(--taupe); letter-spacing: .1em; }
-
-  </style>
+</style>
 </head>
 
 <body>
 
-  <nav>
-    <div class="nav-logo">Grid<em>Watch</em></div>
-    <button class="nav-btn" onclick="location.href='main.html'"> Home</button>
-    <button class="nav-btn" onclick="location.href='predictions.html'">Predictions</button>
-    <button class="nav-btn active" onclick="location.href='map.html'">Outage Map</button>
-    <button class="nav-btn" onclick="location.href='about.html'">About </button>
-  </nav>
+<nav>
+<div class="nav-logo">Grid<em>Watch</em></div>
+<button class="nav-btn" onclick="location.href='main.html'">Home</button>
+<button class="nav-btn" onclick="location.href='predictions.html'">Predictions</button>
+<button class="nav-btn">Outage Map</button>
+<button class="nav-btn" onclick="location.href='about.html'">About</button>
+</nav>
 
-  <div class="content">
-    <h1>Outage<em> Map</em></h1>
+<div class="content">
 
-    <h3>Welcome to the Outage Map. Interact with the map below to see grid outages affecting your area.</h3>
+<h1>Outage <em>Map</em></h1>
 
-    <p>Or, use the buttons in the bar above to navigate to different pages.</p>
+<p>Interact with the map below to see grid outages affecting your area.</p>
 
-    <!-- Map container -->
-    <div id="map"></div>
+<div id="map"></div>
 
-  </div>
+</div>
 
-  <footer>
-    <div class="footer-logo">GRID<em>WATCH</em></div>
-  </footer>
-
+<footer>
+<div class="footer-logo">GRID<em>WATCH</em></div>
+</footer>
 
 <script>
 
-const map = L.map("map").setView([37.5, -77.4], 6);
+const map = L.map("map").setView([37.5,-78.5],7);
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:"© OpenStreetMap contributors"
-}).addTo(map);
+L.tileLayer(
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{ attribution:"© OpenStreetMap contributors" }
+).addTo(map);
 
-let markers = [];
+let markers=[];
 
-async function loadOutages(){
+const outages=[
+{provider:"Dominion Energy",lat:37.54,lng:-77.43,customers:1200},
+{provider:"Dominion Energy",lat:38.03,lng:-78.48,customers:450},
+{provider:"Appalachian Power",lat:37.27,lng:-79.94,customers:800},
+{provider:"NOVEC",lat:38.75,lng:-77.47,customers:320},
+{provider:"Dominion Energy",lat:36.85,lng:-76.29,customers:1500},
+{provider:"Dominion Energy",lat:38.90,lng:-77.03,customers:2100},
+{provider:"Appalachian Power",lat:37.13,lng:-80.41,customers:650}
+];
 
-  try{
+function loadOutages(){
 
-    const response = await fetch("http://localhost:3000/api/outages");
-    const outages = await response.json();
+markers.forEach(m=>map.removeLayer(m));
+markers=[];
 
-    markers.forEach(m => map.removeLayer(m));
-    markers = [];
+outages.forEach(outage=>{
 
-    outages.forEach(outage => {
+const marker=L.circleMarker(
+[outage.lat,outage.lng],
+{
+radius:Math.sqrt(outage.customers)/2,
+color:"red",
+fillColor:"#d94040",
+fillOpacity:0.75
+}
+).addTo(map);
 
-      const marker = L.circleMarker(
-        [outage.lat, outage.lng],
-        {
-          radius:10,
-          color:"red",
-          fillColor:"#d94040",
-          fillOpacity:0.7
-        }
-      ).addTo(map);
+marker.bindPopup(
+"<b>"+outage.provider+"</b><br>Customers affected: "+outage.customers
+);
 
-      marker.bindPopup(
-        "<b>"+outage.provider+"</b><br>Customers affected: "+outage.customers
-      );
+markers.push(marker);
 
-      markers.push(marker);
-
-    });
-
-  }catch(err){
-    console.error("Error loading outages:",err);
-  }
+});
 
 }
 
 loadOutages();
+
 setInterval(loadOutages,30000);
 
 </script>
