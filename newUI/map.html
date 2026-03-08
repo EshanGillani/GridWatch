@@ -34,8 +34,9 @@
     }
     .nav-btn:hover { color: var(--cream); }
     .nav-btn.active { color: var(--salmon); border-bottom-color: var(--salmon); }
-    .live { display: flex; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--taupe); }
-    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); animation: pulse .9s infinite; }
+    .error-badge { display: none; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--red); }
+    .error-badge.visible { display: flex; }
+    .error-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); }
 
     .content { flex: 1; padding: 48px 6vw; }
     h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(40px, 7vw, 80px); line-height: 1; letter-spacing: -.02em; margin-bottom: 16px; }
@@ -94,7 +95,7 @@
     <button class="nav-btn" onclick="location.href='predictions.html'">Predictions</button>
     <button class="nav-btn active" onclick="location.href='map.html'">Outage Map</button>
     <button class="nav-btn" onclick="location.href='about.html'">About</button>
-    <div class="live"><div class="live-dot"></div><span id="live-label">LIVE</span></div>
+    
   </nav>
 
   <div class="content">
@@ -126,15 +127,11 @@
   </footer>
 
 <script>
-// ---------------------------------------------------------------------------
-// Config — path to the outages.json file committed by GitHub Actions
-// ---------------------------------------------------------------------------
-const OUTAGES_JSON = "/api/outages";
-const REFRESH_MS   = 60 * 1000; // re-fetch every 60 seconds
 
-// ---------------------------------------------------------------------------
-// Map setup
-// ---------------------------------------------------------------------------
+const OUTAGES_JSON = "outages.json";
+const REFRESH_MS   = 60 * 1000;
+
+
 const map = L.map("map").setView([37.5, -79.5], 7);
 
 L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
@@ -166,16 +163,12 @@ function toggleHeat() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Load + render outages
-// ---------------------------------------------------------------------------
 async function loadOutages() {
   try {
     const res  = await fetch(OUTAGES_JSON);
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
 
-    // Update stat bar
     const s = data.summary || {};
     document.getElementById("stat-out").textContent     = (s.customers_out  || 0).toLocaleString();
     document.getElementById("stat-events").textContent  = (s.total_outages  || data.outages.length);
@@ -185,7 +178,6 @@ async function loadOutages() {
     document.getElementById("stat-updated").textContent =
       ts.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
 
-    // Clear old layers
     markers.forEach(m => map.removeLayer(m));
     markers = [];
     if (heatLayer) { map.removeLayer(heatLayer); heatLayer = null; }
@@ -196,10 +188,8 @@ async function loadOutages() {
     (data.outages || []).forEach(o => {
       if (o.lat == null || o.lng == null) return;
 
-      // Heatmap point: intensity normalised 0–1
       heatPoints.push([o.lat, o.lng, (o.customers || 1) / maxCust]);
 
-      // Circle marker
       const color  = severityColor(o.customers);
       const radius = Math.max(8, Math.min(40, Math.sqrt(o.customers) * 3));
       const popup =
@@ -218,7 +208,6 @@ async function loadOutages() {
       if (!heatMode) m.addTo(map);
     });
 
-    // Build heat layer
     if (heatPoints.length) {
       heatLayer = L.heatLayer(heatPoints, {
         radius: 35, blur: 25, maxZoom: 10, minOpacity: 0.5,
