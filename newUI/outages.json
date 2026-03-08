@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-03-08T08:38:39.532947+00:00",
+  "pulled_at_utc": "2026-03-08T09:01:13.583400+00:00",
   "summary": {
-    "report_date": "2026-03-08T08:32:26.092Z",
-    "customers_out": 138,
+    "report_date": "2026-03-08T08:46:07.295Z",
+    "customers_out": 133,
     "total_customers": 2820940,
     "pct_out": 0.01,
-    "total_outages": 4
+    "total_outages": 3
   },
   "outages": [
     {
@@ -26,6 +26,16 @@
       "crew_status": "Dispatched",
       "etr": "Today at 5:00 AM - 8:00 AM",
       "incident_id": "34724191",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.65616,
+      "lng": -77.36567,
+      "customers": 1,
+      "cause": "Power Line Damaged",
+      "crew_status": "Dispatched",
+      "etr": "Today at 5:00 AM - 8:00 AM",
+      "incident_id": "34724186",
       "provider": "Dominion Energy"
     }
   ]
