@@ -1,0 +1,50 @@
+name: Scrape Dominion Outages
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run scraper
+        run: python gridwatchbackend/dominion_outage_scraper.py --json --no-map > newUI/outages.json
+
+      - name: Debug - check file exists
+        run: |
+          echo "--- newUI directory contents ---"
+          ls -la newUI/
+          echo "--- outages.json first 5 lines ---"
+          head -5 newUI/outages.json || echo "FILE NOT FOUND"
+          echo "--- git status ---"
+          git status
+
+      - name: Commit outages.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add newUI/outages.json
+          git status
+          git diff --cached --quiet && echo "No changes, skipping commit" && exit 0
+          git commit -m "chore: update outages $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git push origin main
