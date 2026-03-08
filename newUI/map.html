@@ -5,6 +5,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -72,6 +73,13 @@
     }
     .leg-item { display: flex; align-items: center; gap: 7px; }
     .leg-dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
+    .toggle-btn {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      background: var(--charcoal); color: var(--taupe); border: 2px solid var(--taupe-d);
+      padding: 5px 14px; cursor: pointer; transition: all .15s;
+    }
+    .toggle-btn.active { background: var(--salmon); color: var(--paper); border-color: var(--salmon); }
 
     footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 20px 6vw; display: flex; justify-content: space-between; align-items: center; }
     .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 16px; color: var(--cream); }
@@ -106,6 +114,7 @@
       <div class="leg-item"><div class="leg-dot" style="background:#f57c00"></div>Major (100–499)</div>
       <div class="leg-item"><div class="leg-dot" style="background:#fbc02d"></div>Moderate (25–99)</div>
       <div class="leg-item"><div class="leg-dot" style="background:#388e3c"></div>Minor (&lt;25)</div>
+      <button class="toggle-btn" id="heat-toggle" onclick="toggleHeat()">Heatmap</button>
       <div style="margin-left:auto"><span id="status">Loading outage data...</span></div>
     </div>
   </div>
@@ -131,7 +140,9 @@ L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
   maxZoom: 19
 }).addTo(map);
 
-let markers = [];
+let markers    = [];
+let heatLayer  = null;
+let heatMode   = false;
 
 function severityColor(n) {
   if (n >= 500) return "#d32f2f";
@@ -140,12 +151,20 @@ function severityColor(n) {
   return "#388e3c";
 }
 
+function toggleHeat() {
+  heatMode = !heatMode;
+  document.getElementById("heat-toggle").classList.toggle("active", heatMode);
+  markers.forEach(m => heatMode ? map.removeLayer(m) : m.addTo(map));
+  if (heatLayer) {
+    heatMode ? heatLayer.addTo(map) : map.removeLayer(heatLayer);
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Load + render outages
 // ---------------------------------------------------------------------------
 async function loadOutages() {
   try {
-    // Cache-bust so we always get the latest file
     const res  = await fetch(OUTAGES_JSON + "?t=" + Date.now());
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
@@ -156,21 +175,27 @@ async function loadOutages() {
     document.getElementById("stat-events").textContent  = (s.total_outages  || data.outages.length);
     document.getElementById("stat-pct").textContent     = (s.pct_out        || 0) + "%";
 
-    // Format timestamp nicely
     const ts = new Date(data.pulled_at_utc);
     document.getElementById("stat-updated").textContent =
       ts.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
 
-    // Clear old markers
+    // Clear old layers
     markers.forEach(m => map.removeLayer(m));
     markers = [];
+    if (heatLayer) { map.removeLayer(heatLayer); heatLayer = null; }
 
-    // Draw new markers
+    const heatPoints = [];
+    const maxCust    = Math.max(1, ...( (data.outages||[]).map(o => o.customers||0) ));
+
     (data.outages || []).forEach(o => {
       if (o.lat == null || o.lng == null) return;
+
+      // Heatmap point: intensity normalised 0–1
+      heatPoints.push([o.lat, o.lng, (o.customers || 1) / maxCust]);
+
+      // Circle marker
       const color  = severityColor(o.customers);
       const radius = Math.max(8, Math.min(40, Math.sqrt(o.customers) * 3));
-
       const popup =
         "<b>" + (o.provider || "Dominion Energy") + "</b><br>" +
         "<b>Customers out:</b> " + (o.customers || 0).toLocaleString() + "<br>" +
@@ -181,10 +206,20 @@ async function loadOutages() {
 
       const m = L.circleMarker([o.lat, o.lng], {
         radius, color, fillColor: color, fillOpacity: 0.75, weight: 2
-      }).bindPopup(popup).addTo(map);
+      }).bindPopup(popup);
 
       markers.push(m);
+      if (!heatMode) m.addTo(map);
     });
+
+    // Build heat layer
+    if (heatPoints.length) {
+      heatLayer = L.heatLayer(heatPoints, {
+        radius: 35, blur: 25, maxZoom: 10,
+        gradient: { 0.2: "#388e3c", 0.5: "#fbc02d", 0.75: "#f57c00", 1.0: "#d32f2f" }
+      });
+      if (heatMode) heatLayer.addTo(map);
+    }
 
     const now = new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});
     document.getElementById("status").textContent =
@@ -193,7 +228,7 @@ async function loadOutages() {
 
   } catch (err) {
     console.error("Failed to load outages:", err);
-    document.getElementById("status").textContent = "⚠ Could not load outage data — " + err.message;
+    document.getElementById("status").textContent = "Could not load outage data — " + err.message;
     document.getElementById("live-label").textContent = "ERROR";
   }
 }
