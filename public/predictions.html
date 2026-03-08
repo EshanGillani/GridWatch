@@ -441,10 +441,26 @@ async function fetchSingleCity(city) {
     `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,` +
     `wind_gusts_10m,precipitation,snowfall,cloud_cover` +
     `&temperature_unit=fahrenheit`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("HTTP " + res.status);
-  const data = await res.json();
-  return data.current;
+
+  /* Up to 3 attempts with a 6 s timeout each and exponential backoff */
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6000);
+    try {
+      const res = await fetch(url, { signal: controller.signal });
+      clearTimeout(timer);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      return data.current;
+    } catch (err) {
+      clearTimeout(timer);
+      if (attempt < 2) {
+        await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
+        continue;
+      }
+      throw err;
+    }
+  }
 }
 
 function plotCity(id, city, w) {
@@ -464,14 +480,14 @@ function plotCity(id, city, w) {
 }
 
 async function loadAllCities() {
-  const selectedId = document.getElementById("options").value;
-  const entries    = Object.entries(cities);
+  const entries = Object.entries(cities);
 
   /* Clear old markers */
   Object.values(cityData).forEach(d => map.removeLayer(d.marker));
   cityData = {};
 
-  /* Load selected city first so the panel updates immediately */
+  /* Load the currently selected city first, then the rest */
+  const selectedId  = document.getElementById("options").value;
   const prioritised = [
     ...entries.filter(([id]) => id === selectedId),
     ...entries.filter(([id]) => id !== selectedId)
@@ -482,11 +498,11 @@ async function loadAllCities() {
     try {
       const w = await fetchSingleCity(city);
       plotCity(id, city, w);
-      if (id === selectedId) updatePanel();
+      /* Update panel whenever the city that just loaded is the active one */
+      if (id === document.getElementById("options").value) updatePanel();
     } catch (err) {
       console.warn(`${city.name}: ${err.message}`);
     }
-    /* 200 ms gap between requests — avoids rate limiting */
     if (i < prioritised.length - 1)
       await new Promise(r => setTimeout(r, 200));
   }
@@ -553,9 +569,10 @@ function updatePanel() {
 
   const d = cityData[id];
   if (!d) {
-    document.getElementById("risk").innerText  = "Unavailable";
-    document.getElementById("temp").innerText  = "Unavailable";
-    document.getElementById("wind").innerText  = "Unavailable";
+    /* Data still loading — keep spinner text, panel will re-run when ready */
+    document.getElementById("risk").innerText   = "Loading...";
+    document.getElementById("temp").innerText   = "Loading...";
+    document.getElementById("wind").innerText   = "Loading...";
     document.getElementById("risk").style.color = "";
     return;
   }
@@ -583,7 +600,21 @@ function updatePanel() {
     `<ul>${adv.actions.map(a => `<li>${a}</li>`).join("")}</ul>`;
 }
 
-document.getElementById("options").addEventListener("change", updatePanel);
+document.getElementById("options").addEventListener("change", () => {
+  const id   = document.getElementById("options").value;
+  const city = cities[id];
+  map.setView([city.lat, city.lon], 8);
+  if (cityData[id]) {
+    updatePanel();          /* data already loaded — show immediately */
+  } else {
+    /* Still loading — show spinner and let loadAllCities() call updatePanel() */
+    document.getElementById("risk").innerText   = "Loading...";
+    document.getElementById("temp").innerText   = "Loading...";
+    document.getElementById("wind").innerText   = "Loading...";
+    document.getElementById("risk").style.color = "";
+    document.getElementById("advice").style.display = "none";
+  }
+});
 
 loadAllCities();
 
