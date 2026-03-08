@@ -127,15 +127,11 @@
   </footer>
 
 <script>
-// ---------------------------------------------------------------------------
-// Config — path to the outages.json file committed by GitHub Actions
-// ---------------------------------------------------------------------------
-const OUTAGES_JSON = "outages.json";
-const REFRESH_MS   = 60 * 1000; // re-fetch every 60 seconds
 
-// ---------------------------------------------------------------------------
-// Map setup
-// ---------------------------------------------------------------------------
+const OUTAGES_JSON = "outages.json";
+const REFRESH_MS   = 60 * 1000;
+
+
 const map = L.map("map").setView([37.5, -79.5], 7);
 
 L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
@@ -167,16 +163,12 @@ function toggleHeat() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Load + render outages
-// ---------------------------------------------------------------------------
 async function loadOutages() {
   try {
     const res  = await fetch(OUTAGES_JSON + "?t=" + Date.now());
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
 
-    // Update stat bar
     const s = data.summary || {};
     document.getElementById("stat-out").textContent     = (s.customers_out  || 0).toLocaleString();
     document.getElementById("stat-events").textContent  = (s.total_outages  || data.outages.length);
@@ -186,7 +178,6 @@ async function loadOutages() {
     document.getElementById("stat-updated").textContent =
       ts.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
 
-    // Clear old layers
     markers.forEach(m => map.removeLayer(m));
     markers = [];
     if (heatLayer) { map.removeLayer(heatLayer); heatLayer = null; }
