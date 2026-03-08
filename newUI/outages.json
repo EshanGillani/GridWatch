@@ -1,30 +1,5 @@
-
-============================================================
-  Dominion Energy Outage Scraper  --  2026-03-08T04:21:58.622728+00:00
-============================================================
-
-[1/3] Resolving live data paths ...
-  [INFO] Data prefix   : data/02b7ce69-0185-4bc1-8afb-ec47191e3c1f
-
-[2/3] Fetching outage summary ...
-      Report date      : 2026-03-08T04:15:55.596Z
-      Customers out    : 304
-      Total customers  : 2,820,940
-      % affected       : 0.02%
-      Active outages   : 11
-
-[3/3] Fetching individual outage events + locations ...
-  [INFO] Scanning 12 territory tiles ...
-      4 events found  |  4 with GPS  |  169 customers affected
-
-      INC_ID    Cust.Out  Cause                     Crew                  ETR
-      -------------------------------------------------------------------------------------
-      34724031       131  Broken Pole               Working               Tomorrow at 4:00 AM - 7:00 AM
-      34724105        33  Pending Investigation     Working               Today at 9:00 PM - Tomorrow at 12:0
-      34724167         4  Pending Investigation     Working               Tomorrow at 1:00 AM - 4:00 AM
-      34724107         1  Pending Investigation     Assessing Damage      Tomorrow at 2:00 AM - 5:00 AM
 {
-  "pulled_at_utc": "2026-03-08T04:21:58.622728+00:00",
+  "pulled_at_utc": "2026-03-08T04:30:15.267431+00:00",
   "summary": {
     "report_date": "2026-03-08T04:15:55.596Z",
     "customers_out": 304,
