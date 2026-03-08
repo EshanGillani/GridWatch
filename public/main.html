@@ -73,6 +73,18 @@
     }
     .description-text p { margin-bottom: 12px; }
 
+    .cta-btn {
+      display: block; width: 100%;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--charcoal); background: var(--salmon);
+      border: none; border-radius: 4px; padding: 14px 20px;
+      cursor: pointer; text-align: center;
+      margin-bottom: 12px;
+      transition: background .15s;
+    }
+    .cta-btn:hover { background: var(--salmon-d); }
+
     footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 20px 6vw; display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 16px; color: var(--cream); }
     .footer-logo em { color: var(--salmon); font-style: normal; }
@@ -91,6 +103,7 @@
   <div class="main-content">
     <h1>Grid<em>Watch</em></h1>
     <h3>A system for detecting and predicting power outages around the world.</h3>
+    <h3>Grid<span style="color: var(--salmon);">Watch</span> uses <span style="color: var(--salmon);">weather data</span>, <span style="color: var(--salmon);">infrastructure risk</span>, and <span style="color: var(--salmon);">expert analysis</span> to <span style="color: var(--salmon);">predict</span> and <span style="color: var(--salmon);">respond</span> to grid failures <span style="color: var(--salmon);"><em>faster</em></span>. To work with us to help train our models, please visit the <span style="color: var(--salmon);">careers</span> tab above.<h3>
 <h3>Example view:</h3>
     <div class="map-row">
       <div class="member-card">
@@ -101,6 +114,8 @@
         <p>🔴 Large red circle (Wolf Trap/Beulah Rd area) — Active major outage. The larger radius indicates a high number of customers affected, likely thousands of homes across that suburban grid zone.</p>
         <p>🔴 Smaller red circle (Electric Ave, Vienna) — A second active outage, more contained but confirmed down. The irony of "Electric Ave" losing power is not lost.</p>
         <p>🟡 Yellow circle (Lawyers Rd NW, Vienna) — Few outages. Most houses still have power, but a few have reported outages. This serves as a warning for other houses in the circle to prepare for potential upcoming outages within a few hours.</p>
+        <button class="cta-btn" onclick="location.href='predictions.html'">Predictions</button>
+        <button class="cta-btn" onclick="location.href='about.html'">About</button>
       </div>
     </div>
   </div>
