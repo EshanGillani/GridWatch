@@ -1,8 +1,7 @@
 {
-  "version": 2,
-  "outputDirectory": "newUI",
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/$1" }
-  ]
+  "functions": {
+    "api/*.py": {
+      "runtime": "@vercel/python"
+    }
+  }
 }
