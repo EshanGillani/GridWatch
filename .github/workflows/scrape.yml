@@ -2,11 +2,11 @@ name: Scrape Dominion Outages
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # every 5 minutes
-  workflow_dispatch:          # allow manual trigger from GitHub UI
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 permissions:
-  contents: write             # needed to commit outages.json back to repo
+  contents: write
 
 jobs:
   scrape:
@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -30,6 +32,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           git add newUI/outages.json
-          git diff --cached --quiet || git commit -m "chore: update outages $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          git push
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore: update outages $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git push origin main
