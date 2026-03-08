@@ -24,7 +24,7 @@ jobs:
         run: pip install requests beautifulsoup4
 
       - name: Run scraper
-        run: python gridwatchbackend/dominion_outage_scraper.py --json --no-map > outages.json
+        run: python gridwatchbackend/dominion_outage_scraper.py --json --no-map > newUI/outages.json
 
       - name: Commit outages.json
         run: |
