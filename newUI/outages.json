@@ -1,37 +1,37 @@
 
 ============================================================
-  Dominion Energy Outage Scraper  --  2026-03-08T02:32:54.650895+00:00
+  Dominion Energy Outage Scraper  --  2026-03-08T04:14:10.814057+00:00
 ============================================================
 
 [1/3] Resolving live data paths ...
-  [INFO] Data prefix   : data/65b7cdf9-9aa1-45a6-bdfd-7536a2823612
+  [INFO] Data prefix   : data/bf18b929-9cf6-47d0-894f-c9079aefb128
 
 [2/3] Fetching outage summary ...
-      Report date      : 2026-03-08T02:31:11.274Z
-      Customers out    : 175
+      Report date      : 2026-03-08T04:00:55.386Z
+      Customers out    : 221
       Total customers  : 2,820,940
       % affected       : 0.01%
-      Active outages   : 7
+      Active outages   : 9
 
 [3/3] Fetching individual outage events + locations ...
   [INFO] Scanning 12 territory tiles ...
-      5 events found  |  5 with GPS  |  168 customers affected
+      5 events found  |  5 with GPS  |  212 customers affected
 
       INC_ID    Cust.Out  Cause                     Crew                  ETR
       -------------------------------------------------------------------------------------
       34724031       131  Broken Pole               Working               Tomorrow at 4:00 AM - 7:00 AM
+      34724171        43  Emergency work            Working               Tomorrow at 2:00 AM - 5:00 AM
       34724105        33  Pending Investigation     Working               Today at 9:00 PM - Tomorrow at 12:0
-      34724124         2  Emergency work            Working               Today at 9:00 PM - Tomorrow at 12:0
-      34724107         1  Pending Investigation     Dispatched            Tomorrow at 2:00 AM - 5:00 AM
-      34724165         1  Pending Investigation     Dispatched            Today at 11:00 PM - Tomorrow at 2:0
+      34724167         4  Pending Investigation     Working               Tomorrow at 1:00 AM - 4:00 AM
+      34724107         1  Pending Investigation     Assessing Damage      Tomorrow at 2:00 AM - 5:00 AM
 {
-  "pulled_at_utc": "2026-03-08T02:32:54.650895+00:00",
+  "pulled_at_utc": "2026-03-08T04:14:10.814057+00:00",
   "summary": {
-    "report_date": "2026-03-08T02:31:11.274Z",
-    "customers_out": 175,
+    "report_date": "2026-03-08T04:00:55.386Z",
+    "customers_out": 221,
     "total_customers": 2820940,
     "pct_out": 0.01,
-    "total_outages": 7
+    "total_outages": 9
   },
   "outages": [
     {
@@ -45,6 +45,16 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 36.8762,
+      "lng": -76.03345,
+      "customers": 43,
+      "cause": "Emergency work",
+      "crew_status": "Working",
+      "etr": "Tomorrow at 2:00 AM - 5:00 AM",
+      "incident_id": "34724171",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 38.06987,
       "lng": -78.88984,
       "customers": 33,
@@ -55,13 +65,13 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.85747,
-      "lng": -76.2714,
-      "customers": 2,
-      "cause": "Emergency work",
+      "lat": 38.64941,
+      "lng": -78.68353,
+      "customers": 4,
+      "cause": "Pending Investigation",
       "crew_status": "Working",
-      "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
-      "incident_id": "34724124",
+      "etr": "Tomorrow at 1:00 AM - 4:00 AM",
+      "incident_id": "34724167",
       "provider": "Dominion Energy"
     },
     {
@@ -69,19 +79,9 @@
       "lng": -78.47233,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
+      "crew_status": "Assessing Damage",
       "etr": "Tomorrow at 2:00 AM - 5:00 AM",
       "incident_id": "34724107",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 36.12299,
-      "lng": -75.75015,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 11:00 PM - Tomorrow at 2:00 AM",
-      "incident_id": "34724165",
       "provider": "Dominion Energy"
     }
   ]
