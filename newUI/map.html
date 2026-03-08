@@ -188,10 +188,8 @@ async function loadOutages() {
     (data.outages || []).forEach(o => {
       if (o.lat == null || o.lng == null) return;
 
-      // Heatmap point: intensity normalised 0–1
       heatPoints.push([o.lat, o.lng, (o.customers || 1) / maxCust]);
 
-      // Circle marker
       const color  = severityColor(o.customers);
       const radius = Math.max(8, Math.min(40, Math.sqrt(o.customers) * 3));
       const popup =
