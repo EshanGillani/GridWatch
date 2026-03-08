@@ -5,7 +5,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -152,6 +152,10 @@ function severityColor(n) {
 }
 
 function toggleHeat() {
+  if (typeof L.heatLayer !== 'function') {
+    document.getElementById("status").textContent = "Heatmap library failed to load — check network.";
+    return;
+  }
   heatMode = !heatMode;
   document.getElementById("heat-toggle").classList.toggle("active", heatMode);
   markers.forEach(m => heatMode ? map.removeLayer(m) : m.addTo(map));
@@ -215,7 +219,7 @@ async function loadOutages() {
     // Build heat layer
     if (heatPoints.length) {
       heatLayer = L.heatLayer(heatPoints, {
-        radius: 35, blur: 25, maxZoom: 10,
+        radius: 35, blur: 25, maxZoom: 10, minOpacity: 0.5,
         gradient: { 0.2: "#388e3c", 0.5: "#fbc02d", 0.75: "#f57c00", 1.0: "#d32f2f" }
       });
       if (heatMode) heatLayer.addTo(map);
