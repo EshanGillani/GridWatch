@@ -34,8 +34,6 @@
     }
     .nav-btn:hover { color: var(--cream); }
     .nav-btn.active { color: var(--salmon); border-bottom-color: var(--salmon); }
-    .nav-btn.expert-btn { margin-left: auto; color: var(--charcoal); background: var(--salmon); border-radius: 4px; padding: 6px 14px; border-bottom: none; }
-    .nav-btn.expert-btn:hover { background: var(--salmon-d); color: var(--charcoal); }
     .error-badge { display: none; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--red); }
     .error-badge.visible { display: flex; }
     .error-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); }
@@ -94,12 +92,12 @@
 </head>
 <body>
   <nav>
-    <div class="nav-logo">Grid<em>Watch</em></div>
-    <button class="nav-btn" onclick="location.href='index.html'">Home</button>
+    <div class="nav-logo">Grid<span style="color: var(--salmon);">Watch</div>
+    <button class="nav-btn" onclick="location.href='main.html'">Home</button>
     <button class="nav-btn" onclick="location.href='predictions.html'">Predictions</button>
     <button class="nav-btn active" onclick="location.href='map.html'">Outage Map</button>
     <button class="nav-btn" onclick="location.href='about.html'">About</button>
-    <button class="nav-btn expert-btn" onclick="location.href='experts.html'">Expert Mode</button>
+    
   </nav>
 
   <div class="content">
@@ -129,7 +127,7 @@
   </div>
 
   <footer>
-    <div class="footer-logo">Grid<em>Watch</em></div>
+    <div class="nav-logo">Grid<span style="color: var(--salmon);">Watch</div>
   </footer>
 
 <script>
