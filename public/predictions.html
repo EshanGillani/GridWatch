@@ -339,58 +339,62 @@ function computeRisk(w) {
 /* city id → { marker, risk, w } */
 let cityData = {};
 
-async function loadAllCities() {
-  const entries = Object.entries(cities);
-
-  /* Single batched request — comma-separated lat/lon for all cities */
-  const lats = entries.map(([, c]) => c.lat).join(",");
-  const lons = entries.map(([, c]) => c.lon).join(",");
-  const url  =
+async function fetchSingleCity(city) {
+  const url =
     `https://api.open-meteo.com/v1/forecast` +
-    `?latitude=${lats}&longitude=${lons}` +
+    `?latitude=${city.lat}&longitude=${city.lon}` +
     `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,` +
     `wind_gusts_10m,precipitation,snowfall,cloud_cover` +
     `&temperature_unit=fahrenheit`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const data = await res.json();
+  return data.current;
+}
 
-  let weatherList;
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    /* API returns an array when multiple locations are requested */
-    weatherList = Array.isArray(data) ? data : [data];
-  } catch (err) {
-    console.error("Weather fetch failed:", err);
-    return;
-  }
+function plotCity(id, city, w) {
+  const risk  = computeRisk(w);
+  const color = riskColor(risk);
+  if (cityData[id]?.marker) map.removeLayer(cityData[id].marker);
+  const m = L.circleMarker([city.lat, city.lon], {
+    radius: 12, color: '#2a2a2a', weight: 1.5,
+    fillColor: color, fillOpacity: 0.88
+  })
+  .addTo(map)
+  .bindPopup(
+    `<b>${city.name}</b><br>` +
+    `Outage Risk: <b style="color:${color}">${(risk * 100).toFixed(1)}%</b>`
+  );
+  cityData[id] = { marker: m, risk, w };
+}
+
+async function loadAllCities() {
+  const selectedId = document.getElementById("options").value;
+  const entries    = Object.entries(cities);
 
   /* Clear old markers */
   Object.values(cityData).forEach(d => map.removeLayer(d.marker));
   cityData = {};
 
-  entries.forEach(([id, city], i) => {
-    const w = weatherList[i]?.current;
-    if (!w) return;
-    const risk = computeRisk(w);
-    const color = riskColor(risk);
+  /* Load selected city first so the panel updates immediately */
+  const prioritised = [
+    ...entries.filter(([id]) => id === selectedId),
+    ...entries.filter(([id]) => id !== selectedId)
+  ];
 
-    const m = L.circleMarker([city.lat, city.lon], {
-      radius: 12,
-      color: '#2a2a2a',
-      weight: 1.5,
-      fillColor: color,
-      fillOpacity: 0.88
-    })
-    .addTo(map)
-    .bindPopup(
-      `<b>${city.name}</b><br>` +
-      `Outage Risk: <b style="color:${color}">${(risk * 100).toFixed(1)}%</b>`
-    );
-
-    cityData[id] = { marker: m, risk, w };
-  });
-
-  updatePanel();
+  for (let i = 0; i < prioritised.length; i++) {
+    const [id, city] = prioritised[i];
+    try {
+      const w = await fetchSingleCity(city);
+      plotCity(id, city, w);
+      if (id === selectedId) updatePanel();
+    } catch (err) {
+      console.warn(`${city.name}: ${err.message}`);
+    }
+    /* 200 ms gap between requests — avoids rate limiting */
+    if (i < prioritised.length - 1)
+      await new Promise(r => setTimeout(r, 200));
+  }
 }
 
 function getRiskAdvice(pct) {
