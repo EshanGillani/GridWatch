@@ -213,65 +213,107 @@
 </footer>
 
 <script>
-const map = L.map('map').setView([37.5538, -77.4603], 7);
+
+
+const cities = {
+  "1": { name:"Richmond, VA", lat:37.5538, lon:-77.4603 },
+  "2": { name:"Virginia Beach, VA", lat:36.8529, lon:-75.9780 },
+  "3": { name:"Norfolk, VA", lat:36.8508, lon:-76.2859 },
+  "4": { name:"Arlington, VA", lat:38.8816, lon:-77.0910 },
+  "5": { name:"Roanoke, VA", lat:37.2709, lon:-79.9414 },
+  "6": { name:"Charlottesville, VA", lat:38.0293, lon:-78.4767 },
+  "7": { name:"Newport News, VA", lat:37.0871, lon:-76.4730 },
+  "8": { name:"Hampton, VA", lat:37.0299, lon:-76.3452 },
+  "9": { name:"Chesapeake, VA", lat:36.7682, lon:-76.2875 },
+  "10": { name:"Alexandria, VA", lat:38.8048, lon:-77.0469 }
+};
+
+let map = L.map('map').setView([37.5538, -77.4603], 7);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
   attribution:'© OpenStreetMap'
 }).addTo(map);
 
-const LAT = 37.5538, LON = -77.4603;
+let marker = L.marker([37.5538, -77.4603]).addTo(map);
 
-// Simple risk model matching the trained RandomForest logic
 function computeRisk(w) {
+
   let score = 0;
+
   const gusts = w.wind_gusts_10m || 0;
   const wind  = w.wind_speed_10m || 0;
   const precip = w.precipitation || 0;
   const snow  = w.snowfall || 0;
 
-  if (gusts > 50)      score += 0.40;
+  if (gusts > 50) score += 0.40;
   else if (gusts > 35) score += 0.25;
   else if (gusts > 20) score += 0.10;
 
-  if (wind > 40)       score += 0.20;
-  else if (wind > 25)  score += 0.10;
+  if (wind > 40) score += 0.20;
+  else if (wind > 25) score += 0.10;
 
-  if (precip > 1.0)    score += 0.30;
+  if (precip > 1.0) score += 0.30;
   else if (precip > 0.3) score += 0.15;
 
-  if (snow > 2)        score += 0.30;
+  if (snow > 2) score += 0.30;
   else if (snow > 0.5) score += 0.15;
 
   return Math.min(1, score);
 }
 
 async function loadPrediction() {
+
+  const selectedCity = document.getElementById("options").value;
+  const city = cities[selectedCity];
+
+  map.setView([city.lat, city.lon], 8);
+  marker.setLatLng([city.lat, city.lon]);
+
   const url =
-    `https://api.open-meteo.com/v1/forecast` +
-    `?latitude=${LAT}&longitude=${LON}` +
-    `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,` +
-    `wind_gusts_10m,precipitation,snowfall,cloud_cover` +
-    `&temperature_unit=fahrenheit`;
+  `https://api.open-meteo.com/v1/forecast` +
+  `?latitude=${city.lat}&longitude=${city.lon}` +
+  `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,` +
+  `wind_gusts_10m,precipitation,snowfall,cloud_cover` +
+  `&temperature_unit=fahrenheit`;
 
   try {
+
     const res = await fetch(url);
     if (!res.ok) throw new Error("HTTP " + res.status);
+
     const data = await res.json();
     const w = data.current;
 
     const risk = computeRisk(w);
-    document.getElementById("risk").innerText = (risk * 100).toFixed(1) + "%";
-    document.getElementById("temp").innerText = w.temperature_2m.toFixed(1) + "°F";
-    document.getElementById("wind").innerText = w.wind_gusts_10m.toFixed(1) + " mph gusts";
 
-  } catch (err) {
+    document.getElementById("risk").innerText =
+      (risk * 100).toFixed(1) + "%";
+
+    document.getElementById("temp").innerText =
+      w.temperature_2m.toFixed(1) + "°F";
+
+    document.getElementById("wind").innerText =
+      w.wind_gusts_10m.toFixed(1) + " mph gusts";
+
+  }
+  catch(err) {
+
     document.getElementById("risk").innerText = "Unavailable";
     document.getElementById("temp").innerText = "Unavailable";
-    document.getElementById("wind").innerText = "Unavailable — " + err.message;
+    document.getElementById("wind").innerText =
+      "Unavailable — " + err.message;
+
   }
 }
 
+/* Dropdown change listener */
+
+document.getElementById("options").addEventListener("change", loadPrediction);
+
+/* Load default city on page start */
+
 loadPrediction();
+
 </script>
 
 </body>
