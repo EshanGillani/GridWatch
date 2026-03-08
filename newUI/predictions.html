@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>GridWatch | Predictions</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -138,11 +139,33 @@
 
 <div class="content">
   <h1>Prediction & <em>Analysis</em></h1>
-  <h3>Welcome to the Predictions page. Use the map below to find outage predictions for your area.</h3>
-  <p>Live outage risk predictions powered by weather data.</p>
+  <!--<h3>Welcome to the Predictions page. Use the map below to find outage predictions for your area.</h3>-->
+  <h3>Live outage risk predictions powered by weather data.</h3>
   <div class="prediction-box">
 
-<h2>Live Outage Prediction</h2>
+<h3 style="font-family: 'Syne', sans-serif; font-weight: 700; color: #989189;">
+    Current live predictions for 
+    <select id="options" name="options" 
+            style="font-family: 'Syne', sans-serif;
+                   background-color: #F5F4F0; 
+                   color: #989189;
+                   padding: 2px 6px; 
+                   border: 2px solid #E8E7E2; 
+                   border-radius: 4px;
+                   outline: none;
+                   font-size: 16.72px; 
+                   font-weight: 700;
+                   -webkit-appearance: none; 
+                   appearance: none;
+                   cursor: pointer;">
+      <option value="1" style="color: #989189;">RICHMOND, VA</option>
+      <!--<option value="2" style="color: #989189;">Option 2</option>
+      <option value="3" style="color: #989189;">Option 3</option>-->
+    </select>
+</h3>
+
+
+
 
 <p>Outage Risk: <span id="risk">Loading...</span></p>
 
