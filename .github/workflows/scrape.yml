@@ -27,16 +27,12 @@ jobs:
         run: pip install requests beautifulsoup4
 
       - name: Run scraper
-        run: python gridwatchbackend/dominion_outage_scraper.py --json --no-map > newUI/outages.json
+        run: python gridwatchbackend/dominion_outage_scraper.py --json --no-map > newUI/outages.json 2>/dev/null
 
-      - name: Debug - check file exists
+      - name: Verify output
         run: |
-          echo "--- newUI directory contents ---"
-          ls -la newUI/
-          echo "--- outages.json first 5 lines ---"
-          head -5 newUI/outages.json || echo "FILE NOT FOUND"
-          echo "--- git status ---"
-          git status
+          echo "File size: $(wc -c < newUI/outages.json) bytes"
+          head -3 newUI/outages.json
 
       - name: Commit outages.json
         run: |
@@ -44,7 +40,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase origin main
           git add newUI/outages.json
-          git status
-          git diff --cached --quiet && echo "No changes, skipping commit" && exit 0
+          git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "chore: update outages $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           git push origin main
