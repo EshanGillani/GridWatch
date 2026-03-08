@@ -11,7 +11,7 @@
       --taupe-d: #9a9188; --taupe-l: #dedad5; --salmon-d: #e56b5f;
       --mint: #8EE07A;
     }
-    body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; margin: 0; }
+    body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; margin: 0; min-height: 100vh; display: flex; flex-direction: column; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
     nav {
@@ -33,13 +33,13 @@
     .live { display: flex; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--taupe); }
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); animation: pulse 1.4s infinite; }
 
-    .content { padding: 72px 6vw; }
+    .content { padding: 72px 6vw; flex: 1; }
     h1 em { color: var(--salmon); font-style: normal; }
     h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(40px, 7vw, 80px); line-height: 1; letter-spacing: -.02em; margin-bottom: 16px; }
     h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--taupe-d); margin-bottom: 12px; }
     p { font-size: 14px; line-height: 1.85; color: var(--taupe-d); max-width: 520px; }
 
-    footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 20px 6vw; display: flex; justify-content: space-between; align-items: center; }
+    footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 20px 6vw; display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 16px; color: var(--cream); }
     .footer-logo em { color: var(--salmon); font-style: normal; }
     .footer-copy { font-family: 'Syne Mono', monospace; font-size: 9px; color: var(--taupe); letter-spacing: .1em; }
@@ -102,8 +102,9 @@
 
   </div>
 </div>
+  </div>
   <footer>
-    <div class="footer-logo">GRID<em>WATCH</em></div>
+    <div class="nav-logo">Grid<span style="color: var(--salmon);">Watch</div>
   </footer>
 </body>
 </html>
