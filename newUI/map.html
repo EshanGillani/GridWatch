@@ -60,6 +60,8 @@
       border: 3px solid var(--charcoal);
       box-shadow: 8px 8px 0 var(--taupe);
       margin-bottom: 16px;
+      z-index: 0;      
+      position: relative; 
     }
     #status {
       font-family: 'Syne Mono', monospace; font-size: 10px;
@@ -112,10 +114,12 @@
     <div id="map"></div>
 
     <div class="legend">
+      <span style="display:flex; align-items:center; margin-right:8px; color:var(--taupe-d)">Number of Outages</span>
       <div class="leg-item"><div class="leg-dot" style="background:#d32f2f"></div>Critical (500+)</div>
       <div class="leg-item"><div class="leg-dot" style="background:#f57c00"></div>Major (100–499)</div>
       <div class="leg-item"><div class="leg-dot" style="background:#fbc02d"></div>Moderate (25–99)</div>
       <div class="leg-item"><div class="leg-dot" style="background:#388e3c"></div>Minor (&lt;25)</div>
+      
       <button class="toggle-btn" id="heat-toggle" onclick="toggleHeat()">Heatmap</button>
       <button class="toggle-btn" onclick="manualRefresh()" id="refresh-btn">↻ Refresh</button>
       <div style="margin-left:auto"><span id="status">Loading outage data...</span> <span id="countdown" style="font-family:'Syne Mono',monospace;font-size:10px;color:var(--taupe-d)"></span></div>
@@ -165,7 +169,7 @@ function toggleHeat() {
 
 async function loadOutages() {
   try {
-    const res  = await fetch(OUTAGES_JSON);
+    const res  = await fetch(OUTAGES_JSON + "?t=" + Date.now());
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
 
@@ -208,7 +212,7 @@ async function loadOutages() {
       if (!heatMode) m.addTo(map);
     });
 
-    if (heatPoints.length) {
+     if (heatPoints.length) {
       heatLayer = L.heatLayer(heatPoints, {
         radius: 35, blur: 25, maxZoom: 10, minOpacity: 0.5,
         gradient: { 0.2: "#388e3c", 0.5: "#fbc02d", 0.75: "#f57c00", 1.0: "#d32f2f" }
