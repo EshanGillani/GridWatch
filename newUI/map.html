@@ -165,7 +165,7 @@ function toggleHeat() {
 
 async function loadOutages() {
   try {
-    const res  = await fetch(OUTAGES_JSON + "?t=" + Date.now());
+    const res  = await fetch(OUTAGES_JSON);
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
 
