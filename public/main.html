@@ -42,14 +42,16 @@
     h1 em { color: var(--salmon); font-style: normal; }
     h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--taupe-d); margin-bottom: 24px; }
     
+    .map-row { display: flex; align-items: flex-start; gap: 40px; margin: 40px 0; }
+
     .member-card {
       background: var(--paper);
       border: 3px solid var(--charcoal);
       padding: 20px;
       box-shadow: 8px 8px 0px var(--taupe);
       transition: all 0.25s ease;
-      max-width: 800px;
-      margin: 40px 0;
+      flex-shrink: 0;
+      width: 55%;
     }
     .member-card:hover {
       transform: translate(-4px, -4px);
@@ -63,10 +65,11 @@
       font-size: 15px;
       line-height: 1.8;
       color: var(--taupe-d);
-      max-width: 800px;
-      margin-bottom: 80px;
-      white-space: pre-line;
+      flex: 1;
+      min-width: 0;
+      padding-top: 4px;
     }
+    .description-text p { margin-bottom: 12px; }
 
     footer { background: var(--charcoal); border-top: 3px solid var(--salmon); padding: 20px 6vw; display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .footer-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 16px; color: var(--cream); }
@@ -87,15 +90,16 @@
     <h1>Grid<em>Watch</em></h1>
     <h3>A system for detecting and predicting power outages around the world.</h3>
 <h3>Example view:</h3>
-    <div class="member-card">
-      <img src="Untitled drawing (1).png" alt="Map View Illustration">
-    </div>
-
-    <div class="description-text">
-      <strong>What you're seeing:</strong>
-      🔴 Large red circle (Wolf Trap/Beulah Rd area) — Active major outage. The larger radius indicates a high number of customers affected, likely thousands of homes across that suburban grid zone.
-      🔴 Smaller red circle (Electric Ave, Vienna) — A second active outage, more contained but confirmed down. The irony of "Electric Ave" losing power is not lost.
-      🟡 Yellow circle (Lawyers Rd NW, Vienna) — Few outages. Most houses still have power, but a few have reported outages. This serves as a warning for other houses in the circle to prepare for potential upcoming outages within a few hours.
+    <div class="map-row">
+      <div class="member-card">
+        <img src="Untitled drawing (1).png" alt="Map View Illustration">
+      </div>
+      <div class="description-text">
+        <p><strong>What you're seeing:</strong></p>
+        <p>🔴 Large red circle (Wolf Trap/Beulah Rd area) — Active major outage. The larger radius indicates a high number of customers affected, likely thousands of homes across that suburban grid zone.</p>
+        <p>🔴 Smaller red circle (Electric Ave, Vienna) — A second active outage, more contained but confirmed down. The irony of "Electric Ave" losing power is not lost.</p>
+        <p>🟡 Yellow circle (Lawyers Rd NW, Vienna) — Few outages. Most houses still have power, but a few have reported outages. This serves as a warning for other houses in the circle to prepare for potential upcoming outages within a few hours.</p>
+      </div>
     </div>
   </div>
 
