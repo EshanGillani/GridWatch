@@ -1,5 +1,5 @@
 # GridWatch 
-
+Our submission for HackTJ, the nation's largest high school hackathon. 
 A real-time power outage monitoring dashboard for Dominion Energy's service territory in Virginia. GridWatch scrapes live outage data, stores it as JSON, and visualizes it on an interactive map with heatmap support and auto-refresh.
 
 ---
