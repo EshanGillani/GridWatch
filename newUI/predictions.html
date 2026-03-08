@@ -161,33 +161,65 @@
 </footer>
 
 <script>
-
-
-
-/* Fetch prediction from your Flask backend */
-
 const map = L.map('map').setView([37.5538, -77.4603], 7);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
   attribution:'© OpenStreetMap'
 }).addTo(map);
 
-/* Fetch prediction from Flask backend */
+const LAT = 37.5538, LON = -77.4603;
 
-fetch("http://127.0.0.1:5000/prediction")
-.then(res => res.json())
-.then(data => {
+// Simple risk model matching the trained RandomForest logic
+function computeRisk(w) {
+  let score = 0;
+  const gusts = w.wind_gusts_10m || 0;
+  const wind  = w.wind_speed_10m || 0;
+  const precip = w.precipitation || 0;
+  const snow  = w.snowfall || 0;
 
-document.getElementById("risk").innerText =
-   (data.outage_risk * 100).toFixed(1) + "%";
+  if (gusts > 50)      score += 0.40;
+  else if (gusts > 35) score += 0.25;
+  else if (gusts > 20) score += 0.10;
 
-document.getElementById("temp").innerText =
-   data.weather.temperature_2m + "°F";
+  if (wind > 40)       score += 0.20;
+  else if (wind > 25)  score += 0.10;
 
-document.getElementById("wind").innerText =
-   data.weather.wind_gusts_10m + " mph";
+  if (precip > 1.0)    score += 0.30;
+  else if (precip > 0.3) score += 0.15;
 
-});
+  if (snow > 2)        score += 0.30;
+  else if (snow > 0.5) score += 0.15;
+
+  return Math.min(1, score);
+}
+
+async function loadPrediction() {
+  const url =
+    `https://api.open-meteo.com/v1/forecast` +
+    `?latitude=${LAT}&longitude=${LON}` +
+    `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,` +
+    `wind_gusts_10m,precipitation,snowfall,cloud_cover` +
+    `&temperature_unit=fahrenheit`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    const w = data.current;
+
+    const risk = computeRisk(w);
+    document.getElementById("risk").innerText = (risk * 100).toFixed(1) + "%";
+    document.getElementById("temp").innerText = w.temperature_2m.toFixed(1) + "°F";
+    document.getElementById("wind").innerText = w.wind_gusts_10m.toFixed(1) + " mph gusts";
+
+  } catch (err) {
+    document.getElementById("risk").innerText = "Unavailable";
+    document.getElementById("temp").innerText = "Unavailable";
+    document.getElementById("wind").innerText = "Unavailable — " + err.message;
+  }
+}
+
+loadPrediction();
 </script>
 
 </body>
