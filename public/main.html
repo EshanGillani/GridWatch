@@ -32,6 +32,8 @@
     }
     .nav-btn:hover { color: var(--cream); }
     .nav-btn.active { color: var(--salmon); border-bottom-color: var(--salmon); }
+    .nav-btn.expert-btn { margin-left: auto; color: var(--charcoal); background: var(--salmon); border-radius: 4px; padding: 6px 14px; border-bottom: none; }
+    .nav-btn.expert-btn:hover { background: var(--salmon-d); color: var(--charcoal); }
 
     .live { display: flex; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--taupe); }
     .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 8px var(--mint); animation: pulse 1.4s infinite; }
@@ -83,7 +85,7 @@
     <button class="nav-btn" onclick="location.href='predictions.html'">Predictions</button>
     <button class="nav-btn" onclick="location.href='map.html'">Outage Map</button>
     <button class="nav-btn" onclick="location.href='about.html'">About</button>
-
+    <button class="nav-btn expert-btn" onclick="location.href='expert-login.html'">Expert Mode</button>
   </nav>
 
   <div class="main-content">

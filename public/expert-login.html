@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GridWatch | Expert Access</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --taupe: #C8C0B8; --salmon: #FF8B80; --charcoal: #484848;
+      --cream: #F5F4F0; --paper: #FAF9F6; --taupe-d: #9a9188; --salmon-d: #e56b5f;
+    }
+    body {
+      background: var(--cream); color: var(--charcoal);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      height: 56px; background: var(--charcoal);
+      border-bottom: 3px solid var(--salmon);
+      display: flex; align-items: center; padding: 0 6vw;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 22px; color: var(--cream); }
+    .nav-logo em { color: var(--salmon); font-style: normal; }
+
+    .gate {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+    }
+    .gate-card {
+      background: var(--paper);
+      border: 3px solid var(--charcoal);
+      box-shadow: 8px 8px 0px var(--taupe);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 380px;
+    }
+    .gate-card h1 {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: 32px; line-height: 1; letter-spacing: -.02em;
+      margin-bottom: 6px;
+    }
+    .gate-card h1 em { color: var(--salmon); font-style: normal; }
+    .gate-card p {
+      font-size: 12px; color: var(--taupe-d);
+      font-family: 'Syne', sans-serif; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 28px;
+    }
+    .gate-card input[type="password"] {
+      width: 100%; padding: 10px 14px;
+      border: 2px solid var(--charcoal); background: var(--cream);
+      font-family: 'Syne Mono', monospace; font-size: 16px;
+      color: var(--charcoal); outline: none;
+      margin-bottom: 16px; letter-spacing: .15em;
+    }
+    .gate-card input[type="password"]:focus { border-color: var(--salmon); }
+    .gate-card button {
+      width: 100%; padding: 10px;
+      background: var(--salmon); border: none; cursor: pointer;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--charcoal);
+    }
+    .gate-card button:hover { background: var(--salmon-d); }
+    .error {
+      font-family: 'Syne Mono', monospace; font-size: 11px;
+      color: var(--salmon-d); margin-top: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Grid<em>Watch</em></div>
+  </nav>
+
+  <div class="gate">
+    <div class="gate-card">
+      <h1>Expert<em> Mode</em></h1>
+      <p>Restricted access</p>
+      <input type="password" id="pw" placeholder="Enter password" onkeydown="if(event.key==='Enter')check()"/>
+      <button onclick="check()">Enter</button>
+      <div class="error" id="err">Incorrect password.</div>
+    </div>
+  </div>
+
+  <script>
+    function check() {
+      if (document.getElementById('pw').value === '123') {
+        window.location.href = 'experts.html';
+      } else {
+        document.getElementById('err').style.display = 'block';
+        document.getElementById('pw').value = '';
+        document.getElementById('pw').focus();
+      }
+    }
+  </script>
+</body>
+</html>
