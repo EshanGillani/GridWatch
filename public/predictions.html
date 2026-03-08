@@ -126,6 +126,52 @@
 
     .footer-logo em { color: var(--salmon); }
 
+    /* Alert subscription form */
+    .alert-section {
+      width: 88%; margin: 0 auto 48px;
+    }
+    .alert-section h3 {
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--taupe-d); margin-bottom: 14px;
+    }
+    .alert-form {
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start;
+    }
+    .alert-form input[type="email"] {
+      flex: 1; min-width: 200px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      background: var(--paper); color: var(--charcoal);
+      border: 2px solid var(--taupe-l); padding: 9px 14px;
+      outline: none;
+    }
+    .alert-form input[type="email"]:focus { border-color: var(--charcoal); }
+    .alert-form select {
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .06em;
+      background: var(--paper); color: var(--taupe-d);
+      border: 2px solid var(--taupe-l); padding: 9px 32px 9px 12px;
+      outline: none; cursor: pointer;
+      -webkit-appearance: none; appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2212%22 height%3D%2212%22 viewBox%3D%220 0 24 24%22 fill%3D%22none%22 stroke%3D%22%239a9188%22 stroke-width%3D%223%22%3E%3Cpolyline points%3D%226 9 12 15 18 9%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat; background-position: right 10px center;
+    }
+    .alert-form button {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      background: var(--charcoal); color: var(--cream);
+      border: 2px solid var(--charcoal); padding: 9px 22px;
+      cursor: pointer; transition: background .15s;
+    }
+    .alert-form button:hover { background: var(--salmon); border-color: var(--salmon); color: var(--charcoal); }
+    .alert-form button:disabled { opacity: .5; cursor: default; }
+    #alert-msg {
+      margin-top: 10px; font-family: 'Syne Mono', monospace;
+      font-size: 11px; letter-spacing: .04em;
+    }
+    #alert-msg.ok  { color: #388e3c; }
+    #alert-msg.err { color: #d94040; }
+
   </style>
 </head>
 
@@ -216,6 +262,30 @@
   <span>Low Risk</span>
   <div style="flex:1; height:12px; border-radius:6px; border:1.5px solid var(--taupe-l); background:linear-gradient(to right, hsl(120,88%,38%), hsl(60,88%,38%), hsl(0,88%,38%));"></div>
   <span>High Risk</span>
+</div>
+
+<!-- Email Alert Subscription -->
+<div class="alert-section">
+  <h3>&#9993; Get outage alerts by email</h3>
+  <div class="alert-form">
+    <input type="email" id="alert-email" placeholder="your@email.com" autocomplete="email"/>
+
+    <select id="alert-city">
+      <option value="Richmond, VA">Richmond, VA</option>
+      <option value="Virginia Beach, VA">Virginia Beach, VA</option>
+      <option value="Norfolk, VA">Norfolk, VA</option>
+      <option value="Arlington, VA">Arlington, VA</option>
+      <option value="Roanoke, VA">Roanoke, VA</option>
+      <option value="Charlottesville, VA">Charlottesville, VA</option>
+      <option value="Newport News, VA">Newport News, VA</option>
+      <option value="Hampton, VA">Hampton, VA</option>
+      <option value="Chesapeake, VA">Chesapeake, VA</option>
+      <option value="Alexandria, VA">Alexandria, VA</option>
+    </select>
+
+    <button id="alert-btn" onclick="subscribeAlert()">Notify Me</button>
+  </div>
+  <div id="alert-msg"></div>
 </div>
 
 <footer>
@@ -353,6 +423,49 @@ function updatePanel() {
 document.getElementById("options").addEventListener("change", updatePanel);
 
 loadAllCities();
+
+async function subscribeAlert() {
+  const email = document.getElementById("alert-email").value.trim();
+  const city  = document.getElementById("alert-city").value;
+  const btn   = document.getElementById("alert-btn");
+  const msg   = document.getElementById("alert-msg");
+
+  msg.textContent = "";
+  msg.className   = "";
+
+  if (!email) {
+    msg.textContent = "Please enter your email address.";
+    msg.className   = "err";
+    return;
+  }
+
+  btn.disabled    = true;
+  btn.textContent = "Subscribing…";
+
+  try {
+    const res  = await fetch("/api/subscribe", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ email, city }),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      msg.textContent = data.message;
+      msg.className   = "ok";
+      document.getElementById("alert-email").value = "";
+    } else {
+      msg.textContent = data.error || "Something went wrong. Please try again.";
+      msg.className   = "err";
+    }
+  } catch {
+    msg.textContent = "Network error — please try again.";
+    msg.className   = "err";
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = "Notify Me";
+  }
+}
 
 </script>
 
