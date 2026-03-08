@@ -34,8 +34,9 @@
     }
     .nav-btn:hover { color: var(--cream); }
     .nav-btn.active { color: var(--salmon); border-bottom-color: var(--salmon); }
-    .live { display: flex; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--taupe); }
-    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); animation: pulse .9s infinite; }
+    .error-badge { display: none; align-items: center; gap: 6px; margin-left: auto; font-family: 'Syne Mono', monospace; font-size: 10px; color: var(--red); }
+    .error-badge.visible { display: flex; }
+    .error-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); }
 
     .content { flex: 1; padding: 48px 6vw; }
     h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(40px, 7vw, 80px); line-height: 1; letter-spacing: -.02em; margin-bottom: 16px; }
@@ -94,7 +95,7 @@
     <button class="nav-btn" onclick="location.href='predictions.html'">Predictions</button>
     <button class="nav-btn active" onclick="location.href='map.html'">Outage Map</button>
     <button class="nav-btn" onclick="location.href='about.html'">About</button>
-    <div class="live"><div class="live-dot"></div><span id="live-label">LIVE</span></div>
+    
   </nav>
 
   <div class="content">
