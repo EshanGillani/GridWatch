@@ -429,7 +429,11 @@ def main():
 
     try:
         while True:
+            if args.json:
+                sys.stdout = sys.stderr   # send debug prints to stderr so they don't corrupt JSON output
             data = collect_outage_data()
+            if args.json:
+                sys.stdout = sys.__stdout__  # restore stdout for JSON output
             if args.json:
                 clean = json.loads(json.dumps(data, default=str))
                 for e in clean.get("outage_events", []):
