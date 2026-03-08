@@ -116,7 +116,8 @@
       <div class="leg-item"><div class="leg-dot" style="background:#fbc02d"></div>Moderate (25–99)</div>
       <div class="leg-item"><div class="leg-dot" style="background:#388e3c"></div>Minor (&lt;25)</div>
       <button class="toggle-btn" id="heat-toggle" onclick="toggleHeat()">Heatmap</button>
-      <div style="margin-left:auto"><span id="status">Loading outage data...</span></div>
+      <button class="toggle-btn" onclick="manualRefresh()" id="refresh-btn">↻ Refresh</button>
+      <div style="margin-left:auto"><span id="status">Loading outage data...</span> <span id="countdown" style="font-family:'Syne Mono',monospace;font-size:10px;color:var(--taupe-d)"></span></div>
     </div>
   </div>
 
@@ -238,8 +239,38 @@ async function loadOutages() {
   }
 }
 
+let secondsUntilRefresh = REFRESH_MS / 1000;
+let countdownTimer = null;
+
+function startCountdown() {
+  clearInterval(countdownTimer);
+  secondsUntilRefresh = REFRESH_MS / 1000;
+  countdownTimer = setInterval(() => {
+    secondsUntilRefresh--;
+    document.getElementById("countdown").textContent = "— next in " + secondsUntilRefresh + "s";
+    if (secondsUntilRefresh <= 0) {
+      clearInterval(countdownTimer);
+    }
+  }, 1000);
+}
+
+async function manualRefresh() {
+  const btn = document.getElementById("refresh-btn");
+  btn.disabled = true;
+  btn.textContent = "↻ Loading...";
+  await loadOutages();
+  btn.disabled = false;
+  btn.textContent = "↻ Refresh";
+}
+
+async function autoRefresh() {
+  await loadOutages();
+  startCountdown();
+}
+
 loadOutages();
-setInterval(loadOutages, REFRESH_MS);
+startCountdown();
+setInterval(autoRefresh, REFRESH_MS);
 </script>
 </body>
 </html>

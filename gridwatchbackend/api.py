@@ -17,22 +17,28 @@ LON = -77.4603
 
 def get_weather():
 
-    url = f"https://api.open-meteo.com/v1/forecast?latitude={LAT}&longitude={LON}&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_gusts_10m,precipitation,snowfall,cloud_cover&temperature_unit=fahrenheit&forecast_days=1"
+    url = (
+        f"https://api.open-meteo.com/v1/forecast"
+        f"?latitude={LAT}&longitude={LON}"
+        f"&current=temperature_2m,relative_humidity_2m,wind_speed_10m,"
+        f"wind_gusts_10m,precipitation,snowfall,cloud_cover"
+        f"&temperature_unit=fahrenheit"
+    )
 
     try:
         response = requests.get(url, timeout=10)
         data = response.json()
 
-        hourly = data["hourly"]
+        current = data["current"]
 
         weather = {
-            "temperature_2m": hourly["temperature_2m"][-1],
-            "relative_humidity_2m": hourly["relative_humidity_2m"][-1],
-            "wind_speed_10m": hourly["wind_speed_10m"][-1],
-            "wind_gusts_10m": hourly["wind_gusts_10m"][-1],
-            "precipitation": hourly["precipitation"][-1],
-            "snowfall": hourly["snowfall"][-1],
-            "cloud_cover": hourly["cloud_cover"][-1]
+            "temperature_2m":      current["temperature_2m"],
+            "relative_humidity_2m": current["relative_humidity_2m"],
+            "wind_speed_10m":      current["wind_speed_10m"],
+            "wind_gusts_10m":      current["wind_gusts_10m"],
+            "precipitation":       current["precipitation"],
+            "snowfall":            current["snowfall"],
+            "cloud_cover":         current["cloud_cover"],
         }
 
         return weather
