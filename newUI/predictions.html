@@ -140,6 +140,17 @@
   <h1>Prediction & <em>Analysis</em></h1>
   <h3>Welcome to the Predictions page. Use the map below to find outage predictions for your area.</h3>
   <p>Live outage risk predictions powered by weather data.</p>
+  <div class="prediction-box">
+
+<h2>Live Outage Prediction</h2>
+
+<p>Outage Risk: <span id="risk">Loading...</span></p>
+
+<p>Temperature: <span id="temp">Loading...</span></p>
+
+<p>Wind Gusts: <span id="wind">Loading...</span></p>
+
+</div>
 </div>
 
 <!-- Map Container -->
@@ -151,34 +162,32 @@
 
 <script>
 
+
+
+/* Fetch prediction from your Flask backend */
+
 const map = L.map('map').setView([37.5538, -77.4603], 7);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
   attribution:'© OpenStreetMap'
 }).addTo(map);
 
-
-/* Fetch prediction from your Flask backend */
+/* Fetch prediction from Flask backend */
 
 fetch("http://127.0.0.1:5000/prediction")
-  .then(res => res.json())
-  .then(data => {
+.then(res => res.json())
+.then(data => {
 
-    const risk = data.outage_risk;
-    const weather = data.weather;
+document.getElementById("risk").innerText =
+   (data.outage_risk * 100).toFixed(1) + "%";
 
-    const riskPercent = (risk * 100).toFixed(1);
+document.getElementById("temp").innerText =
+   data.weather.temperature_2m + "°F";
 
-    L.marker([37.5538,-77.4603])
-      .addTo(map)
-      .bindPopup(
-        "<b>Outage Risk:</b> " + riskPercent + "%<br>" +
-        "Temperature: " + weather.temperature_2m + "°F<br>" +
-        "Wind Gust: " + weather.wind_gusts_10m + " mph"
-      );
+document.getElementById("wind").innerText =
+   data.weather.wind_gusts_10m + " mph";
 
-  });
-
+});
 </script>
 
 </body>
