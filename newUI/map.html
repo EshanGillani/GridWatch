@@ -208,7 +208,6 @@ async function loadOutages() {
       if (!heatMode) m.addTo(map);
     });
 
-    // Build heat layer
     if (heatPoints.length) {
       heatLayer = L.heatLayer(heatPoints, {
         radius: 35, blur: 25, maxZoom: 10, minOpacity: 0.5,
