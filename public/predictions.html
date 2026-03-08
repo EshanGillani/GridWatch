@@ -126,51 +126,44 @@
 
     .footer-logo em { color: var(--salmon); }
 
-    /* Alert subscription form */
-    .alert-section {
-      width: 88%; margin: 0 auto 48px;
+    #advice {
+      width: 88%;
+      margin: 0 auto 40px;
+      border: 2px solid var(--taupe-l);
+      border-radius: 8px;
+      padding: 24px 28px;
+      background: var(--paper);
     }
-    .alert-section h3 {
-      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .08em;
-      color: var(--taupe-d); margin-bottom: 14px;
+    #advice .advice-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
     }
-    .alert-form {
-      display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start;
+    #advice .advice-status {
+      font-size: 13px;
+      color: var(--taupe-d);
+      margin-bottom: 14px;
     }
-    .alert-form input[type="email"] {
-      flex: 1; min-width: 200px;
-      font-family: 'DM Sans', sans-serif; font-size: 14px;
-      background: var(--paper); color: var(--charcoal);
-      border: 2px solid var(--taupe-l); padding: 9px 14px;
-      outline: none;
+    #advice ul {
+      list-style: none;
+      padding: 0;
     }
-    .alert-form input[type="email"]:focus { border-color: var(--charcoal); }
-    .alert-form select {
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .06em;
-      background: var(--paper); color: var(--taupe-d);
-      border: 2px solid var(--taupe-l); padding: 9px 32px 9px 12px;
-      outline: none; cursor: pointer;
-      -webkit-appearance: none; appearance: none;
-      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2212%22 height%3D%2212%22 viewBox%3D%220 0 24 24%22 fill%3D%22none%22 stroke%3D%22%239a9188%22 stroke-width%3D%223%22%3E%3Cpolyline points%3D%226 9 12 15 18 9%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
-      background-repeat: no-repeat; background-position: right 10px center;
+    #advice ul li {
+      font-size: 14px;
+      color: var(--taupe-d);
+      line-height: 1.7;
+      padding: 3px 0 3px 18px;
+      position: relative;
     }
-    .alert-form button {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .1em;
-      background: var(--charcoal); color: var(--cream);
-      border: 2px solid var(--charcoal); padding: 9px 22px;
-      cursor: pointer; transition: background .15s;
+    #advice ul li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--taupe);
     }
-    .alert-form button:hover { background: var(--salmon); border-color: var(--salmon); color: var(--charcoal); }
-    .alert-form button:disabled { opacity: .5; cursor: default; }
-    #alert-msg {
-      margin-top: 10px; font-family: 'Syne Mono', monospace;
-      font-size: 11px; letter-spacing: .04em;
-    }
-    #alert-msg.ok  { color: #388e3c; }
-    #alert-msg.err { color: #d94040; }
 
   </style>
 </head>
@@ -181,7 +174,6 @@
   <div class="nav-logo">Grid<span style="color: var(--salmon);">Watch</div>
   <button class="nav-btn" onclick="location.href='main.html'">Home</button>
   <button class="nav-btn active" onclick="location.href='predictions.html'">Predictions</button>
-  <button class="nav-btn" onclick="location.href='map.html'">Outage Map</button>
   <button class="nav-btn" onclick="location.href='about.html'">About</button>
   <button class="nav-btn expert-btn" onclick="location.href='expert-login.html'">Expert Mode</button>
 </nav>
@@ -253,6 +245,8 @@
   </div>
 </div>
 
+
+<div id="advice" style="display:none;"></div>
 
 <!-- Map Container -->
 <div id="map"></div>
@@ -394,6 +388,60 @@ async function loadAllCities() {
   updatePanel();
 }
 
+function getRiskAdvice(pct) {
+  if (pct < 20) return {
+    emoji: "🟢", label: "Minimal Risk", color: "hsl(120,88%,38%)",
+    status: "Grid conditions are stable.",
+    actions: [
+      "No action needed.",
+      "Continue normal activities.",
+      "Monitor the dashboard periodically for updates."
+    ]
+  };
+  if (pct < 40) return {
+    emoji: "🟡", label: "Low Risk", color: "hsl(60,88%,38%)",
+    status: "Slight instability detected, but outages are unlikely.",
+    actions: [
+      "Stay aware of weather or grid alerts.",
+      "Charge essential devices if severe weather is expected.",
+      "Check the dashboard for updates."
+    ]
+  };
+  if (pct < 60) return {
+    emoji: "🟠", label: "Moderate Risk", color: "hsl(30,88%,38%)",
+    status: "Conditions indicate a possible disruption.",
+    actions: [
+      "Ensure phones and essential devices are charged.",
+      "Identify backup lighting (flashlights, batteries).",
+      "Avoid scheduling critical power-dependent activities.",
+      "Monitor updates more frequently."
+    ]
+  };
+  if (pct < 80) return {
+    emoji: "🔴", label: "High Risk", color: "hsl(0,88%,38%)",
+    status: "Strong likelihood of outages developing.",
+    actions: [
+      "Fully charge phones, laptops, and battery packs.",
+      "Prepare backup lighting and essential supplies.",
+      "Save important work and data.",
+      "Limit use of high-power appliances.",
+      "Enable outage alerts if available."
+    ]
+  };
+  return {
+    emoji: "⚫", label: "Severe Risk", color: "#222",
+    status: "Outage is highly likely or imminent.",
+    actions: [
+      "Prepare for possible loss of electricity.",
+      "Charge all critical devices immediately.",
+      "Secure backup power if available (generators, power banks).",
+      "Keep flashlights and emergency supplies accessible.",
+      "Avoid using elevators or equipment requiring continuous power.",
+      "Follow local emergency updates."
+    ]
+  };
+}
+
 function updatePanel() {
   const id   = document.getElementById("options").value;
   const city = cities[id];
@@ -418,6 +466,17 @@ function updatePanel() {
     d.w.temperature_2m.toFixed(1) + "°F";
   document.getElementById("wind").innerText =
     d.w.wind_gusts_10m.toFixed(1) + " mph gusts";
+
+  const pct = d.risk * 100;
+  const adv = getRiskAdvice(pct);
+  const advEl = document.getElementById("advice");
+  advEl.style.display = "block";
+  advEl.style.borderColor = adv.color;
+  advEl.innerHTML =
+    `<div class="advice-title" style="color:${adv.color}">${adv.emoji} ${adv.label}</div>` +
+    `<div class="advice-status"><strong>Status:</strong> ${adv.status}</div>` +
+    `<strong style="font-family:'Syne',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--taupe-d);">Recommended Actions</strong>` +
+    `<ul>${adv.actions.map(a => `<li>${a}</li>`).join("")}</ul>`;
 }
 
 document.getElementById("options").addEventListener("change", updatePanel);
