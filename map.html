@@ -223,12 +223,10 @@ async function loadOutages() {
     const now = new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});
     document.getElementById("status").textContent =
       markers.length + " outage(s) plotted — last fetched " + now;
-    document.getElementById("live-label").textContent = "LIVE";
 
   } catch (err) {
     console.error("Failed to load outages:", err);
     document.getElementById("status").textContent = "Could not load outage data — " + err.message;
-    document.getElementById("live-label").textContent = "ERROR";
   }
 }
 
