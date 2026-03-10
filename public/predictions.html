@@ -445,7 +445,7 @@ const cities = {
   
 };
 
-let map = L.map('map').setView([37.5538, -77.4603], 7);
+let map = L.map('map').setView([39.5, -98.35], 4);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
@@ -548,7 +548,7 @@ async function loadAllCities() {
       const w = await fetchSingleCity(city);
       plotCity(id, city, w);
       /* Update panel whenever the city that just loaded is the active one */
-      if (id === document.getElementById("options").value) updatePanel();
+      if (id === document.getElementById("options").value) updatePanel(false);
     } catch (err) {
       console.warn(`${city.name}: ${err.message}`);
     }
@@ -611,11 +611,11 @@ function getRiskAdvice(pct) {
   };
 }
 
-function updatePanel() {
+function updatePanel(pan = true) {
   const id   = document.getElementById("options").value;
   const city = cities[id];
   if (!city) return;
-  map.setView([city.lat, city.lon], id === "other" ? 11 : 8);
+  if (pan) map.setView([city.lat, city.lon], id === "other" ? 11 : 8);
 
   const d = cityData[id];
   if (!d) {
