@@ -392,7 +392,7 @@
 <!-- Gradient Key -->
 <div style="width:88%; margin: 0 auto 40px; display:flex; align-items:center; gap:14px; font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--taupe-d);">
   <span>Low Risk</span>
-  <div style="flex:1; height:12px; border-radius:6px; border:1.5px solid var(--taupe-l); background:linear-gradient(to right, hsl(120,88%,38%), hsl(60,88%,38%), hsl(0,88%,38%));"></div>
+  <div style="flex:1; height:12px; border-radius:6px; border:1.5px solid var(--taupe-l); background:linear-gradient(to right, hsl(85,88%,38%), hsl(60,88%,38%), hsl(30,88%,38%), hsl(0,88%,38%));"></div>
   <span>High Risk</span>
 </div>
 
@@ -451,9 +451,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
 
-/* green (120) → yellow (60) → red (0) based on risk 0..1 */
+/* yellow-green (85) → yellow (60) → orange (25) → red (0) */
 function riskColor(risk) {
-  const hue = Math.round((1 - risk) * 120);
+  let hue;
+  if (risk < 0.3)       hue = Math.round(85 - (risk / 0.3) * 25);              // 0 → 85, 0.3 → 60
+  else if (risk < 0.82) hue = Math.round(60 - ((risk - 0.3) / 0.52) * 35);    // 0.3 → 60, 0.82 → 25
+  else                  hue = Math.round(25 - ((risk - 0.82) / 0.18) * 25);    // 0.82 → 25, 1.0 → 0
   return `hsl(${hue}, 88%, 38%)`;
 }
 
