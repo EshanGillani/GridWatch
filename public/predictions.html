@@ -418,7 +418,23 @@
       <option value="Minneapolis, MN">Minneapolis, MN</option>
       <option value="Dever, CO">Denver, CO</option>
       <option value="Charlotte, NC">Charlotte, NC</option>
+      <option value="Custom Location">Custom Location</option>
     </select>
+
+    <input
+      type="text"
+      id="alert-custom-city"
+      placeholder="Enter city or ZIP"
+      style="
+        display:none;
+        margin-top: 8px;
+        padding:9px 14px;
+        border: 2px solid var(--taupe-1);
+        border-radius:6px;
+        font-family:'Courier New', Courier, monospace;
+        font-size: 13px;
+      "
+    >
 
     <button id="alert-btn" onclick="subscribeAlert()">Notify Me</button>
   </div>
@@ -695,7 +711,11 @@ loadAllCities();
 
 async function subscribeAlert() {
   const email = document.getElementById("alert-email").value.trim();
-  const city  = document.getElementById("alert-city").value;
+  let city  = document.getElementById("alert-city").value;
+
+  if (city === "custom"){
+    city = document.getElementById("alert-custom-city").value.trim();
+  }
   const btn   = document.getElementById("alert-btn");
   const msg   = document.getElementById("alert-msg");
 
@@ -850,6 +870,22 @@ const url =
 
   suggestionsBox.style.display = "block";
 });
+
+
+document.geetElementById("alert-city").addEventListener("change", () => {
+
+  const dropdown = document.getElementById("alert-city");
+  const customBox = document.getElementById("alert-custom-city");
+
+  if (dropdown.value === "custom") {
+    customBox.style.display = "block";
+
+  } else {
+    customBox.style.display = "none";
+
+  }
+});
+
 
 </script>
 
