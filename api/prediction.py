@@ -23,12 +23,11 @@ CITIES = {
     "charlottesville": (38.0293, -78.4767),
     "newport_news": (37.0871, -76.4730),
     "hampton": (37.0299, -76.3452),
-    "chesapeake": (36.7682, -76.2875)
+    "chesapeake": (36.7682, -76.2875),
+    "mclean": (38.9339, -77.1773)
 }
 
-def get_weather(city):
-    lat, lon = CITIES[city]
-
+def get_weather_by_coords(lat, lon):
     url = (
         f"https://api.open-meteo.com/v1/forecast"
         f"?latitude={lat}"
@@ -43,7 +42,7 @@ def get_weather(city):
     data = response.json()
     hourly = data["hourly"]
 
-    weather = {
+    return {
         "temperature_2m": hourly["temperature_2m"][-1],
         "relative_humidity_2m": hourly["relative_humidity_2m"][-1],
         "wind_speed_10m": hourly["wind_speed_10m"][-1],
@@ -53,11 +52,36 @@ def get_weather(city):
         "cloud_cover": hourly["cloud_cover"][-1],
     }
 
-    return weather
+
+def get_weather(city):
+    lat, lon = CITIES[city]
+    return get_weather_by_coords(lat, lon)
 
 
 @app.route("/api/prediction")
 def prediction():
+    # Support either a named city or raw lat/lon coordinates
+    lat_param = request.args.get("lat")
+    lon_param = request.args.get("lon")
+
+    if lat_param and lon_param:
+        try:
+            lat = float(lat_param)
+            lon = float(lon_param)
+        except ValueError:
+            return jsonify({"error": "Invalid lat/lon values"}), 400
+
+        weather = get_weather_by_coords(lat, lon)
+        city_label = request.args.get("label", f"{lat:.4f},{lon:.4f}")
+
+        df = pd.DataFrame([weather])[features]
+        risk = model.predict_proba(df)[0][1]
+
+        return jsonify({
+            "city": city_label,
+            "weather": weather,
+            "outage_risk": float(risk)
+        })
 
     city = request.args.get("city", "richmond").lower()
 

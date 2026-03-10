@@ -279,12 +279,12 @@
   </h1>
 
   <h3>Live outage risk predictions powered by weather data.</h3>
-  
+
   <div class="prediction-box">
     <!-- Wrap the label and the dynamic dropdown in a flex h3 to keep them inline -->
     <h3 style="font-family: 'Syne', sans-serif; font-weight: 700; color: #989189; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
-      Current live predictions for 
-      
+      Current live predictions for
+
       <!-- DYNAMIC DROPDOWN START -->
       <span style="display: inline-grid; vertical-align: middle; align-items: center;">
         <!-- Invisible mirror that dictates the width -->
@@ -298,40 +298,83 @@
           padding: 0 25px 0 6px;
         ">RICHMOND, VA</span>
 
-        <select id="options" name="options" 
+        <select id="options" name="options"
                 oninput="document.getElementById('mirror').textContent = this.options[this.selectedIndex].text"
                 style="
                   grid-area: 1/1;
                   width: 100%;
                   font-family: 'Syne', sans-serif;
-                  background-color: #F5F4F0; 
+                  background-color: #F5F4F0;
                   color: #989189;
-                  padding: 2px 25px 2px 6px; 
-                  border: 2px solid #E8E7E2; 
+                  padding: 2px 25px 2px 6px;
+                  border: 2px solid #E8E7E2;
                   border-radius: 4px;
                   outline: none;
-                  font-size: 16.72px; 
+                  font-size: 16.72px;
                   font-weight: 700;
-                  -webkit-appearance: none; 
+                  -webkit-appearance: none;
                   appearance: none;
                   cursor: pointer;
                   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23989189%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
                   background-repeat: no-repeat;
                   background-position: right 6px center;
                 ">
-          <option value="1">RICHMOND, VA</option>
-          <option value="2">VIRGINIA BEACH, VA</option>
-          <option value="3">NORFOLK, VA</option>
-          <option value="4">ARLINGTON, VA</option>
-          <option value="5">ROANOKE, VA</option>
-          <option value="6">CHARLOTTESVILLE, VA</option>
-          <option value="7">NEWPORT NEWS, VA</option>
-          <option value="8">HAMPTON, VA</option>
-          <option value="9">CHESAPEAKE, VA</option>
-          <option value="10">ALEXANDRIA, VA</option>
+          <option value="1">WASHINGTON, DC</option>
+          <option value="2">NEW YORK CITY, NY</option>
+          <option value="3">LOS ANGELES, CA</option>
+          <option value="4">CHICAGO, IL</option>
+          <option value="5">HOUSTON, TX</option>
+          <option value="6">PHOENIX, AZ</option>
+          <option value="7">PHILADELPHIA, PA</option>
+          <option value="8">SEATTLE, WA</option>
+          <option value="9">DALLAS, TX</option>
+          <option value="10">MIAMI, FL</option>
+          <option value="11">MINNEAPOLIS, MN</option>
+          <option value="12">DENVER, CO</option>
+          <option value="13">CHARLOTTE, NC</option>
+          
+          <option value="other">CUSTOM</option>
         </select>
       </span>
       <!-- DYNAMIC DROPDOWN END -->
+
+      <!-- ADDRESS SEARCH (shown inline when Other is selected) -->
+      <div id="addressSearchWrapper" style="position: relative; display:none;">
+        <input
+          id="addressSearch"
+          type="text"
+          placeholder="Enter US city or zip code..."
+          autocomplete="off"
+          style="
+            padding: 2px 10px;
+            border: 2px solid #E8E7E2;
+            border-radius: 4px;
+            font-family: 'Syne', sans-serif;
+            font-size: 16.72px;
+            font-weight: 700;
+            background: #F5F4F0;
+            color: #989189;
+            outline: none;
+            width: 259px;
+          "
+        >
+        <div id="suggestions"
+          style="
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 280px;
+            background: white;
+            border: 2px solid var(--taupe-l);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            z-index: 200;
+          "></div>
+      </div>
+      <!-- ADDRESS SEARCH END -->
     </h3>
 
     <p>Outage Risk: <span id="risk">Loading...</span></p>
@@ -360,6 +403,7 @@
     <input type="email" id="alert-email" placeholder="your@email.com" autocomplete="email"/>
 
     <select id="alert-city">
+      <option value="Washington, DC">Washington, DC</option>
       <option value="Richmond, VA">Richmond, VA</option>
       <option value="Virginia Beach, VA">Virginia Beach, VA</option>
       <option value="Norfolk, VA">Norfolk, VA</option>
@@ -370,6 +414,7 @@
       <option value="Hampton, VA">Hampton, VA</option>
       <option value="Chesapeake, VA">Chesapeake, VA</option>
       <option value="Alexandria, VA">Alexandria, VA</option>
+      <option value="McLean, VA">McLean, VA</option>
     </select>
 
     <button id="alert-btn" onclick="subscribeAlert()">Notify Me</button>
@@ -384,16 +429,20 @@
 <script>
 
 const cities = {
-  "1":  { name:"Richmond, VA",        lat:37.5538, lon:-77.4603 },
-  "2":  { name:"Virginia Beach, VA",  lat:36.8529, lon:-75.9780 },
-  "3":  { name:"Norfolk, VA",         lat:36.8508, lon:-76.2859 },
-  "4":  { name:"Arlington, VA",       lat:38.8816, lon:-77.0910 },
-  "5":  { name:"Roanoke, VA",         lat:37.2709, lon:-79.9414 },
-  "6":  { name:"Charlottesville, VA", lat:38.0293, lon:-78.4767 },
-  "7":  { name:"Newport News, VA",    lat:37.0871, lon:-76.4730 },
-  "8":  { name:"Hampton, VA",         lat:37.0299, lon:-76.3452 },
-  "9":  { name:"Chesapeake, VA",      lat:36.7682, lon:-76.2875 },
-  "10": { name:"Alexandria, VA",      lat:38.8048, lon:-77.0469 }
+  "1":  { name:"Washington, DC",      lat:38.91,   lon:-77.04 },
+  "2":  { name:"New York City, NY",   lat:40.7128, lon:-74.0060 },
+  "3":  { name:"Los Angeles, CA",     lat:34.0549, lon:-118.2426},
+  "4":  { name:"Chicago, IL",         lat:41.8832, lon:-87.6324 },
+  "5":  { name:"Houston, TX",         lat:29.7601, lon:-95.3701 },
+  "6":  { name:"Phoenix, AZ",         lat:33.4483, lon:-112.0725 },
+  "7":  { name:"Philadelphia, PA",    lat:39.9526, lon:-75.1652 },
+  "8":  { name:"Seattle, WA",         lat:47.6061, lon:-122.3328 },
+  "9":  { name:"Dallas, TX",          lat:32.7767, lon:-96.7970 },
+  "10": { name:"Miami, FL",           lat:25.7167, lon:-80.1918 },
+  "11": { name:"Minneapolis, MN",     lat:44.9778, lon:-93.2650 },
+  "12": { name:"Denver, CO",          lat:39.7392, lon:-104.9903 },
+  "13": { name:"Charlotte, NC",       lat:35.2271, lon:-80.8409 }
+  
 };
 
 let map = L.map('map').setView([37.5538, -77.4603], 7);
@@ -565,7 +614,8 @@ function getRiskAdvice(pct) {
 function updatePanel() {
   const id   = document.getElementById("options").value;
   const city = cities[id];
-  map.setView([city.lat, city.lon], 8);
+  if (!city) return;
+  map.setView([city.lat, city.lon], id === "other" ? 11 : 8);
 
   const d = cityData[id];
   if (!d) {
@@ -601,13 +651,32 @@ function updatePanel() {
 }
 
 document.getElementById("options").addEventListener("change", () => {
-  const id   = document.getElementById("options").value;
+  const id = document.getElementById("options").value;
+  const wrapper = document.getElementById("addressSearchWrapper");
+
+  if (id === "other") {
+    wrapper.style.display = "block";
+    document.getElementById("addressSearch").focus();
+    if (cityData["other"]) {
+      const c = cities["other"];
+      map.setView([c.lat, c.lon], 10);
+      updatePanel();
+    } else {
+      document.getElementById("risk").innerText   = "Enter a location above";
+      document.getElementById("temp").innerText   = "—";
+      document.getElementById("wind").innerText   = "—";
+      document.getElementById("risk").style.color = "";
+      document.getElementById("advice").style.display = "none";
+    }
+    return;
+  }
+
+  wrapper.style.display = "none";
   const city = cities[id];
   map.setView([city.lat, city.lon], 8);
   if (cityData[id]) {
-    updatePanel();          /* data already loaded — show immediately */
+    updatePanel();
   } else {
-    /* Still loading — show spinner and let loadAllCities() call updatePanel() */
     document.getElementById("risk").innerText   = "Loading...";
     document.getElementById("temp").innerText   = "Loading...";
     document.getElementById("wind").innerText   = "Loading...";
@@ -660,6 +729,121 @@ async function subscribeAlert() {
     btn.textContent = "Notify Me";
   }
 }
+
+async function convertAddress(){
+  const address = document.getElementById("addressSearch").value;
+
+
+  const GEOCODIO_KEY = "a6e0c79eaa1ae666ea911076c73e6c35e3a0769";
+
+
+const url =
+`https://api.geocod.io/v1.7/geocode?q=${encodeURIComponent(address)}&api_key=${GEOCODIO_KEY}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+  
+  const lat = data.features[0].location.lat;
+  const lon = data.features[0].location.lon;
+
+  map.setView([lat,lon],10);
+
+  L.marker([lat,lon]).addTo(map)
+    .bindPopup("Your Address")
+    .openPopup();
+}
+
+const GEOCODIO_KEY = "a6e0c79eaa1ae666ea911076c73e6c35e3a0769";
+
+
+
+
+const searchInput = document.getElementById("addressSearch");
+const suggestionsBox = document.getElementById("suggestions");
+
+searchInput.addEventListener("input", async () => {
+
+  const text = searchInput.value.trim();
+
+  if (text.length < 3) {
+    suggestionsBox.style.display = "none";
+    return;
+  }
+
+  const GEOCODIO_KEY = "a6e0c79eaa1ae666ea911076c73e6c35e3a0769";
+
+const url =
+`https://api.geocod.io/v1.7/geocode?q=${encodeURIComponent(text)}&api_key=${GEOCODIO_KEY}`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  suggestionsBox.innerHTML = "";
+
+ if (!data.results || data.results.length === 0) {
+    suggestionsBox.style.display = "none";
+    return;
+  }
+
+  data.results.forEach(place => {
+
+  const div = document.createElement("div");
+  div.textContent = place.formatted_address;
+
+  div.style.padding = "8px 10px";
+  div.style.cursor = "pointer";
+
+  div.onclick = async () => {
+    const lat = place.location.lat;
+    const lon = place.location.lng;
+
+    searchInput.value = place.formatted_address;
+    suggestionsBox.style.display = "none";
+
+    map.setView([lat, lon], 11);
+
+    // Register as the "other" custom location
+    cities["other"] = { name: place.formatted_address, lat, lon };
+
+    // Show loading state
+    document.getElementById("risk").innerText   = "Loading...";
+    document.getElementById("temp").innerText   = "Loading...";
+    document.getElementById("wind").innerText   = "Loading...";
+    document.getElementById("risk").style.color = "";
+    document.getElementById("advice").style.display = "none";
+
+    try {
+      // Fetch weather from open-meteo for these coords
+      const weatherUrl =
+        `https://api.open-meteo.com/v1/forecast` +
+        `?latitude=${lat}&longitude=${lon}` +
+        `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,` +
+        `wind_gusts_10m,precipitation,snowfall,cloud_cover` +
+        `&temperature_unit=fahrenheit`;
+
+      const res = await fetch(weatherUrl);
+      const data = await res.json();
+      const w = data.current;
+
+      plotCity("other", cities["other"], w);
+
+      // Select "other" in the dropdown and update the panel
+      document.getElementById("options").value = "other";
+      document.getElementById("mirror").textContent =
+        place.formatted_address.toUpperCase().slice(0, 24) || "OTHER...";
+      updatePanel();
+    } catch (err) {
+      document.getElementById("risk").innerText = "Error fetching weather";
+      console.error("Weather fetch failed:", err);
+    }
+  };
+
+  suggestionsBox.appendChild(div);
+
+});
+
+  suggestionsBox.style.display = "block";
+});
 
 </script>
 
