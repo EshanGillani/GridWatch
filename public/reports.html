@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>GridWatch | Live Reports</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+
+body{
+background:#f5f4f0;
+font-family:monospace;
+}
+
+#map{
+height:600px;
+margin:20px;
+border:2px solid #e8e7e2;
+border-radius:10px;
+}
+
+.controls{
+width:400px;
+margin:auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1 style="text-align:center">Live Grid Risk Reports</h1>
+
+<div class="controls">
+
+<input id="zip" placeholder="Enter ZIP code">
+
+<input id="radius" type="range" min="5" max="200" value="50">
+
+<p>Radius: <span id="radiusValue">50</span> miles</p>
+
+<button onclick="search()">Search</button>
+
+</div>
+
+<div id="map"></div>
+
+<script>
+
+const map=L.map("map").setView([37.5,-77.4],6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:19
+}).addTo(map);
+
+let reports=[];
+
+async function loadReports(){
+
+const res=await fetch("https://raw.githubusercontent.com/EshanGillani/GridWatch/main/reports.json");
+
+const data=await res.json();
+
+reports=data.reports;
+
+drawReports(reports);
+
+}
+
+function drawReports(list){
+
+list.forEach(r=>{
+
+let color="orange";
+
+if(r.type==="power_outage") color="red";
+if(r.type==="downed_line") color="black";
+
+L.circleMarker([r.lat,r.lng],{
+radius:8,
+color:color
+}).addTo(map);
+
+});
+
+}
+
+async function search(){
+
+const zip=document.getElementById("zip").value;
+
+const res=await fetch(`https://api.zippopotam.us/us/${zip}`);
+
+const data=await res.json();
+
+const lat=data.places[0].latitude;
+const lng=data.places[0].longitude;
+
+map.setView([lat,lng],10);
+
+const radiusMiles=document.getElementById("radius").value;
+
+L.circle([lat,lng],{
+radius:radiusMiles*1609
+}).addTo(map);
+
+}
+
+document.getElementById("radius").oninput=function(){
+
+document.getElementById("radiusValue").innerText=this.value;
+
+}
+
+loadReports();
+
+</script>
+
+</body>
+</html>

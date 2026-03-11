@@ -5,6 +5,8 @@
         <title>Gridwatch | Report a Risk</title>
 
         <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700&family=DM+Sans&display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
         <style>
             body{
@@ -48,14 +50,30 @@
             button:hover{
                 background:#e56b5f;
             }
+
+            #map{
+                border:2px solid #e8e7e2;
+            }
         </style>
     </head>
     <body>
+        <nav>
+    
+    <button class="nav-btn" onclick="location.href='index.html'"> Home</button>
+    
+  </nav>
 
         <div class="container">
             <h1>Report an Outage Risk</h1>
 
-            <input id="location" placeholder="US City or ZIP Code">
+            <input id="location" placeholder="Enter a US ZIP Code">
+
+            <label>Search Radius</label>
+
+            <input id="radiusSlider" type="range" min="5" max="200" value="50">
+            <p>Radius: <span id="radiusValue">50</span> miles</p>
+
+            <div id="map" style="height:350px;margin-bottom:12px;border-radius:6px;"></div>
 
             <select id="type">
                 <option value="power_outage">Power Outage</option>
@@ -72,22 +90,63 @@
         </div>
 
         <script>
-            async function submitReport(){
-                const location=document.getElementById("location").value;
-                const type = document.getElementById("type").value;
-                const description=document.getElementById("description").value;
+            const map = L.map('map').setView([37.5,-77.4],6);
 
-                const res = await fetch("/api/report",{
-                    method:"POST",
-                    headers:{ "Content-Type":"application/json"},
-                    body:JSON.stringify({location,type,description})
-                });
-        
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19
+}).addTo(map);
 
-            const data = await res.json();
+let marker=null;
+let radiusCircle=null;
 
-            document.getElementById("msg").innerText = data.message || data.error;
-        }
+map.on("click",function(e){
+
+    if(marker){
+        map.removeLayer(marker);
+    }
+
+    marker=L.marker(e.latlng).addTo(map);
+
+});
+
+const slider=document.getElementById("radiusSlider");
+const radiusValue=document.getElementById("radiusValue");
+
+slider.oninput=function(){
+    radiusValue.innerText=slider.value;
+};
+
+async function submitReport(){
+
+    const location=document.getElementById("location").value;
+    const type=document.getElementById("type").value;
+    const description=document.getElementById("description").value;
+
+    let lat=null;
+    let lng=null;
+
+    if(marker){
+        lat=marker.getLatLng().lat;
+        lng=marker.getLatLng().lng;
+    }
+
+    const res=await fetch("/api/report",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            location,
+            type,
+            description,
+            lat,
+            lng,
+            radius:slider.value
+        })
+    });
+
+    const data=await res.json();
+
+    document.getElementById("msg").innerText=data.message || data.error;
+}
         </script>
 
     </body>
