@@ -200,7 +200,7 @@ btn.innerText="Submitted"
 btn.classList.add("submitted")
 btn.onclick=null
 }catch(err){
-msg.innerText="Error submitting report. Please try again."
+msg.innerText="Error: "+err.message
 console.error(err)
 }
 }
