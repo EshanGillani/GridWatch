@@ -1,3 +1,5 @@
+import fs from "fs"
+
 export default async function handler(req,res){
 
 if(req.method !== "POST"){
@@ -21,8 +23,15 @@ lng,
 time:Date.now()
 }
 
-global.reports = global.reports || []
-global.reports.push(report)
+let reports=[]
+
+if(fs.existsSync("reports.json")){
+reports=JSON.parse(fs.readFileSync("reports.json"))
+}
+
+reports.push(report)
+
+fs.writeFileSync("reports.json",JSON.stringify(reports))
 
 res.json({message:"Report submitted"})
 }

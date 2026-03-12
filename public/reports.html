@@ -133,25 +133,34 @@
       drawReports(reports);
     }
 
-    function drawReports(list) {
-      list.forEach(r => {
-        let color = "orange";
-        if (r.type === "power_outage") color = "#e56b5f";
-        if (r.type === "downed_line") color = "#333";
+    let markers=[]
 
-        L.circleMarker([r.lat, r.lng], {
-          radius: 8,
-          color: color,
-          fillColor: color,
-          fillOpacity: 0.7
+    function drawReports(list){
+      markers.forEach(m=>map.removeLayer(m))
+      markers=[]
+
+      list.forEach(r=>{
+
+        let color="orange"
+        if(r.type==="power_outage") color = "e56b5f"
+        if(r.type==="downed_line") color = "#333"arguments
+
+        const marker=L.cirleMarker([r.lat,r.lng],{
+          radius:8,
+          color:color,
+          fillColor:color,
+          fillOpacity:0.7
         })
         .addTo(map)
         .bindPopup(`
         <b>${r.type}</b><br>
         ZIP: ${r.zip}<br>
         ${r.description}
-        `);
-      });
+        `)
+
+        markers.push(marker)
+
+      })
     }
 
     async function search() {
