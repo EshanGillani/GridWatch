@@ -143,9 +143,14 @@
           radius: 8,
           color: color,
           fillColor: color,
-          fillOpacity: 0.7,
-          weight: 2
-        }).addTo(map);
+          fillOpacity: 0.7
+        })
+        .addTo(map)
+        .bindPopup(`
+        <b>${r.type}</b><br>
+        ZIP: ${r.zip}<br>
+        ${r.description}
+        `);
       });
     }
 
