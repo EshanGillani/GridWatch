@@ -1,4 +1,8 @@
 import fs from "fs"
+import os from "os"
+import path from "path"
+
+const REPORTS_FILE = path.join(os.tmpdir(), "gridwatch-reports.json")
 
 export default async function handler(req,res){
 
@@ -32,19 +36,17 @@ time:Date.now()
 }
 
 let reports=[]
-
-if(fs.existsSync("reports.json")){
-reports=JSON.parse(fs.readFileSync("reports.json"))
+if(fs.existsSync(REPORTS_FILE)){
+reports=JSON.parse(fs.readFileSync(REPORTS_FILE))
 }
 
 reports.push(report)
-
-fs.writeFileSync("reports.json",JSON.stringify(reports))
+fs.writeFileSync(REPORTS_FILE, JSON.stringify(reports))
 
 res.json({message:"Report submitted"})
 
 }catch(err){
 console.error("Report handler error:", err)
-res.status(500).json({error:"Failed to submit report"})
+res.status(500).json({error:"Failed to submit report: "+err.message})
 }
 }

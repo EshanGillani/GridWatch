@@ -194,8 +194,13 @@ body:JSON.stringify({zip,type,description})
 })
 
 const data=await res.json()
-msg.innerText=data.message||"Report submitted!"
 
+if(data.error){
+msg.innerText="Error: "+data.error
+return
+}
+
+msg.innerText=data.message||"Report submitted!"
 btn.innerText="Submitted"
 btn.classList.add("submitted")
 btn.onclick=null
