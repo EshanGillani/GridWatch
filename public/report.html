@@ -131,6 +131,11 @@
                 background:#e56b5f;
             }
 
+            button.submitted, button.submitted:hover{
+                background:#8ee07a;
+                cursor:default;
+            }
+
             #map{
                 border:2px solid #e8e7e2;
             }
@@ -163,7 +168,7 @@
             <textarea id="description" placeholder="Describe the risk or cause of the outage..."></textarea>
             <label>Upload Image</label>
             <input id="image" type="file" accept="image/*">
-            <button onclick="submitReport()">Submit Report</button>
+            <button id="submitBtn" onclick="submitReport()">Submit Report</button>
 
             <p id="msg"></p>
 
@@ -174,25 +179,30 @@
 
 
 async function submitReport(){
+const btn=document.getElementById("submitBtn")
+const msg=document.getElementById("msg")
 
+try{
 const zip=document.getElementById("zip").value
 const type=document.getElementById("type").value
 const description=document.getElementById("description").value
 
 const res=await fetch("/api/report",{
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-zip,
-type,
-description
-})
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({zip,type,description})
 })
 
 const data=await res.json()
-document.getElementById("msg").innerText=data.message
+msg.innerText=data.message||"Report submitted!"
+
+btn.innerText="Submitted"
+btn.classList.add("submitted")
+btn.onclick=null
+}catch(err){
+msg.innerText="Error submitting report. Please try again."
+console.error(err)
+}
 }
         </script>
 
