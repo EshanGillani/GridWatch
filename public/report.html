@@ -5,8 +5,7 @@
         <title>Gridwatch | Report a Risk</title>
 
         <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        
 
         <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -144,6 +143,7 @@
     <button class="nav-btn" onclick="location.href='predictions.html'">Predictions</button>
     <button class="nav-btn" onclick="location.href='about.html'">About </button>
     <button class="nav-btn active" onclick="location.href='report.html'">Report Risk/Outage</button>
+    <button class="nav-btn" onclick="location.href='reports.html'">View Reported Risks and Outages</button>
     <button class="nav-btn expert-btn" onclick="location.href='expert-login.html'">Expert Mode</button>
   </nav>
 
@@ -152,21 +152,17 @@
 
             <input id="location" placeholder="Enter a US ZIP Code">
 
-            <label>Search Radius</label>
-
-            <input id="radiusSlider" type="range" min="5" max="200" value="50">
-            <p>Radius: <span id="radiusValue">50</span> miles</p>
-
-            <div id="map" style="height:350px;margin-bottom:12px;border-radius:6px;"></div>
-
             <select id="type">
                 <option value="power_outage">Power Outage</option>
                 <option value="flickering_power">Flickering Power</option>
                 <option value="downed_line">Downed Power Line</option>
+                <option value="tree">Overhanging Tree or Similar Hazard</option>
                 <option value="other">Other</option>
             </select>
 
             <textarea id="description" placeholder="Describe the risk or cause of the outage..."></textarea>
+            <label>Upload Image</label>
+            <input id="image" type="file" accept="image/*">
             <button onclick="submitReport()">Submit Report</button>
 
             <p id="msg"></p>
@@ -174,24 +170,7 @@
         </div>
 
         <script>
-            const map = L.map('map').setView([37.5,-77.4],6);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    maxZoom:19
-}).addTo(map);
-
-let marker=null;
-let radiusCircle=null;
-
-map.on("click",function(e){
-
-    if(marker){
-        map.removeLayer(marker);
-    }
-
-    marker=L.marker(e.latlng).addTo(map);
-
-});
+            
 
 const slider=document.getElementById("radiusSlider");
 const radiusValue=document.getElementById("radiusValue");
@@ -201,35 +180,25 @@ slider.oninput=function(){
 };
 
 async function submitReport(){
+    
+    const zip=document.getElementById("zip").value
+    const type=document.getElementById("type").value
+    const description=document.getElementById("description").value
+    const image=document.getElementById("image").files[0]
 
-    const location=document.getElementById("location").value;
-    const type=document.getElementById("type").value;
-    const description=document.getElementById("description").value;
+    const formData=new FormData()
 
-    let lat=null;
-    let lng=null;
-
-    if(marker){
-        lat=marker.getLatLng().lat;
-        lng=marker.getLatLng().lng;
-    }
+    formData.append("zip",zip)
+    formData.append("type",type)
+    formData.append("description",description)
+    formData.append("image",image)
 
     const res=await fetch("/api/report",{
         method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-            location,
-            type,
-            description,
-            lat,
-            lng,
-            radius:slider.value
-        })
-    });
-
-    const data=await res.json();
-
-    document.getElementById("msg").innerText=data.message || data.error;
+        body:formData
+    })
+    const data=await res.json()
+    document.getElementById("msg").innerText=data.message
 }
         </script>
 
