@@ -174,25 +174,25 @@
 
 
 async function submitReport(){
-    
-    const zip=document.getElementById("zip").value
-    const type=document.getElementById("type").value
-    const description=document.getElementById("description").value
-    const image=document.getElementById("image").files[0]
 
-    const formData=new FormData()
+const zip=document.getElementById("zip").value
+const type=document.getElementById("type").value
+const description=document.getElementById("description").value
 
-    formData.append("zip",zip)
-    formData.append("type",type)
-    formData.append("description",description)
-    formData.append("image",image)
+const res=await fetch("/api/report",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+zip,
+type,
+description
+})
+})
 
-    const res=await fetch("/api/report",{
-        method:"POST",
-        body:formData
-    })
-    const data=await res.json()
-    document.getElementById("msg").innerText=data.message
+const data=await res.json()
+document.getElementById("msg").innerText=data.message
 }
         </script>
 
