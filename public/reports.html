@@ -5,8 +5,6 @@
   <title>GridWatch | Live Reports</title>
   <link rel="icon" href="gridwatch logo.svg" type="image/svg+xml" sizes="any">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -16,8 +14,6 @@
       --mint: #8EE07A;
     }
     body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
-
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
     nav {
       position: sticky; top: 0; z-index: 100;
@@ -55,10 +51,6 @@
       width: 180px;
     }
     .controls input[type="text"]::placeholder { color: var(--taupe); }
-    .radius-group { display: flex; align-items: center; gap: 10px; font-family: 'Syne Mono', monospace; font-size: 11px; color: var(--taupe-d); }
-    .controls input[type="range"] {
-      accent-color: var(--salmon); width: 140px; cursor: pointer;
-    }
     .controls button {
       font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
       letter-spacing: .12em; text-transform: uppercase;
@@ -68,19 +60,67 @@
     }
     .controls button:hover { background: var(--salmon-d); }
 
-    #map {
-      width: 100%; height: 560px;
+    .table-wrap {
       border: 3px solid var(--charcoal);
       box-shadow: 8px 8px 0px var(--taupe);
+      overflow-x: auto;
+      background: var(--paper);
     }
 
-    .legend {
-      display: flex; gap: 24px; margin-top: 16px;
-      font-family: 'Syne Mono', monospace; font-size: 11px; color: var(--taupe-d);
-      flex-wrap: wrap;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
     }
-    .legend-item { display: flex; align-items: center; gap: 8px; }
-    .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+    thead tr {
+      background: var(--charcoal);
+      color: var(--cream);
+    }
+
+    th {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--taupe-l);
+      vertical-align: top;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover { background: var(--cream2); }
+
+    .badge {
+      display: inline-block;
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .badge-power_outage    { background: #fce8e6; color: #c0392b; }
+    .badge-flickering_power{ background: #fff3cd; color: #856404; }
+    .badge-downed_line     { background: #e8e8e8; color: #333; }
+    .badge-tree            { background: #e6f4ea; color: #2d6a2d; }
+    .badge-other           { background: #e8eaf6; color: #3949ab; }
+
+    .empty {
+      text-align: center;
+      padding: 48px 16px;
+      color: var(--taupe-d);
+      font-family: 'Syne Mono', monospace;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -99,84 +139,84 @@
     <h3>Community-submitted outages and risks</h3>
 
     <div class="controls">
-      <input id="zip" type="text" placeholder="Enter ZIP code">
-      <div class="radius-group">
-        <span>Radius:</span>
-        <input id="radius" type="range" min="5" max="200" value="50">
-        <span><span id="radiusValue">50</span> mi</span>
-      </div>
-      <button onclick="search()">Search</button>
+      <input id="zipFilter" type="text" placeholder="Filter by ZIP code">
+      <button onclick="applyFilter()">Filter</button>
+      <button onclick="clearFilter()">Show All</button>
     </div>
 
-    <div id="map"></div>
-
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#e56b5f;"></div> Power Outage</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#333;"></div> Downed Line</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#e8a020;"></div> Other Risk</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>ZIP</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody id="reportBody">
+          <tr><td colspan="4" class="empty">Loading reports...</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <script>
-    const map = L.map("map").setView([37.5, -77.4], 6);
+    const TYPE_LABELS = {
+      power_outage: "Power Outage",
+      flickering_power: "Flickering Power",
+      downed_line: "Downed Power Line",
+      tree: "Overhanging Tree / Hazard",
+      other: "Other"
+    };
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19
-    }).addTo(map);
-
-    let reports = [];
+    let allReports = [];
 
     async function loadReports() {
       const res = await fetch("/api/reports");
       const data = await res.json();
-      reports = data.reports;
-      drawReports(reports);
+      allReports = (data.reports || []).sort((a, b) => b.time - a.time);
+      renderTable(allReports);
     }
 
-    let markers=[]
-
-    function drawReports(list){
-      markers.forEach(m=>map.removeLayer(m))
-      markers=[]
-
-      list.forEach(r=>{
-
-        let color="orange"
-        if(r.type==="power_outage") color = "e56b5f"
-        if(r.type==="downed_line") color = "#333"
-
-        const marker=L.cirleMarker([r.lat,r.lng],{
-          radius:8,
-          color:color,
-          fillColor:color,
-          fillOpacity:0.7
-        })
-        .addTo(map)
-        .bindPopup(`
-        <b>${r.type}</b><br>
-        ZIP: ${r.zip}<br>
-        ${r.description}
-        `)
-
-        markers.push(marker)
-
-      })
+    function renderTable(reports) {
+      const tbody = document.getElementById("reportBody");
+      if (reports.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="empty">No reports found.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = reports.map(r => {
+        const date = new Date(r.time).toLocaleString();
+        const label = TYPE_LABELS[r.type] || r.type;
+        const badgeClass = "badge badge-" + (r.type || "other");
+        const desc = r.description ? escapeHtml(r.description) : "<em style='color:var(--taupe)'>—</em>";
+        return `<tr>
+          <td style="font-family:'Syne Mono',monospace;font-size:12px;white-space:nowrap">${date}</td>
+          <td style="font-family:'Syne Mono',monospace;font-size:13px">${escapeHtml(r.zip || "")}</td>
+          <td><span class="${badgeClass}">${escapeHtml(label)}</span></td>
+          <td>${desc}</td>
+        </tr>`;
+      }).join("");
     }
 
-    async function search() {
-      const zip = document.getElementById("zip").value;
-      const res = await fetch(`https://api.zippopotam.us/us/${zip}`);
-      const data = await res.json();
-      const lat = data.places[0].latitude;
-      const lng = data.places[0].longitude;
-      map.setView([lat, lng], 10);
-      const radiusMiles = document.getElementById("radius").value;
-      L.circle([lat, lng], { radius: radiusMiles * 1609 }).addTo(map);
+    function applyFilter() {
+      const zip = document.getElementById("zipFilter").value.trim();
+      if (!zip) { renderTable(allReports); return; }
+      renderTable(allReports.filter(r => r.zip === zip));
     }
 
-    document.getElementById("radius").oninput = function() {
-      document.getElementById("radiusValue").innerText = this.value;
-    };
+    function clearFilter() {
+      document.getElementById("zipFilter").value = "";
+      renderTable(allReports);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
 
     loadReports();
   </script>
