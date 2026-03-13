@@ -258,11 +258,25 @@
     let allReports = [];
 
     async function loadReports() {
+      const openIds = new Set(
+        [...document.querySelectorAll("tr.report-detail.open")].map(el => el.id)
+      );
       const res = await fetch("/api/reports");
       const data = await res.json();
       allReports = (data.reports || []).sort((a, b) => b.time - a.time);
-      renderTable(allReports);
+      const zip = document.getElementById("zipFilter").value.trim();
+      renderTable(zip ? allReports.filter(r => r.zip === zip) : allReports);
+      openIds.forEach(id => {
+        const detailRow = document.getElementById(id);
+        if (detailRow) {
+          detailRow.classList.add("open");
+          const prevRow = detailRow.previousElementSibling;
+          if (prevRow) prevRow.classList.add("open");
+        }
+      });
     }
+
+    setInterval(loadReports, 5000);
 
     function renderTable(reports) {
       const tbody = document.getElementById("reportBody");

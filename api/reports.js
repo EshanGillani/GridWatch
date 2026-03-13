@@ -1,15 +1,7 @@
-import fs from "fs"
-import os from "os"
-import path from "path"
+import { kv } from "@vercel/kv"
 
-const REPORTS_FILE = path.join(os.tmpdir(), "gridwatch-reports.json")
-
-export default function handler(req,res){
-
-let reports=[]
-if(fs.existsSync(REPORTS_FILE)){
-reports=JSON.parse(fs.readFileSync(REPORTS_FILE))
-}
-
-res.json({reports})
+export default async function handler(_req, res) {
+  const raw = await kv.lrange("gridwatch-reports", 0, -1)
+  const reports = raw.map(r => typeof r === "string" ? JSON.parse(r) : r)
+  res.json({ reports })
 }
