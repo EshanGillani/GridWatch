@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GridWatch | Admin</title>
+  <link rel="icon" href="gridwatch logo.svg" type="image/svg+xml" sizes="any">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Syne+Mono&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --taupe: #C8C0B8; --salmon: #FF8B80; --charcoal: #484848;
+      --cream: #F5F4F0; --cream2: #ECEAE4; --paper: #FAF9F6;
+      --taupe-d: #9a9188; --taupe-l: #dedad5; --salmon-d: #e56b5f;
+      --mint: #8EE07A;
+    }
+    body { background: var(--cream); color: var(--charcoal); font-family: 'DM Sans', sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      height: 56px; background: var(--charcoal);
+      border-bottom: 3px solid var(--salmon);
+      display: flex; align-items: center; padding: 0 6vw; gap: 2px;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 22px; color: var(--cream); margin-right: 40px; flex-shrink: 0; }
+    .nav-logo em { color: var(--salmon); font-style: normal; }
+    .nav-btn {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--taupe);
+      padding: 6px 18px; cursor: pointer; background: transparent; border: none;
+      border-bottom: 2px solid transparent; transition: color .15s;
+    }
+    .nav-btn:hover { color: var(--cream); }
+    .nav-btn.expert-btn { margin-left: auto; color: var(--charcoal); background: var(--salmon); border-radius: 4px; padding: 6px 14px; border-bottom: none; }
+    .nav-btn.expert-btn:hover { background: var(--salmon-d); color: var(--charcoal); }
+
+    .main-content { flex: 1; padding: 48px 6vw 72px; }
+
+    h1 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(28px, 4vw, 48px); line-height: 1; letter-spacing: -.02em; margin-bottom: 8px; }
+    h1 em { color: var(--salmon); font-style: normal; }
+    h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--taupe-d); margin-bottom: 32px; }
+
+    /* Login box */
+    #loginBox {
+      max-width: 360px;
+      border: 3px solid var(--charcoal);
+      box-shadow: 6px 6px 0 var(--taupe);
+      background: var(--paper);
+      padding: 32px;
+    }
+    #loginBox label {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--taupe-d);
+      display: block; margin-bottom: 8px;
+    }
+    #loginBox input {
+      width: 100%; padding: 10px 12px;
+      border: 2px solid var(--charcoal); background: var(--cream);
+      font-family: 'Syne Mono', monospace; font-size: 14px;
+      color: var(--charcoal); outline: none; margin-bottom: 16px;
+    }
+    #loginBox input:focus { border-color: var(--salmon); }
+    #loginError { color: var(--salmon-d); font-size: 13px; margin-top: 8px; min-height: 20px; }
+
+    /* Shared button style */
+    .btn {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      border: none; padding: 10px 22px; cursor: pointer; border-radius: 4px;
+      transition: background .15s;
+    }
+    .btn-salmon { background: var(--salmon); color: var(--charcoal); }
+    .btn-salmon:hover { background: var(--salmon-d); }
+    .btn-danger { background: #fce8e6; color: #c0392b; font-size: 10px; padding: 5px 12px; }
+    .btn-danger:hover { background: #f5c6c3; }
+
+    /* Reports panel */
+    #reportsPanel { display: none; }
+
+    .table-wrap {
+      border: 3px solid var(--charcoal);
+      box-shadow: 8px 8px 0px var(--taupe);
+      overflow-x: auto;
+      background: var(--paper);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead tr { background: var(--charcoal); color: var(--cream); }
+    th {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; padding: 12px 16px; text-align: left;
+    }
+    td { padding: 11px 16px; border-bottom: 1px solid var(--taupe-l); vertical-align: middle; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--cream2); }
+
+    .badge { display: inline-block; font-family: 'Syne Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; }
+    .badge-power_outage    { background: #fce8e6; color: #c0392b; }
+    .badge-flickering_power{ background: #fff3cd; color: #856404; }
+    .badge-downed_line     { background: #e8e8e8; color: #333; }
+    .badge-tree            { background: #e6f4ea; color: #2d6a2d; }
+    .badge-other           { background: #e8eaf6; color: #3949ab; }
+
+    .empty { text-align: center; padding: 48px 16px; color: var(--taupe-d); font-family: 'Syne Mono', monospace; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo"><a href="main.html" style="color: inherit; text-decoration: none;">Grid<em>Watch</em></a></div>
+    <button class="nav-btn" onclick="location.href='main.html'">Home</button>
+    <button class="nav-btn" onclick="location.href='reports.html'">View Reports</button>
+    <button class="nav-btn expert-btn" onclick="location.href='expert-login.html'">Expert Mode</button>
+  </nav>
+
+  <div class="main-content">
+    <h1>Admin <em>Panel</em></h1>
+    <h3>Manage submitted reports</h3>
+
+    <div id="loginBox">
+      <label for="pwInput">Admin Password</label>
+      <input id="pwInput" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')login()">
+      <button class="btn btn-salmon" onclick="login()">Sign In</button>
+      <div id="loginError"></div>
+    </div>
+
+    <div id="reportsPanel">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>ZIP</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="adminBody">
+            <tr><td colspan="5" class="empty">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TYPE_LABELS = {
+      power_outage: "Power Outage", flickering_power: "Flickering Power",
+      downed_line: "Downed Power Line", tree: "Overhanging Tree / Hazard", other: "Other"
+    };
+
+    let adminPassword = "";
+    let allReports = [];
+
+    function login() {
+      const pw = document.getElementById("pwInput").value;
+      if (!pw) return;
+      adminPassword = pw;
+      document.getElementById("loginError").textContent = "";
+      loadReports();
+    }
+
+    async function loadReports() {
+      const res = await fetch("/api/reports");
+      const data = await res.json();
+      if (data.error) {
+        document.getElementById("loginError").textContent = "Failed to load reports.";
+        return;
+      }
+      allReports = (data.reports || []).sort((a, b) => b.time - a.time);
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("reportsPanel").style.display = "block";
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById("adminBody");
+      if (allReports.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty">No reports.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = allReports.map(r => {
+        const date = new Date(r.time).toLocaleString();
+        const label = TYPE_LABELS[r.type] || r.type;
+        const badge = `<span class="badge badge-${r.type || 'other'}">${escapeHtml(label)}</span>`;
+        const desc = r.description ? escapeHtml(r.description.slice(0, 80)) + (r.description.length > 80 ? "…" : "") : "<em style='color:var(--taupe)'>—</em>";
+        return `<tr>
+          <td style="font-family:'Syne Mono',monospace;font-size:12px;white-space:nowrap">${date}</td>
+          <td style="font-family:'Syne Mono',monospace;font-size:13px">${escapeHtml(r.zip || "")}</td>
+          <td>${badge}</td>
+          <td>${desc}</td>
+          <td><button class="btn btn-danger" onclick="deleteReport(${r.time})">Delete</button></td>
+        </tr>`;
+      }).join("");
+    }
+
+    async function deleteReport(time) {
+      if (!confirm("Delete this report?")) return;
+      const res = await fetch("/api/delete-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ time, password: adminPassword })
+      });
+      const data = await res.json();
+      if (data.error) {
+        if (res.status === 401) {
+          document.getElementById("reportsPanel").style.display = "none";
+          document.getElementById("loginBox").style.display = "block";
+          document.getElementById("loginError").textContent = "Wrong password.";
+        } else {
+          alert("Error: " + data.error);
+        }
+        return;
+      }
+      allReports = allReports.filter(r => r.time !== time);
+      renderTable();
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+  </script>
+</body>
+</html>
