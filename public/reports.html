@@ -91,12 +91,96 @@
     td {
       padding: 12px 16px;
       border-bottom: 1px solid var(--taupe-l);
-      vertical-align: top;
+      vertical-align: middle;
     }
 
     tbody tr:last-child td { border-bottom: none; }
 
-    tbody tr:hover { background: var(--cream2); }
+    /* Summary rows */
+    tr.report-row {
+      cursor: pointer;
+      transition: background .12s;
+    }
+    tr.report-row:hover { background: var(--cream2); }
+    tr.report-row.open { background: var(--cream2); }
+
+    .chevron {
+      display: inline-block;
+      font-size: 10px;
+      color: var(--taupe-d);
+      transition: transform .2s;
+      user-select: none;
+    }
+    tr.report-row.open .chevron { transform: rotate(180deg); }
+
+    /* Detail rows */
+    tr.report-detail td {
+      padding: 0;
+      border-bottom: 2px solid var(--charcoal);
+    }
+
+    .detail-inner {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .3s ease;
+    }
+    tr.report-detail.open .detail-inner {
+      max-height: 800px;
+    }
+
+    .detail-body {
+      padding: 20px 24px 24px;
+      background: var(--cream2);
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .detail-text { flex: 1; min-width: 200px; }
+
+    .detail-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--taupe-d);
+      margin-bottom: 6px;
+    }
+
+    .detail-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--charcoal);
+      white-space: pre-wrap;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 3px; }
+    .meta-value {
+      font-family: 'Syne Mono', monospace;
+      font-size: 12px;
+      color: var(--charcoal);
+    }
+
+    .detail-image-wrap {
+      flex-shrink: 0;
+    }
+    .detail-image-wrap img {
+      display: block;
+      max-width: 320px;
+      max-height: 260px;
+      width: auto;
+      height: auto;
+      border: 2px solid var(--charcoal);
+      border-radius: 4px;
+      object-fit: cover;
+    }
 
     .badge {
       display: inline-block;
@@ -152,10 +236,11 @@
             <th>ZIP</th>
             <th>Type</th>
             <th>Description</th>
+            <th></th>
           </tr>
         </thead>
         <tbody id="reportBody">
-          <tr><td colspan="4" class="empty">Loading reports...</td></tr>
+          <tr><td colspan="5" class="empty">Loading reports...</td></tr>
         </tbody>
       </table>
     </div>
@@ -182,21 +267,74 @@
     function renderTable(reports) {
       const tbody = document.getElementById("reportBody");
       if (reports.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="empty">No reports found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="empty">No reports found.</td></tr>';
         return;
       }
-      tbody.innerHTML = reports.map(r => {
+      tbody.innerHTML = reports.map((r, i) => {
         const date = new Date(r.time).toLocaleString();
         const label = TYPE_LABELS[r.type] || r.type;
         const badgeClass = "badge badge-" + (r.type || "other");
-        const desc = r.description ? escapeHtml(r.description) : "<em style='color:var(--taupe)'>—</em>";
-        return `<tr>
-          <td style="font-family:'Syne Mono',monospace;font-size:12px;white-space:nowrap">${date}</td>
-          <td style="font-family:'Syne Mono',monospace;font-size:13px">${escapeHtml(r.zip || "")}</td>
-          <td><span class="${badgeClass}">${escapeHtml(label)}</span></td>
-          <td>${desc}</td>
-        </tr>`;
+        const descSnippet = r.description
+          ? escapeHtml(r.description.length > 60 ? r.description.slice(0, 60) + "…" : r.description)
+          : "<em style='color:var(--taupe)'>—</em>";
+
+        const fullDesc = r.description ? escapeHtml(r.description) : "";
+        const imageHtml = r.image
+          ? `<div class="detail-image-wrap"><img src="${escapeAttr(r.image)}" alt="Attached photo"></div>`
+          : "";
+
+        return `
+          <tr class="report-row" onclick="toggleRow(${i})">
+            <td style="font-family:'Syne Mono',monospace;font-size:12px;white-space:nowrap">${date}</td>
+            <td style="font-family:'Syne Mono',monospace;font-size:13px">${escapeHtml(r.zip || "")}</td>
+            <td><span class="${badgeClass}">${escapeHtml(label)}</span></td>
+            <td>${descSnippet}</td>
+            <td style="text-align:center;width:32px"><span class="chevron">&#9660;</span></td>
+          </tr>
+          <tr class="report-detail" id="detail-${i}">
+            <td colspan="5">
+              <div class="detail-inner">
+                <div class="detail-body">
+                  <div class="detail-text">
+                    <div class="detail-meta">
+                      <div class="meta-item">
+                        <span class="detail-label">Time</span>
+                        <span class="meta-value">${date}</span>
+                      </div>
+                      <div class="meta-item">
+                        <span class="detail-label">ZIP</span>
+                        <span class="meta-value">${escapeHtml(r.zip || "—")}</span>
+                      </div>
+                      <div class="meta-item">
+                        <span class="detail-label">Type</span>
+                        <span class="meta-value"><span class="${badgeClass}">${escapeHtml(label)}</span></span>
+                      </div>
+                    </div>
+                    <div class="detail-label">Description</div>
+                    <div class="detail-desc">${fullDesc || "<em style='color:var(--taupe)'>No description provided.</em>"}</div>
+                  </div>
+                  ${imageHtml}
+                </div>
+              </div>
+            </td>
+          </tr>`;
       }).join("");
+    }
+
+    function toggleRow(i) {
+      const detailRow = document.getElementById(`detail-${i}`);
+      if (!detailRow) return;
+
+      const prevRow = detailRow.previousElementSibling;
+
+      const isOpen = detailRow.classList.contains("open");
+      if (isOpen) {
+        detailRow.classList.remove("open");
+        if (prevRow) prevRow.classList.remove("open");
+      } else {
+        detailRow.classList.add("open");
+        if (prevRow) prevRow.classList.add("open");
+      }
     }
 
     function applyFilter() {
@@ -216,6 +354,10 @@
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;");
+    }
+
+    function escapeAttr(str) {
+      return String(str).replace(/"/g, "&quot;");
     }
 
     loadReports();

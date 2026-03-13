@@ -187,10 +187,21 @@ const zip=document.getElementById("zip").value
 const type=document.getElementById("type").value
 const description=document.getElementById("description").value
 
+const imageFile=document.getElementById("image").files[0]
+let image=null
+if(imageFile){
+image=await new Promise((resolve,reject)=>{
+const reader=new FileReader()
+reader.onload=e=>resolve(e.target.result)
+reader.onerror=reject
+reader.readAsDataURL(imageFile)
+})
+}
+
 const res=await fetch("/api/report",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({zip,type,description})
+body:JSON.stringify({zip,type,description,image})
 })
 
 const data=await res.json()

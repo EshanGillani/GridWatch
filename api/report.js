@@ -4,6 +4,14 @@ import path from "path"
 
 const REPORTS_FILE = path.join(os.tmpdir(), "gridwatch-reports.json")
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "4mb"
+    }
+  }
+}
+
 export default async function handler(req,res){
 
 if(req.method !== "POST"){
@@ -12,7 +20,7 @@ return res.status(405).json({error:"Method not allowed"})
 
 try{
 
-const { zip, type, description } = req.body
+const { zip, type, description, image } = req.body
 
 let lat=null, lng=null
 try{
@@ -30,6 +38,7 @@ const report={
 zip,
 type,
 description,
+image: image || null,
 lat,
 lng,
 time:Date.now()
