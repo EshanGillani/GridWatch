@@ -1,23 +1,13 @@
 {
-  "pulled_at_utc": "2026-03-14T15:58:22.680772+00:00",
+  "pulled_at_utc": "2026-03-14T16:42:25.230869+00:00",
   "summary": {
-    "report_date": "2026-03-14T15:46:08.266Z",
-    "customers_out": 15898,
+    "report_date": "2026-03-14T16:32:00.326Z",
+    "customers_out": 15496,
     "total_customers": 2820992,
-    "pct_out": 0.57,
-    "total_outages": 142
+    "pct_out": 0.55,
+    "total_outages": 140
   },
   "outages": [
-    {
-      "lat": 38.3929,
-      "lng": -78.90815,
-      "customers": 105,
-      "cause": "Circuit Out",
-      "crew_status": "Dispatched",
-      "etr": "Reassessing Condition",
-      "incident_id": "34731750",
-      "provider": "Dominion Energy"
-    },
     {
       "lat": 36.40833,
       "lng": -77.28475,
@@ -59,6 +49,16 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 37.1303,
+      "lng": -76.45182,
+      "customers": 4,
+      "cause": "Emergency work",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Reassessing Condition",
+      "incident_id": "34732094",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 37.80581,
       "lng": -76.78521,
       "customers": 2,
@@ -69,6 +69,16 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 36.61163,
+      "lng": -76.18708,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Assessing Damage",
+      "etr": "Reassessing Condition",
+      "incident_id": "34732139",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 36.79691,
       "lng": -79.35669,
       "customers": 1,
@@ -76,16 +86,6 @@
       "crew_status": "Working",
       "etr": "Reassessing Condition",
       "incident_id": "34732047",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 38.16277,
-      "lng": -79.10624,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Reassessing Condition",
-      "incident_id": "34731182",
       "provider": "Dominion Energy"
     }
   ]
