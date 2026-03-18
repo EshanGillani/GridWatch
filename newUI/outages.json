@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-03-18T05:18:49.987545+00:00",
+  "pulled_at_utc": "2026-03-18T06:36:17.199207+00:00",
   "summary": {
-    "report_date": "2026-03-18T05:15:57.635Z",
-    "customers_out": 600,
+    "report_date": "2026-03-18T06:31:45.540Z",
+    "customers_out": 604,
     "total_customers": 2820593,
     "pct_out": 0.03,
-    "total_outages": 21
+    "total_outages": 20
   },
   "outages": [
     {
@@ -16,6 +16,16 @@
       "crew_status": "Dispatched",
       "etr": "Yesterday at 11:00 PM - Today at 4:00 AM",
       "incident_id": "34738734",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.10289,
+      "lng": -78.66779,
+      "customers": 7,
+      "cause": "Storm",
+      "crew_status": "Dispatched",
+      "etr": "Today at 5:00 AM - 10:00 AM",
+      "incident_id": "34738855",
       "provider": "Dominion Energy"
     },
     {
