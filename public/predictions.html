@@ -451,9 +451,8 @@
 </footer>
 
 <script>
-const GEOAPIFY_KEY = "YOUR_KEY_HERE";
+const GEOAPIFY_KEY = "9852a6a8c89d4ca5ad87ac9305c4627c";
 
-/* PRESET CITIES */
 const cities = {
   "1": { name:"Washington, DC", lat:38.91, lon:-77.04 },
   "2": { name:"New York City, NY", lat:40.7128, lon:-74.0060 },
@@ -478,7 +477,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let cityData = {};
 
-/* COLOR */
 function riskColor(risk) {
   let hue;
   if (risk < 0.3) hue = 85 - (risk / 0.3) * 25;
@@ -487,7 +485,6 @@ function riskColor(risk) {
   return `hsl(${Math.round(hue)}, 88%, 38%)`;
 }
 
-/* RISK MODEL */
 function computeRisk(w) {
   let score = 0;
 
@@ -507,7 +504,6 @@ function computeRisk(w) {
   return Math.min(score, 1);
 }
 
-/* FETCH WEATHER */
 async function fetchSingleCity(city) {
   const url =
     `https://api.open-meteo.com/v1/forecast` +
@@ -520,7 +516,6 @@ async function fetchSingleCity(city) {
   return data.current;
 }
 
-/* PLOT */
 function plotCity(id, city, w) {
   const risk = computeRisk(w);
   const color = riskColor(risk);
@@ -540,7 +535,6 @@ function plotCity(id, city, w) {
   cityData[id] = { marker, risk, w };
 }
 
-/* LOAD ALL PRESETS */
 async function loadAllCities() {
   for (const id in cities) {
     try {
@@ -554,7 +548,6 @@ async function loadAllCities() {
   updatePanel();
 }
 
-/* UPDATE PANEL */
 function updatePanel() {
   const id = document.getElementById("options").value;
   const d = cityData[id];
@@ -573,7 +566,6 @@ function updatePanel() {
     d.w.wind_gusts_10m.toFixed(1) + " mph gusts";
 }
 
-/* DROPDOWN */
 document.getElementById("options").addEventListener("change", () => {
   const id = document.getElementById("options").value;
 
@@ -589,7 +581,6 @@ document.getElementById("options").addEventListener("change", () => {
   updatePanel();
 });
 
-/* SEARCH */
 const input = document.getElementById("addressSearch");
 const box = document.getElementById("suggestions");
 
@@ -637,7 +628,6 @@ input.addEventListener("input", async () => {
   box.style.display = "block";
 });
 
-/* INIT */
 loadAllCities();
 </script>
 
