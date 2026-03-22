@@ -530,38 +530,37 @@ searchInput.addEventListener("input", async () => {
       div.style.cursor = "pointer";
 
       div.onclick = async () => {
-        searchInput.value = formatted;
-        suggestionsBox.style.display = "none";
+  searchInput.value = label;
+  suggestionsBox.style.display = "none";
 
-        map.setView([lat, lon], 11);
+  map.setView([lat, lon], 11);
 
-        
-        const weatherUrl =
-          `https://api.open-meteo.com/v1/forecast` +
-          `?latitude=${lat}&longitude=${lon}` +
-          `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation,snowfall` +
-          `&temperature_unit=fahrenheit`;
+  // Inject into your existing city system
+  cities["other"] = { name: label, lat, lon };
 
-        try {
-          const res = await fetch(weatherUrl);
-          const weather = await res.json();
+  document.getElementById("options").value = "other";
+  document.getElementById("mirror").textContent =
+    label.toUpperCase().slice(0, 24);
 
-          const risk = computeRisk(weather.current);
+  document.getElementById("risk").innerText = "Loading...";
+  document.getElementById("temp").innerText = "Loading...";
+  document.getElementById("wind").innerText = "Loading...";
+  document.getElementById("advice").style.display = "none";
 
-          L.circleMarker([lat, lon], {
-            radius: 12,
-            fillColor: riskColor(risk),
-            fillOpacity: 0.9,
-            color: "#2a2a2a",
-            weight: 1.5
-          }).addTo(map);
+  try {
+    // ✅ USE YOUR EXISTING WEATHER FUNCTION
+    const w = await fetchSingleCity(cities["other"]);
 
-          updateUI(weather.current, risk);
+    // ✅ USE YOUR EXISTING PLOT + STATE SYSTEM
+    plotCity("other", cities["other"], w);
 
-        } catch (err) {
-          console.error("Weather fetch failed", err);
-        }
-      };
+    // ✅ UPDATE UI PROPERLY
+    updatePanel();
+
+  } catch (err) {
+    console.error("Custom location failed:", err);
+  }
+};
 
       suggestionsBox.appendChild(div);
     });
