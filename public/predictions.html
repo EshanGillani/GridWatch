@@ -448,18 +448,34 @@
 </footer>
 
 <script>
-const GEOAPIFY_KEY = "9852a6a8c89d4ca5ad87ac9305c4627c";
+const GEOAPIFY_KEY = "YOUR_KEY_HERE";
 
-/* ---------------- MAP ---------------- */
+/* PRESET CITIES */
+const cities = {
+  "1": { name:"Washington, DC", lat:38.91, lon:-77.04 },
+  "2": { name:"New York City, NY", lat:40.7128, lon:-74.0060 },
+  "3": { name:"Los Angeles, CA", lat:34.05, lon:-118.24 },
+  "4": { name:"Chicago, IL", lat:41.88, lon:-87.63 },
+  "5": { name:"Houston, TX", lat:29.76, lon:-95.37 },
+  "6": { name:"Phoenix, AZ", lat:33.45, lon:-112.07 },
+  "7": { name:"Philadelphia, PA", lat:39.95, lon:-75.16 },
+  "8": { name:"Seattle, WA", lat:47.61, lon:-122.33 },
+  "9": { name:"Dallas, TX", lat:32.77, lon:-96.79 },
+  "10": { name:"Miami, FL", lat:25.76, lon:-80.19 },
+  "11": { name:"Minneapolis, MN", lat:44.98, lon:-93.26 },
+  "12": { name:"Denver, CO", lat:39.74, lon:-104.99 },
+  "13": { name:"Charlotte, NC", lat:35.23, lon:-80.84 }
+};
+
 let map = L.map('map').setView([39.5, -98.35], 4);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
 
-let currentMarker = null;
+let cityData = {};
 
-/* ---------------- RISK ---------------- */
+/* COLOR */
 function riskColor(risk) {
   let hue;
   if (risk < 0.3) hue = 85 - (risk / 0.3) * 25;
@@ -468,6 +484,7 @@ function riskColor(risk) {
   return `hsl(${Math.round(hue)}, 88%, 38%)`;
 }
 
+/* RISK MODEL */
 function computeRisk(w) {
   let score = 0;
 
@@ -487,120 +504,138 @@ function computeRisk(w) {
   return Math.min(score, 1);
 }
 
-/* ---------------- UI ---------------- */
-function updateUI(data, risk) {
-  const color = riskColor(risk);
+/* FETCH WEATHER */
+async function fetchSingleCity(city) {
+  const url =
+    `https://api.open-meteo.com/v1/forecast` +
+    `?latitude=${city.lat}&longitude=${city.lon}` +
+    `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation,snowfall` +
+    `&temperature_unit=fahrenheit`;
 
-  document.getElementById("risk").innerText = (risk * 100).toFixed(1) + "%";
-  document.getElementById("risk").style.color = color;
-
-  document.getElementById("temp").innerText =
-    data.temperature_2m.toFixed(1) + "°F";
-
-  document.getElementById("wind").innerText =
-    data.wind_gusts_10m.toFixed(1) + " mph gusts";
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.current;
 }
 
-/* ---------------- AUTOCOMPLETE ---------------- */
-const searchInput = document.getElementById("addressSearch");
-const suggestionsBox = document.getElementById("suggestions");
+/* PLOT */
+function plotCity(id, city, w) {
+  const risk = computeRisk(w);
+  const color = riskColor(risk);
 
-searchInput.addEventListener("input", async () => {
-  const text = searchInput.value.trim();
+  if (cityData[id]?.marker) map.removeLayer(cityData[id].marker);
 
+  const marker = L.circleMarker([city.lat, city.lon], {
+    radius: 12,
+    color: "#222",
+    weight: 1.5,
+    fillColor: color,
+    fillOpacity: 0.9
+  }).addTo(map);
+
+  marker.bindPopup(`${city.name}<br>${(risk*100).toFixed(1)}% risk`);
+
+  cityData[id] = { marker, risk, w };
+}
+
+/* LOAD ALL PRESETS */
+async function loadAllCities() {
+  for (const id in cities) {
+    try {
+      const w = await fetchSingleCity(cities[id]);
+      plotCity(id, cities[id], w);
+    } catch (e) {
+      console.error("Failed:", cities[id].name);
+    }
+  }
+
+  updatePanel();
+}
+
+/* UPDATE PANEL */
+function updatePanel() {
+  const id = document.getElementById("options").value;
+  const d = cityData[id];
+  if (!d) return;
+
+  document.getElementById("risk").innerText =
+    (d.risk*100).toFixed(1) + "%";
+
+  document.getElementById("risk").style.color =
+    riskColor(d.risk);
+
+  document.getElementById("temp").innerText =
+    d.w.temperature_2m.toFixed(1) + "°F";
+
+  document.getElementById("wind").innerText =
+    d.w.wind_gusts_10m.toFixed(1) + " mph gusts";
+}
+
+/* DROPDOWN */
+document.getElementById("options").addEventListener("change", () => {
+  const id = document.getElementById("options").value;
+
+  if (id === "other") {
+    document.getElementById("addressSearchWrapper").style.display = "block";
+    return;
+  }
+
+  document.getElementById("addressSearchWrapper").style.display = "none";
+
+  const city = cities[id];
+  map.setView([city.lat, city.lon], 8);
+  updatePanel();
+});
+
+/* SEARCH */
+const input = document.getElementById("addressSearch");
+const box = document.getElementById("suggestions");
+
+input.addEventListener("input", async () => {
+  const text = input.value.trim();
   if (text.length < 3) {
-    suggestionsBox.style.display = "none";
+    box.style.display = "none";
     return;
   }
 
   const url =
-    `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}` +
-    `&limit=5&filter=countrycode:us&apiKey=${GEOAPIFY_KEY}`;
+    `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&limit=5&filter=countrycode:us&apiKey=${GEOAPIFY_KEY}`;
 
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
+  const res = await fetch(url);
+  const data = await res.json();
 
-    suggestionsBox.innerHTML = "";
+  box.innerHTML = "";
 
-    if (!data.features?.length) {
-      suggestionsBox.style.display = "none";
-      return;
-    }
+  data.features.forEach(f => {
+    const { lat, lon, formatted } = f.properties;
 
-    data.features.forEach(place => {
-      const { lat, lon, formatted } = place.properties;
+    const div = document.createElement("div");
+    div.textContent = formatted;
+    div.style.padding = "8px";
+    div.style.cursor = "pointer";
 
-      const div = document.createElement("div");
-      div.textContent = formatted;
-      div.style.padding = "8px";
-      div.style.cursor = "pointer";
+    div.onclick = async () => {
+      input.value = formatted;
+      box.style.display = "none";
 
-      div.onclick = async () => {
-        searchInput.value = formatted;
-        suggestionsBox.style.display = "none";
+      cities["other"] = { name: formatted, lat, lon };
 
-        map.setView([lat, lon], 11);
+      const w = await fetchSingleCity(cities["other"]);
+      plotCity("other", cities["other"], w);
 
-        document.getElementById("options").value = "other";
-        document.getElementById("mirror").textContent =
-          formatted.toUpperCase().slice(0, 24);
+      map.setView([lat, lon], 10);
 
-        document.getElementById("risk").innerText = "Loading...";
-        document.getElementById("temp").innerText = "Loading...";
-        document.getElementById("wind").innerText = "Loading...";
+      document.getElementById("options").value = "other";
+      updatePanel();
+    };
 
-        try {
-          const weatherUrl =
-            `https://api.open-meteo.com/v1/forecast` +
-            `?latitude=${lat}&longitude=${lon}` +
-            `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation,snowfall` +
-            `&temperature_unit=fahrenheit`;
+    box.appendChild(div);
+  });
 
-          const res = await fetch(weatherUrl);
-          const weather = await res.json();
-
-          const risk = computeRisk(weather.current);
-
-          // Remove old marker
-          if (currentMarker) map.removeLayer(currentMarker);
-
-          // Add new marker
-          currentMarker = L.circleMarker([lat, lon], {
-            radius: 12,
-            fillColor: riskColor(risk),
-            fillOpacity: 0.9,
-            color: "#2a2a2a",
-            weight: 1.5
-          }).addTo(map);
-
-          updateUI(weather.current, risk);
-
-        } catch (err) {
-          console.error("Weather fetch failed:", err);
-        }
-      };
-
-      suggestionsBox.appendChild(div);
-    });
-
-    suggestionsBox.style.display = "block";
-
-  } catch (err) {
-    console.error("Geoapify error:", err);
-  }
+  box.style.display = "block";
 });
 
-/* ---------------- DROPDOWN ---------------- */
-document.getElementById("options").addEventListener("change", () => {
-  const wrapper = document.getElementById("addressSearchWrapper");
-
-  if (document.getElementById("options").value === "other") {
-    wrapper.style.display = "block";
-  } else {
-    wrapper.style.display = "none";
-  }
-});
+/* INIT */
+loadAllCities();
 </script>
 
 </body>
