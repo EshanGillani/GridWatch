@@ -283,6 +283,8 @@
   </h1>
 
   <h3>Live outage risk predictions powered by weather data.</h3>
+  <p>Experimental outside of the US - <a href="https://gridwatch-amber.vercel.app/about.html">Learn More</a></p>
+  <br>
 
   <div class="prediction-box">
     <!-- Wrap the label and the dynamic dropdown in a flex h3 to keep them inline -->
@@ -344,10 +346,11 @@
 
       <!-- ADDRESS SEARCH (shown inline when Other is selected) -->
       <div id="addressSearchWrapper" style="position: relative; display:none;">
+        
         <input
           id="addressSearch"
           type="text"
-          placeholder="Enter US city or zip code..."
+          placeholder="Enter any location to view predictions..."
           autocomplete="off"
           style="
             padding: 2px 10px;
@@ -598,7 +601,7 @@ input.addEventListener("input", async () => {
   }
 
   const url =
-    `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&limit=5&filter=countrycode:us&apiKey=${GEOAPIFY_KEY}`;
+  `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}&limit=5&apiKey=${GEOAPIFY_KEY}`;
 
   const res = await fetch(url);
   const data = await res.json();
