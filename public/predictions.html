@@ -450,12 +450,16 @@
 <script>
 const GEOAPIFY_KEY = "9852a6a8c89d4ca5ad87ac9305c4627c";
 
+/* ---------------- MAP ---------------- */
 let map = L.map('map').setView([39.5, -98.35], 4);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
 
+let currentMarker = null;
+
+/* ---------------- RISK ---------------- */
 function riskColor(risk) {
   let hue;
   if (risk < 0.3) hue = 85 - (risk / 0.3) * 25;
@@ -466,6 +470,7 @@ function riskColor(risk) {
 
 function computeRisk(w) {
   let score = 0;
+
   if (w.wind_gusts_10m > 50) score += 0.4;
   else if (w.wind_gusts_10m > 35) score += 0.25;
   else if (w.wind_gusts_10m > 20) score += 0.1;
@@ -482,6 +487,7 @@ function computeRisk(w) {
   return Math.min(score, 1);
 }
 
+/* ---------------- UI ---------------- */
 function updateUI(data, risk) {
   const color = riskColor(risk);
 
@@ -495,6 +501,7 @@ function updateUI(data, risk) {
     data.wind_gusts_10m.toFixed(1) + " mph gusts";
 }
 
+/* ---------------- AUTOCOMPLETE ---------------- */
 const searchInput = document.getElementById("addressSearch");
 const suggestionsBox = document.getElementById("suggestions");
 
@@ -530,37 +537,49 @@ searchInput.addEventListener("input", async () => {
       div.style.cursor = "pointer";
 
       div.onclick = async () => {
-  searchInput.value = label;
-  suggestionsBox.style.display = "none";
+        searchInput.value = formatted;
+        suggestionsBox.style.display = "none";
 
-  map.setView([lat, lon], 11);
+        map.setView([lat, lon], 11);
 
-  // Inject into your existing city system
-  cities["other"] = { name: label, lat, lon };
+        document.getElementById("options").value = "other";
+        document.getElementById("mirror").textContent =
+          formatted.toUpperCase().slice(0, 24);
 
-  document.getElementById("options").value = "other";
-  document.getElementById("mirror").textContent =
-    label.toUpperCase().slice(0, 24);
+        document.getElementById("risk").innerText = "Loading...";
+        document.getElementById("temp").innerText = "Loading...";
+        document.getElementById("wind").innerText = "Loading...";
 
-  document.getElementById("risk").innerText = "Loading...";
-  document.getElementById("temp").innerText = "Loading...";
-  document.getElementById("wind").innerText = "Loading...";
-  document.getElementById("advice").style.display = "none";
+        try {
+          const weatherUrl =
+            `https://api.open-meteo.com/v1/forecast` +
+            `?latitude=${lat}&longitude=${lon}` +
+            `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation,snowfall` +
+            `&temperature_unit=fahrenheit`;
 
-  try {
-    // ✅ USE YOUR EXISTING WEATHER FUNCTION
-    const w = await fetchSingleCity(cities["other"]);
+          const res = await fetch(weatherUrl);
+          const weather = await res.json();
 
-    // ✅ USE YOUR EXISTING PLOT + STATE SYSTEM
-    plotCity("other", cities["other"], w);
+          const risk = computeRisk(weather.current);
 
-    // ✅ UPDATE UI PROPERLY
-    updatePanel();
+          // Remove old marker
+          if (currentMarker) map.removeLayer(currentMarker);
 
-  } catch (err) {
-    console.error("Custom location failed:", err);
-  }
-};
+          // Add new marker
+          currentMarker = L.circleMarker([lat, lon], {
+            radius: 12,
+            fillColor: riskColor(risk),
+            fillOpacity: 0.9,
+            color: "#2a2a2a",
+            weight: 1.5
+          }).addTo(map);
+
+          updateUI(weather.current, risk);
+
+        } catch (err) {
+          console.error("Weather fetch failed:", err);
+        }
+      };
 
       suggestionsBox.appendChild(div);
     });
@@ -568,11 +587,11 @@ searchInput.addEventListener("input", async () => {
     suggestionsBox.style.display = "block";
 
   } catch (err) {
-    console.error("Geoapify error", err);
+    console.error("Geoapify error:", err);
   }
 });
 
-
+/* ---------------- DROPDOWN ---------------- */
 document.getElementById("options").addEventListener("change", () => {
   const wrapper = document.getElementById("addressSearchWrapper");
 
