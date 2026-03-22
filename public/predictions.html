@@ -268,7 +268,7 @@
 <body>
 
 <nav>
-  <div class="nav-logo">Grid<span style="color: var(--salmon);">Watch</div>
+  <div class="nav-logo">Grid<span style="color: var(--salmon);">Watch</span></div>
   <button class="nav-btn" onclick="location.href='main.html'">Home</button>
   <button class="nav-btn active" onclick="location.href='predictions.html'">Predictions</button>
   <button class="nav-btn" onclick="location.href='about.html'">About</button>
@@ -418,9 +418,9 @@
       <option value="Dallas, TX">Dallas, TX</option>
       <option value="Miami, FL">Miami, FL</option>
       <option value="Minneapolis, MN">Minneapolis, MN</option>
-      <option value="Dever, CO">Denver, CO</option>
+      <option value="Denver, CO">Denver, CO</option>
       <option value="Charlotte, NC">Charlotte, NC</option>
-      <option value="Custom Location">Custom Location</option>
+      <option value="custom">Custom Location</option>
     </select>
 
     <input
@@ -431,7 +431,7 @@
         display:none;
         margin-top: 8px;
         padding:9px 14px;
-        border: 2px solid var(--taupe-1);
+        border: 2px solid var(--taupe-l);
         border-radius:6px;
         font-family:'Courier New', Courier, monospace;
         font-size: 13px;
@@ -444,27 +444,11 @@
 </div>
 
 <footer>
-  <div class="nav-logo">Grid<span style="color: var(--salmon);">Watch</div>
+  <div class="nav-logo">Grid<span style="color: var(--salmon);">Watch</span></div>
 </footer>
 
 <script>
-
-const cities = {
-  "1":  { name:"Washington, DC",      lat:38.91,   lon:-77.04 },
-  "2":  { name:"New York City, NY",   lat:40.7128, lon:-74.0060 },
-  "3":  { name:"Los Angeles, CA",     lat:34.0549, lon:-118.2426},
-  "4":  { name:"Chicago, IL",         lat:41.8832, lon:-87.6324 },
-  "5":  { name:"Houston, TX",         lat:29.7601, lon:-95.3701 },
-  "6":  { name:"Phoenix, AZ",         lat:33.4483, lon:-112.0725 },
-  "7":  { name:"Philadelphia, PA",    lat:39.9526, lon:-75.1652 },
-  "8":  { name:"Seattle, WA",         lat:47.6061, lon:-122.3328 },
-  "9":  { name:"Dallas, TX",          lat:32.7767, lon:-96.7970 },
-  "10": { name:"Miami, FL",           lat:25.7167, lon:-80.1918 },
-  "11": { name:"Minneapolis, MN",     lat:44.9778, lon:-93.2650 },
-  "12": { name:"Denver, CO",          lat:39.7392, lon:-104.9903 },
-  "13": { name:"Charlotte, NC",       lat:35.2271, lon:-80.8409 }
-  
-};
+const GEOAPIFY_KEY = "9852a6a8c89d4ca5ad87ac9305c4627c";
 
 let map = L.map('map').setView([39.5, -98.35], 4);
 
@@ -472,325 +456,49 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
 
-/* yellow-green (85) → yellow (60) → orange (25) → red (0) */
 function riskColor(risk) {
   let hue;
-  if (risk < 0.3)       hue = Math.round(85 - (risk / 0.3) * 25);              // 0 → 85, 0.3 → 60
-  else if (risk < 0.82) hue = Math.round(60 - ((risk - 0.3) / 0.52) * 35);    // 0.3 → 60, 0.82 → 25
-  else                  hue = Math.round(25 - ((risk - 0.82) / 0.18) * 25);    // 0.82 → 25, 1.0 → 0
-  return `hsl(${hue}, 88%, 38%)`;
+  if (risk < 0.3) hue = 85 - (risk / 0.3) * 25;
+  else if (risk < 0.82) hue = 60 - ((risk - 0.3) / 0.52) * 35;
+  else hue = 25 - ((risk - 0.82) / 0.18) * 25;
+  return `hsl(${Math.round(hue)}, 88%, 38%)`;
 }
 
 function computeRisk(w) {
   let score = 0;
-  const gusts  = w.wind_gusts_10m || 0;
-  const wind   = w.wind_speed_10m || 0;
-  const precip = w.precipitation  || 0;
-  const snow   = w.snowfall       || 0;
+  if (w.wind_gusts_10m > 50) score += 0.4;
+  else if (w.wind_gusts_10m > 35) score += 0.25;
+  else if (w.wind_gusts_10m > 20) score += 0.1;
 
-  if      (gusts > 50) score += 0.40;
-  else if (gusts > 35) score += 0.25;
-  else if (gusts > 20) score += 0.10;
+  if (w.wind_speed_10m > 40) score += 0.2;
+  else if (w.wind_speed_10m > 25) score += 0.1;
 
-  if      (wind > 40) score += 0.20;
-  else if (wind > 25) score += 0.10;
+  if (w.precipitation > 1) score += 0.3;
+  else if (w.precipitation > 0.3) score += 0.15;
 
-  if      (precip > 1.0) score += 0.30;
-  else if (precip > 0.3) score += 0.15;
+  if (w.snowfall > 2) score += 0.3;
+  else if (w.snowfall > 0.5) score += 0.15;
 
-  if      (snow > 2)   score += 0.30;
-  else if (snow > 0.5) score += 0.15;
-
-  return Math.min(1, score);
+  return Math.min(score, 1);
 }
 
-/* city id → { marker, risk, w } */
-let cityData = {};
-
-async function fetchSingleCity(city) {
-  const url =
-    `https://api.open-meteo.com/v1/forecast` +
-    `?latitude=${city.lat}&longitude=${city.lon}` +
-    `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,` +
-    `wind_gusts_10m,precipitation,snowfall,cloud_cover` +
-    `&temperature_unit=fahrenheit`;
-
-  /* Up to 3 attempts with a 6 s timeout each and exponential backoff */
-  for (let attempt = 0; attempt < 3; attempt++) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 6000);
-    try {
-      const res = await fetch(url, { signal: controller.signal });
-      clearTimeout(timer);
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const data = await res.json();
-      return data.current;
-    } catch (err) {
-      clearTimeout(timer);
-      if (attempt < 2) {
-        await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
-        continue;
-      }
-      throw err;
-    }
-  }
-}
-
-function plotCity(id, city, w) {
-  const risk  = computeRisk(w);
+function updateUI(data, risk) {
   const color = riskColor(risk);
-  if (cityData[id]?.marker) map.removeLayer(cityData[id].marker);
-  const m = L.circleMarker([city.lat, city.lon], {
-    radius: 12, color: '#2a2a2a', weight: 1.5,
-    fillColor: color, fillOpacity: 0.88
-  })
-  .addTo(map)
-  .bindPopup(
-    `<b>${city.name}</b><br>` +
-    `Outage Risk: <b style="color:${color}">${(risk * 100).toFixed(1)}%</b>`
-  );
-  cityData[id] = { marker: m, risk, w };
-}
 
-async function loadAllCities() {
-  const entries = Object.entries(cities);
-
-  /* Clear old markers */
-  Object.values(cityData).forEach(d => map.removeLayer(d.marker));
-  cityData = {};
-
-  /* Load the currently selected city first, then the rest */
-  const selectedId  = document.getElementById("options").value;
-  const prioritised = [
-    ...entries.filter(([id]) => id === selectedId),
-    ...entries.filter(([id]) => id !== selectedId)
-  ];
-
-  for (let i = 0; i < prioritised.length; i++) {
-    const [id, city] = prioritised[i];
-    try {
-      const w = await fetchSingleCity(city);
-      plotCity(id, city, w);
-      /* Update panel whenever the city that just loaded is the active one */
-      if (id === document.getElementById("options").value) updatePanel(false);
-    } catch (err) {
-      console.warn(`${city.name}: ${err.message}`);
-    }
-    if (i < prioritised.length - 1)
-      await new Promise(r => setTimeout(r, 200));
-  }
-}
-
-function getRiskAdvice(pct) {
-  if (pct < 20) return {
-    emoji: "🟢", label: "Minimal Risk", color: "hsl(120,88%,38%)",
-    status: "Grid conditions are stable.",
-    actions: [
-      "No action needed.",
-      "Continue normal activities.",
-      "Monitor the dashboard periodically for updates."
-    ]
-  };
-  if (pct < 40) return {
-    emoji: "🟡", label: "Low Risk", color: "hsl(60,88%,38%)",
-    status: "Slight instability detected, but outages are unlikely.",
-    actions: [
-      "Stay aware of weather or grid alerts.",
-      "Charge essential devices if severe weather is expected.",
-      "Check the dashboard for updates."
-    ]
-  };
-  if (pct < 60) return {
-    emoji: "🟠", label: "Moderate Risk", color: "hsl(30,88%,38%)",
-    status: "Conditions indicate a possible disruption.",
-    actions: [
-      "Ensure phones and essential devices are charged.",
-      "Identify backup lighting (flashlights, batteries).",
-      "Avoid scheduling critical power-dependent activities.",
-      "Monitor updates more frequently."
-    ]
-  };
-  if (pct < 80) return {
-    emoji: "🔴", label: "High Risk", color: "hsl(0,88%,38%)",
-    status: "Strong likelihood of outages developing.",
-    actions: [
-      "Fully charge phones, laptops, and battery packs.",
-      "Prepare backup lighting and essential supplies.",
-      "Save important work and data.",
-      "Limit use of high-power appliances.",
-      "Enable outage alerts if available."
-    ]
-  };
-  return {
-    emoji: "⚫", label: "Severe Risk", color: "#222",
-    status: "Outage is highly likely or imminent.",
-    actions: [
-      "Prepare for possible loss of electricity.",
-      "Charge all critical devices immediately.",
-      "Secure backup power if available (generators, power banks).",
-      "Keep flashlights and emergency supplies accessible.",
-      "Avoid using elevators or equipment requiring continuous power.",
-      "Follow local emergency updates."
-    ]
-  };
-}
-
-function updatePanel(pan = true) {
-  const id   = document.getElementById("options").value;
-  const city = cities[id];
-  if (!city) return;
-  if (pan) map.setView([city.lat, city.lon], id === "other" ? 11 : 8);
-
-  const d = cityData[id];
-  if (!d) {
-    /* Data still loading — keep spinner text, panel will re-run when ready */
-    document.getElementById("risk").innerText   = "Loading...";
-    document.getElementById("temp").innerText   = "Loading...";
-    document.getElementById("wind").innerText   = "Loading...";
-    document.getElementById("risk").style.color = "";
-    return;
-  }
-
-  const color = riskColor(d.risk);
-  const riskEl = document.getElementById("risk");
-  riskEl.innerText    = (d.risk * 100).toFixed(1) + "%";
-  riskEl.style.color  = color;
-  riskEl.style.fontWeight = "700";
+  document.getElementById("risk").innerText = (risk * 100).toFixed(1) + "%";
+  document.getElementById("risk").style.color = color;
 
   document.getElementById("temp").innerText =
-    d.w.temperature_2m.toFixed(1) + "°F";
+    data.temperature_2m.toFixed(1) + "°F";
+
   document.getElementById("wind").innerText =
-    d.w.wind_gusts_10m.toFixed(1) + " mph gusts";
-
-  const pct = d.risk * 100;
-  const adv = getRiskAdvice(pct);
-  const advEl = document.getElementById("advice");
-  advEl.style.display = "block";
-  advEl.style.borderColor = adv.color;
-  advEl.innerHTML =
-    `<div class="advice-title" style="color:${adv.color}">${adv.emoji} ${adv.label}</div>` +
-    `<div class="advice-status"><strong>Status:</strong> ${adv.status}</div>` +
-    `<strong style="font-family:'Syne',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--taupe-d);">Recommended Actions</strong>` +
-    `<ul>${adv.actions.map(a => `<li>${a}</li>`).join("")}</ul>`;
+    data.wind_gusts_10m.toFixed(1) + " mph gusts";
 }
-
-document.getElementById("options").addEventListener("change", () => {
-  const id = document.getElementById("options").value;
-  const wrapper = document.getElementById("addressSearchWrapper");
-
-  if (id === "other") {
-    wrapper.style.display = "block";
-    document.getElementById("addressSearch").focus();
-    if (cityData["other"]) {
-      const c = cities["other"];
-      map.setView([c.lat, c.lon], 10);
-      updatePanel();
-    } else {
-      document.getElementById("risk").innerText   = "Enter a location above";
-      document.getElementById("temp").innerText   = "—";
-      document.getElementById("wind").innerText   = "—";
-      document.getElementById("risk").style.color = "";
-      document.getElementById("advice").style.display = "none";
-    }
-    return;
-  }
-
-  wrapper.style.display = "none";
-  const city = cities[id];
-  map.setView([city.lat, city.lon], 8);
-  if (cityData[id]) {
-    updatePanel();
-  } else {
-    document.getElementById("risk").innerText   = "Loading...";
-    document.getElementById("temp").innerText   = "Loading...";
-    document.getElementById("wind").innerText   = "Loading...";
-    document.getElementById("risk").style.color = "";
-    document.getElementById("advice").style.display = "none";
-  }
-});
-
-loadAllCities();
-
-async function subscribeAlert() {
-  const email = document.getElementById("alert-email").value.trim();
-  let city  = document.getElementById("alert-city").value;
-
-  if (city === "custom"){
-    city = document.getElementById("alert-custom-city").value.trim();
-  }
-  const btn   = document.getElementById("alert-btn");
-  const msg   = document.getElementById("alert-msg");
-
-  msg.textContent = "";
-  msg.className   = "";
-
-  if (!email) {
-    msg.textContent = "Please enter your email address.";
-    msg.className   = "err";
-    return;
-  }
-
-  btn.disabled    = true;
-  btn.textContent = "Subscribing…";
-
-  try {
-    const res  = await fetch("/api/subscribe", {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ email, city }),
-    });
-    const data = await res.json();
-
-    if (res.ok) {
-      msg.textContent = data.message;
-      msg.className   = "ok";
-      document.getElementById("alert-email").value = "";
-    } else {
-      msg.textContent = data.error || "Something went wrong. Please try again.";
-      msg.className   = "err";
-    }
-  } catch {
-    msg.textContent = "Network error — please try again.";
-    msg.className   = "err";
-  } finally {
-    btn.disabled    = false;
-    btn.textContent = "Notify Me";
-  }
-}
-
-async function convertAddress(){
-  const address = document.getElementById("addressSearch").value;
-
-
-  const GEOCODIO_KEY = "a6e0c79eaa1ae666ea911076c73e6c35e3a0769";
-
-
-const url =
-`https://api.geocod.io/v1.7/geocode?q=${encodeURIComponent(address)}&api_key=${GEOCODIO_KEY}`;
-
-  const res = await fetch(url);
-  const data = await res.json();
-  
-  const lat = data.features[0].location.lat;
-  const lon = data.features[0].location.lon;
-
-  map.setView([lat,lon],10);
-
-  L.marker([lat,lon]).addTo(map)
-    .bindPopup("Your Address")
-    .openPopup();
-}
-
-const GEOCODIO_KEY = "a6e0c79eaa1ae666ea911076c73e6c35e3a0769";
-
-
-
 
 const searchInput = document.getElementById("addressSearch");
 const suggestionsBox = document.getElementById("suggestions");
 
 searchInput.addEventListener("input", async () => {
-
   const text = searchInput.value.trim();
 
   if (text.length < 3) {
@@ -798,97 +506,83 @@ searchInput.addEventListener("input", async () => {
     return;
   }
 
-  const GEOCODIO_KEY = "a6e0c79eaa1ae666ea911076c73e6c35e3a0769";
+  const url =
+    `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(text)}` +
+    `&limit=5&filter=countrycode:us&apiKey=${GEOAPIFY_KEY}`;
 
-const url =
-`https://api.geocod.io/v1.7/geocode?q=${encodeURIComponent(text)}&api_key=${GEOCODIO_KEY}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
 
-  const res = await fetch(url);
-  const data = await res.json();
+    suggestionsBox.innerHTML = "";
 
-  suggestionsBox.innerHTML = "";
-
- if (!data.results || data.results.length === 0) {
-    suggestionsBox.style.display = "none";
-    return;
-  }
-
-  data.results.forEach(place => {
-
-  const div = document.createElement("div");
-  div.textContent = place.formatted_address;
-
-  div.style.padding = "8px 10px";
-  div.style.cursor = "pointer";
-
-  div.onclick = async () => {
-    const lat = place.location.lat;
-    const lon = place.location.lng;
-
-    searchInput.value = place.formatted_address;
-    suggestionsBox.style.display = "none";
-
-    map.setView([lat, lon], 11);
-
-    // Register as the "other" custom location
-    cities["other"] = { name: place.formatted_address, lat, lon };
-
-    // Show loading state
-    document.getElementById("risk").innerText   = "Loading...";
-    document.getElementById("temp").innerText   = "Loading...";
-    document.getElementById("wind").innerText   = "Loading...";
-    document.getElementById("risk").style.color = "";
-    document.getElementById("advice").style.display = "none";
-
-    try {
-      // Fetch weather from open-meteo for these coords
-      const weatherUrl =
-        `https://api.open-meteo.com/v1/forecast` +
-        `?latitude=${lat}&longitude=${lon}` +
-        `&current=temperature_2m,relative_humidity_2m,wind_speed_10m,` +
-        `wind_gusts_10m,precipitation,snowfall,cloud_cover` +
-        `&temperature_unit=fahrenheit`;
-
-      const res = await fetch(weatherUrl);
-      const data = await res.json();
-      const w = data.current;
-
-      plotCity("other", cities["other"], w);
-
-      // Select "other" in the dropdown and update the panel
-      document.getElementById("options").value = "other";
-      document.getElementById("mirror").textContent =
-        place.formatted_address.toUpperCase().slice(0, 24) || "OTHER...";
-      updatePanel();
-    } catch (err) {
-      document.getElementById("risk").innerText = "Error fetching weather";
-      console.error("Weather fetch failed:", err);
+    if (!data.features?.length) {
+      suggestionsBox.style.display = "none";
+      return;
     }
-  };
 
-  suggestionsBox.appendChild(div);
+    data.features.forEach(place => {
+      const { lat, lon, formatted } = place.properties;
 
-});
+      const div = document.createElement("div");
+      div.textContent = formatted;
+      div.style.padding = "8px";
+      div.style.cursor = "pointer";
 
-  suggestionsBox.style.display = "block";
-});
+      div.onclick = async () => {
+        searchInput.value = formatted;
+        suggestionsBox.style.display = "none";
 
+        map.setView([lat, lon], 11);
 
-document.geetElementById("alert-city").addEventListener("change", () => {
+        
+        const weatherUrl =
+          `https://api.open-meteo.com/v1/forecast` +
+          `?latitude=${lat}&longitude=${lon}` +
+          `&current=temperature_2m,wind_speed_10m,wind_gusts_10m,precipitation,snowfall` +
+          `&temperature_unit=fahrenheit`;
 
-  const dropdown = document.getElementById("alert-city");
-  const customBox = document.getElementById("alert-custom-city");
+        try {
+          const res = await fetch(weatherUrl);
+          const weather = await res.json();
 
-  if (dropdown.value === "custom") {
-    customBox.style.display = "block";
+          const risk = computeRisk(weather.current);
 
-  } else {
-    customBox.style.display = "none";
+          L.circleMarker([lat, lon], {
+            radius: 12,
+            fillColor: riskColor(risk),
+            fillOpacity: 0.9,
+            color: "#2a2a2a",
+            weight: 1.5
+          }).addTo(map);
 
+          updateUI(weather.current, risk);
+
+        } catch (err) {
+          console.error("Weather fetch failed", err);
+        }
+      };
+
+      suggestionsBox.appendChild(div);
+    });
+
+    suggestionsBox.style.display = "block";
+
+  } catch (err) {
+    console.error("Geoapify error", err);
   }
 });
 
 
+document.getElementById("options").addEventListener("change", () => {
+  const wrapper = document.getElementById("addressSearchWrapper");
+
+  if (document.getElementById("options").value === "other") {
+    wrapper.style.display = "block";
+  } else {
+    wrapper.style.display = "none";
+  }
+});
 </script>
 
 </body>
