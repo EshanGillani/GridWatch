@@ -1,33 +1,13 @@
 {
-  "pulled_at_utc": "2026-03-24T07:33:09.710286+00:00",
+  "pulled_at_utc": "2026-03-24T08:26:45.162163+00:00",
   "summary": {
-    "report_date": "2026-03-24T07:31:47.846Z",
-    "customers_out": 912,
+    "report_date": "2026-03-24T08:16:06.780Z",
+    "customers_out": 814,
     "total_customers": 2820654,
-    "pct_out": 0.04,
-    "total_outages": 27
+    "pct_out": 0.03,
+    "total_outages": 28
   },
   "outages": [
-    {
-      "lat": 38.24075,
-      "lng": -77.37665,
-      "customers": 12,
-      "cause": "Broken Pole",
-      "crew_status": "Working",
-      "etr": "Reassessing Condition",
-      "incident_id": "34744163",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 38.74882,
-      "lng": -77.08228,
-      "customers": 6,
-      "cause": "Equipment Upgrade",
-      "crew_status": "Working",
-      "etr": "Today at 6:00 AM - 11:00 AM",
-      "incident_id": "34744797",
-      "provider": "Dominion Energy"
-    },
     {
       "lat": 36.22791,
       "lng": -77.10992,
@@ -39,20 +19,30 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.93041,
-      "lng": -76.01642,
-      "customers": 1,
-      "cause": "EQUIPMENT PROBLEM",
-      "crew_status": "Dispatched",
+      "lat": 37.25996,
+      "lng": -78.67235,
+      "customers": 2,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 7:00 AM - 10:00 AM",
+      "incident_id": "34744802",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.71171,
+      "lng": -77.82794,
+      "customers": 2,
+      "cause": "Power Line Damaged",
+      "crew_status": "Awaiting Assignment",
       "etr": "Pending Investigation",
-      "incident_id": "34741643",
+      "incident_id": "34744657",
       "provider": "Dominion Energy"
     },
     {
       "lat": 38.26477,
       "lng": -78.82266,
       "customers": 1,
-      "cause": "Pending Investigation",
+      "cause": "Power Line Damaged",
       "crew_status": "Working",
       "etr": "Today at 1:00 AM - 6:00 AM",
       "incident_id": "34744126",
