@@ -1,13 +1,23 @@
 {
-  "pulled_at_utc": "2026-04-05T14:50:03.025679+00:00",
+  "pulled_at_utc": "2026-04-05T15:21:46.368327+00:00",
   "summary": {
-    "report_date": "2026-04-05T14:45:56.914Z",
-    "customers_out": 73,
+    "report_date": "2026-04-05T15:16:14.360Z",
+    "customers_out": 1973,
     "total_customers": 2821169,
-    "pct_out": 0.01,
-    "total_outages": 15
+    "pct_out": 0.07,
+    "total_outages": 20
   },
   "outages": [
+    {
+      "lat": 38.11288,
+      "lng": -78.45648,
+      "customers": 1872,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34755952",
+      "provider": "Dominion Energy"
+    },
     {
       "lat": 36.7506,
       "lng": -75.99939,
@@ -39,13 +49,13 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.05225,
-      "lng": -77.44284,
-      "customers": 1,
-      "cause": "EQUIPMENT PROBLEM",
+      "lat": 36.23075,
+      "lng": -76.70145,
+      "customers": 3,
+      "cause": "Pending Investigation",
       "crew_status": "Awaiting Assignment",
-      "etr": "Today at 10:00 AM - 1:00 PM",
-      "incident_id": "34755885",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34755951",
       "provider": "Dominion Energy"
     },
     {
@@ -76,6 +86,26 @@
       "crew_status": "Assessing Damage",
       "etr": "Today at 10:00 AM - 1:00 PM",
       "incident_id": "34755877",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.62104,
+      "lng": -77.80266,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 1:00 PM - 4:00 PM",
+      "incident_id": "34755956",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.05225,
+      "lng": -77.44284,
+      "customers": 1,
+      "cause": "EQUIPMENT PROBLEM",
+      "crew_status": "Dispatched",
+      "etr": "Today at 10:00 AM - 1:00 PM",
+      "incident_id": "34755885",
       "provider": "Dominion Energy"
     }
   ]
