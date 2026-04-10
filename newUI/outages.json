@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-04-10T14:40:11.799443+00:00",
+  "pulled_at_utc": "2026-04-10T15:35:22.185121+00:00",
   "summary": {
-    "report_date": "2026-04-10T14:31:48.896Z",
-    "customers_out": 1168,
+    "report_date": "2026-04-10T15:31:46.069Z",
+    "customers_out": 429,
     "total_customers": 2820182,
-    "pct_out": 0.05,
-    "total_outages": 32
+    "pct_out": 0.02,
+    "total_outages": 36
   },
   "outages": [
     {
@@ -19,13 +19,63 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 38.09613,
+      "lng": -79.33389,
+      "customers": 2,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Working",
+      "etr": "Today at 12:00 PM - 2:00 PM",
+      "incident_id": "34761441",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.58084,
+      "lng": -78.21903,
+      "customers": 2,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 3:00 PM - 7:00 PM",
+      "incident_id": "34761458",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 37.01732,
       "lng": -78.93122,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
+      "crew_status": "Assessing Damage",
       "etr": "Today at 12:00 PM - 3:00 PM",
       "incident_id": "34761328",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 35.86266,
+      "lng": -75.64675,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Working",
+      "etr": "Today at 1:00 PM - 4:00 PM",
+      "incident_id": "34761391",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 39.14596,
+      "lng": -77.65707,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 3:00 PM - 6:00 PM",
+      "incident_id": "34761460",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.99982,
+      "lng": -77.41746,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 1:00 PM - 4:00 PM",
+      "incident_id": "34761356",
       "provider": "Dominion Energy"
     },
     {
@@ -33,9 +83,19 @@
       "lng": -77.8655,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
+      "crew_status": "Assessing Damage",
       "etr": "Today at 2:00 PM - 5:00 PM",
       "incident_id": "34761387",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.00647,
+      "lng": -76.43259,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 12:00 PM - 3:00 PM",
+      "incident_id": "34761416",
       "provider": "Dominion Energy"
     },
     {
@@ -43,29 +103,29 @@
       "lng": -76.74549,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
+      "crew_status": "Dispatched",
       "etr": "Today at 1:00 PM - 4:00 PM",
       "incident_id": "34761303",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.27439,
+      "lng": -77.32505,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 1:00 PM - 4:00 PM",
+      "incident_id": "34761465",
       "provider": "Dominion Energy"
     },
     {
       "lat": 36.69306,
       "lng": -77.53669,
       "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
+      "cause": "Animal",
+      "crew_status": "Working",
       "etr": "Today at 2:00 PM - 5:00 PM",
-      "incident_id": "34761374",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 38.62944,
-      "lng": -77.2739,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 10:00 AM - 1:00 PM",
-      "incident_id": "34761282",
+      "incident_id": "34761455",
       "provider": "Dominion Energy"
     }
   ]
