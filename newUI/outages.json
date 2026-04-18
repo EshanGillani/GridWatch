@@ -1,31 +1,21 @@
 {
-  "pulled_at_utc": "2026-04-18T12:29:12.032547+00:00",
+  "pulled_at_utc": "2026-04-18T13:44:03.258312+00:00",
   "summary": {
-    "report_date": "2026-04-18T12:15:55.712Z",
-    "customers_out": 469,
+    "report_date": "2026-04-18T13:31:52.495Z",
+    "customers_out": 502,
     "total_customers": 2820475,
     "pct_out": 0.02,
-    "total_outages": 22
+    "total_outages": 25
   },
   "outages": [
     {
-      "lat": 37.43819,
-      "lng": -76.5326,
-      "customers": 51,
-      "cause": "EQUIPMENT PROBLEM",
+      "lat": 39.02161,
+      "lng": -77.47654,
+      "customers": 18,
+      "cause": "Equipment Upgrade",
       "crew_status": "Working",
-      "etr": "Today at 6:00 AM - 9:00 AM",
-      "incident_id": "34768140",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 38.47581,
-      "lng": -77.37829,
-      "customers": 5,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 11:00 AM - 2:00 PM",
-      "incident_id": "34768200",
+      "etr": "Today at 5:00 PM - 8:00 PM",
+      "incident_id": "34768167",
       "provider": "Dominion Energy"
     },
     {
@@ -39,11 +29,21 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 38.73687,
+      "lng": -78.70825,
+      "customers": 2,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 11:00 AM - 2:00 PM",
+      "incident_id": "34768208",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 36.44028,
       "lng": -77.65058,
       "customers": 2,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
+      "crew_status": "Dispatched",
       "etr": "Today at 10:00 AM - 1:00 PM",
       "incident_id": "34768199",
       "provider": "Dominion Energy"
@@ -52,7 +52,7 @@
       "lat": 38.87085,
       "lng": -77.92121,
       "customers": 1,
-      "cause": "Pending Investigation",
+      "cause": "Power Line Damaged",
       "crew_status": "Dispatched",
       "etr": "Today at 9:00 AM - 12:00 PM",
       "incident_id": "34768177",
