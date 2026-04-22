@@ -1,11 +1,22 @@
 {
-  "pulled_at_utc": "2026-04-22T06:14:40.371300+00:00",
+  "pulled_at_utc": "2026-04-22T08:09:38.941314+00:00",
   "summary": {
-    "report_date": "2026-04-22T06:01:41.292Z",
-    "customers_out": 73,
+    "report_date": "2026-04-22T08:01:23.639Z",
+    "customers_out": 65,
     "total_customers": 2820647,
     "pct_out": 0.01,
-    "total_outages": 11
+    "total_outages": 7
   },
-  "outages": []
+  "outages": [
+    {
+      "lat": 37.47315,
+      "lng": -77.45212,
+      "customers": 1,
+      "cause": "EQUIPMENT PROBLEM",
+      "crew_status": "Working",
+      "etr": "Today at 2:00 AM - 5:00 AM",
+      "incident_id": "34771172",
+      "provider": "Dominion Energy"
+    }
+  ]
 }
