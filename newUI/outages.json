@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-04-29T04:45:31.201384+00:00",
+  "pulled_at_utc": "2026-04-29T07:12:52.487938+00:00",
   "summary": {
-    "report_date": "2026-04-29T04:30:56.394Z",
-    "customers_out": 125,
+    "report_date": "2026-04-29T07:01:27.305Z",
+    "customers_out": 446,
     "total_customers": 2821068,
-    "pct_out": 0.01,
-    "total_outages": 15
+    "pct_out": 0.02,
+    "total_outages": 16
   },
   "outages": [
     {
@@ -24,7 +24,7 @@
       "customers": 32,
       "cause": "Broken Pole",
       "crew_status": "Working",
-      "etr": "Yesterday at 10:00 PM - Today at 1:00 AM",
+      "etr": "Today at 1:00 AM - 4:00 AM",
       "incident_id": "34777615",
       "provider": "Dominion Energy"
     },
@@ -56,6 +56,16 @@
       "crew_status": "Working",
       "etr": "Today at 3:00 AM - 6:00 AM",
       "incident_id": "34777688",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.31845,
+      "lng": -77.44075,
+      "customers": 5,
+      "cause": "Vehicle Accident",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 3:00 AM - 6:00 AM",
+      "incident_id": "34777692",
       "provider": "Dominion Energy"
     },
     {
