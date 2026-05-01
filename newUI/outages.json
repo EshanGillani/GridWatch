@@ -1,41 +1,51 @@
 {
-  "pulled_at_utc": "2026-05-01T00:08:19.520729+00:00",
+  "pulled_at_utc": "2026-05-01T04:16:01.446698+00:00",
   "summary": {
-    "report_date": "2026-05-01T00:01:45.310Z",
-    "customers_out": 3026,
+    "report_date": "2026-05-01T04:01:57.400Z",
+    "customers_out": 287,
     "total_customers": 2821068,
-    "pct_out": 0.11,
-    "total_outages": 36
+    "pct_out": 0.02,
+    "total_outages": 18
   },
   "outages": [
     {
-      "lat": 36.93469,
-      "lng": -76.52112,
-      "customers": 1,
+      "lat": 37.69896,
+      "lng": -77.34687,
+      "customers": 61,
+      "cause": "Pending Investigation",
+      "crew_status": "Assessing Damage",
+      "etr": "Today at 3:00 AM - 6:00 AM",
+      "incident_id": "34779905",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.49246,
+      "lng": -77.55833,
+      "customers": 17,
       "cause": "EQUIPMENT PROBLEM",
-      "crew_status": "Dispatched",
-      "etr": "Today at 6:00 PM - 9:00 PM",
-      "incident_id": "34779208",
+      "crew_status": "Assessing Damage",
+      "etr": "Yesterday at 10:00 PM - Today at 1:00 AM",
+      "incident_id": "34779603",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 37.47035,
-      "lng": -78.36186,
+      "lat": 38.27516,
+      "lng": -77.47488,
       "customers": 1,
       "cause": "Pending Investigation",
       "crew_status": "Dispatched",
-      "etr": "Today at 11:00 PM - Tomorrow at 3:00 AM",
-      "incident_id": "34779826",
+      "etr": "Today at 1:00 AM - 4:00 AM",
+      "incident_id": "34779902",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 37.9783,
-      "lng": -78.37906,
+      "lat": 35.95602,
+      "lng": -76.12493,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Reassessing Condition",
-      "incident_id": "34779479",
+      "crew_status": "Working",
+      "etr": "Today at 12:00 AM - 3:00 AM",
+      "incident_id": "34779893",
       "provider": "Dominion Energy"
     }
   ]
