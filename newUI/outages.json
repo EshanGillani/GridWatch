@@ -1,21 +1,41 @@
 {
-  "pulled_at_utc": "2026-05-04T04:51:35.592324+00:00",
+  "pulled_at_utc": "2026-05-04T07:43:43.586040+00:00",
   "summary": {
-    "report_date": "2026-05-04T04:45:50.491Z",
-    "customers_out": 61,
+    "report_date": "2026-05-04T07:30:46.992Z",
+    "customers_out": 84,
     "total_customers": 2821068,
     "pct_out": 0.01,
-    "total_outages": 5
+    "total_outages": 6
   },
   "outages": [
     {
-      "lat": 37.09128,
-      "lng": -76.4885,
-      "customers": 47,
+      "lat": 36.81355,
+      "lng": -76.10618,
+      "customers": 71,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 3:00 AM - 6:00 AM",
-      "incident_id": "34781456",
+      "crew_status": "Assessing Damage",
+      "etr": "Today at 5:00 AM - 8:00 AM",
+      "incident_id": "34781462",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.6894,
+      "lng": -77.39657,
+      "customers": 5,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 4:00 AM - 7:00 AM",
+      "incident_id": "34781457",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.52007,
+      "lng": -77.91087,
+      "customers": 3,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 7:00 AM - 10:00 AM",
+      "incident_id": "34781466",
       "provider": "Dominion Energy"
     },
     {
@@ -29,13 +49,23 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 37.17697,
-      "lng": -77.78405,
+      "lat": 39.20957,
+      "lng": -77.56545,
       "customers": 1,
       "cause": "Pending Investigation",
       "crew_status": "Dispatched",
-      "etr": "Today at 1:00 AM - 4:00 AM",
-      "incident_id": "34781440",
+      "etr": "Today at 7:00 AM - 10:00 AM",
+      "incident_id": "34781465",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.40691,
+      "lng": -77.76343,
+      "customers": 1,
+      "cause": "EQUIPMENT PROBLEM",
+      "crew_status": "Dispatched",
+      "etr": "Today at 4:00 AM - 7:00 AM",
+      "incident_id": "34781460",
       "provider": "Dominion Energy"
     }
   ]
