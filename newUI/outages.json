@@ -1,13 +1,33 @@
 {
-  "pulled_at_utc": "2026-05-16T19:33:05.557570+00:00",
+  "pulled_at_utc": "2026-05-16T20:23:43.646660+00:00",
   "summary": {
-    "report_date": "2026-05-16T19:30:52.306Z",
-    "customers_out": 267,
+    "report_date": "2026-05-16T20:15:51.145Z",
+    "customers_out": 600,
     "total_customers": 2821021,
-    "pct_out": 0.01,
+    "pct_out": 0.03,
     "total_outages": 24
   },
   "outages": [
+    {
+      "lat": 37.38526,
+      "lng": -76.6245,
+      "customers": 358,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 8:00 PM - 11:00 PM",
+      "incident_id": "34793033",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.19403,
+      "lng": -78.90622,
+      "customers": 6,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 8:00 PM - 11:00 PM",
+      "incident_id": "34793042",
+      "provider": "Dominion Energy"
+    },
     {
       "lat": 38.85555,
       "lng": -77.76467,
@@ -19,23 +39,33 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 37.65436,
-      "lng": -79.81783,
-      "customers": 1,
+      "lat": 39.01923,
+      "lng": -77.49439,
+      "customers": 2,
       "cause": "Pending Investigation",
       "crew_status": "Working",
-      "etr": "Reassessing Condition",
-      "incident_id": "34792841",
+      "etr": "Today at 6:00 PM - 9:00 PM",
+      "incident_id": "34793016",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 37.85661,
-      "lng": -76.36394,
+      "lat": 35.99308,
+      "lng": -77.78279,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Assessing Damage",
-      "etr": "Today at 4:00 PM - 7:00 PM",
-      "incident_id": "34792978",
+      "crew_status": "Dispatched",
+      "etr": "Today at 6:00 PM - 9:00 PM",
+      "incident_id": "34793022",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.21495,
+      "lng": -77.39381,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 5:00 PM - 8:00 PM",
+      "incident_id": "34793002",
       "provider": "Dominion Energy"
     }
   ]
