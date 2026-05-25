@@ -1,19 +1,19 @@
 {
-  "pulled_at_utc": "2026-05-25T22:45:33.308570+00:00",
+  "pulled_at_utc": "2026-05-25T23:51:23.568943+00:00",
   "summary": {
-    "report_date": "2026-05-25T22:30:43.004521878Z",
-    "customers_out": 1677,
+    "report_date": "2026-05-25T23:45:45.084794669Z",
+    "customers_out": 2292,
     "total_customers": 2823106,
-    "pct_out": 0.06,
-    "total_outages": 57
+    "pct_out": 0.09,
+    "total_outages": 63
   },
   "outages": [
     {
       "lat": 36.25085,
       "lng": -76.46576,
       "customers": 361,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
+      "cause": "Tree On Line",
+      "crew_status": "Assessing Damage",
       "etr": "Tomorrow at 8:00 AM - 11:00 AM",
       "incident_id": "34802489",
       "provider": "Dominion Energy"
@@ -39,16 +39,6 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.38626,
-      "lng": -78.54551,
-      "customers": 5,
-      "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
-      "incident_id": "34802412",
-      "provider": "Dominion Energy"
-    },
-    {
       "lat": 37.81914,
       "lng": -78.04531,
       "customers": 2,
@@ -59,13 +49,23 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.69147,
-      "lng": -78.78978,
+      "lat": 37.03041,
+      "lng": -78.59724,
+      "customers": 1,
+      "cause": "Tree On Line",
+      "crew_status": "Working",
+      "etr": "Today at 5:00 PM - 8:00 PM",
+      "incident_id": "34802087",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.10513,
+      "lng": -78.45645,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 7:00 PM - 10:00 PM",
-      "incident_id": "34802367",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 10:00 PM - Tomorrow at 1:00 AM",
+      "incident_id": "34802564",
       "provider": "Dominion Energy"
     }
   ]
