@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-05-24T23:13:41.595881+00:00",
+  "pulled_at_utc": "2026-05-25T00:15:11.319983+00:00",
   "summary": {
-    "report_date": "2026-05-24T23:01:14.708999952Z",
-    "customers_out": 1392,
+    "report_date": "2026-05-25T00:01:06.458142927Z",
+    "customers_out": 885,
     "total_customers": 2821725,
-    "pct_out": 0.05,
-    "total_outages": 36
+    "pct_out": 0.04,
+    "total_outages": 24
   },
   "outages": [
     {
@@ -39,6 +39,16 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 36.82257,
+      "lng": -76.26722,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 6:00 PM - 9:00 PM",
+      "incident_id": "34801870",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 37.3037,
       "lng": -76.52739,
       "customers": 1,
@@ -46,16 +56,6 @@
       "crew_status": "Dispatched",
       "etr": "Today at 7:00 PM - 10:00 PM",
       "incident_id": "34801879",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.60529,
-      "lng": -76.45449,
-      "customers": 1,
-      "cause": "Power Line Damaged",
-      "crew_status": "Working",
-      "etr": "Today at 7:00 PM - 10:00 PM",
-      "incident_id": "34801631",
       "provider": "Dominion Energy"
     },
     {
