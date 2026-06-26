@@ -1,5 +1,5 @@
 # GridWatch 
-The password for Expert Mode is not visible on the site because it is paet of our integration with Terac. People who choose to complete the job on Terac recieve the password so that they can complete sample risk identification, which is data we may use in the future for training our ML model, integrating OpenCV to detect risks from public camera feeds. For testing purposes, the password is 12367.
+The password for Expert Mode is not visible on the site because it is part of our integration with Terac. People who choose to complete the job on Terac recieve the password so that they can complete sample risk identification, which is data we may use in the future for training our ML model, integrating OpenCV to detect risks from public camera feeds. For testing purposes, the password is 12367.
 
 
 
