@@ -1,23 +1,13 @@
 {
-  "pulled_at_utc": "2026-07-04T22:07:49.853991+00:00",
+  "pulled_at_utc": "2026-07-04T23:11:52.324258+00:00",
   "summary": {
-    "report_date": "2026-07-04T22:01:54.150814108Z",
-    "customers_out": 36494,
+    "report_date": "2026-07-04T23:02:59.768181090Z",
+    "customers_out": 35769,
     "total_customers": 2824886,
-    "pct_out": 1.29,
-    "total_outages": 230
+    "pct_out": 1.27,
+    "total_outages": 323
   },
   "outages": [
-    {
-      "lat": 37.30452,
-      "lng": -78.11785,
-      "customers": 17,
-      "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
-      "incident_id": "34856744",
-      "provider": "Dominion Energy"
-    },
     {
       "lat": 37.58695,
       "lng": -79.64511,
@@ -29,13 +19,13 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 35.895,
-      "lng": -75.6424,
-      "customers": 7,
+      "lat": 37.81285,
+      "lng": -78.02189,
+      "customers": 2,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
-      "incident_id": "34857067",
+      "crew_status": "Dispatched",
+      "etr": "Reassessing Condition",
+      "incident_id": "34856377",
       "provider": "Dominion Energy"
     },
     {
@@ -49,6 +39,16 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 37.52677,
+      "lng": -77.80551,
+      "customers": 1,
+      "cause": "Power Line Damaged",
+      "crew_status": "Dispatched",
+      "etr": "Today at 10:00 PM - Tomorrow at 1:00 AM",
+      "incident_id": "34857213",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 36.26661,
       "lng": -76.30785,
       "customers": 1,
@@ -59,33 +59,13 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.2429,
-      "lng": -75.89161,
+      "lat": 36.42455,
+      "lng": -77.17901,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 10:00 PM - Tomorrow at 1:00 AM",
-      "incident_id": "34857031",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.44045,
-      "lng": -77.04054,
-      "customers": 1,
-      "cause": "EQUIPMENT PROBLEM",
-      "crew_status": "Working",
-      "etr": "Today at 4:00 PM - 7:00 PM",
-      "incident_id": "34856421",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 36.9026,
-      "lng": -77.41504,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
-      "incident_id": "34856830",
+      "crew_status": "Assessing Damage",
+      "etr": "Today at 8:00 PM - 11:00 PM",
+      "incident_id": "34856999",
       "provider": "Dominion Energy"
     }
   ]
