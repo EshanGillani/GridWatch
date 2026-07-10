@@ -1,11 +1,72 @@
 {
-  "pulled_at_utc": "2026-07-10T07:56:03.959294+00:00",
+  "pulled_at_utc": "2026-07-10T11:07:13.833029+00:00",
   "summary": {
-    "report_date": "2026-07-10T07:46:04.183703599Z",
-    "customers_out": 1218,
+    "report_date": "2026-07-10T11:01:37.505820718Z",
+    "customers_out": 747,
     "total_customers": 2825046,
-    "pct_out": 0.05,
-    "total_outages": 40
+    "pct_out": 0.03,
+    "total_outages": 38
   },
-  "outages": []
+  "outages": [
+    {
+      "lat": 36.67036,
+      "lng": -78.09603,
+      "customers": 283,
+      "cause": "Tree On Line",
+      "crew_status": "Dispatched",
+      "etr": "Today at 8:00 AM - 11:00 AM",
+      "incident_id": "34868668",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.84724,
+      "lng": -75.9993,
+      "customers": 56,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 10:00 AM - 1:00 PM",
+      "incident_id": "34868690",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.88836,
+      "lng": -76.71218,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 8:00 AM - 11:00 AM",
+      "incident_id": "34868686",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.32051,
+      "lng": -78.42078,
+      "customers": 1,
+      "cause": "Vehicle Accident",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 11:00 AM - 2:00 PM",
+      "incident_id": "34868695",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.74786,
+      "lng": -76.67031,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 9:00 AM - 12:00 PM",
+      "incident_id": "34868704",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.05431,
+      "lng": -75.68453,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 8:00 AM - 11:00 AM",
+      "incident_id": "34868692",
+      "provider": "Dominion Energy"
+    }
+  ]
 }
