@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-07-11T08:25:54.555274+00:00",
+  "pulled_at_utc": "2026-07-11T09:58:55.762294+00:00",
   "summary": {
-    "report_date": "2026-07-11T08:15:26.198857702Z",
-    "customers_out": 1034,
+    "report_date": "2026-07-11T09:45:42.451782046Z",
+    "customers_out": 914,
     "total_customers": 2825046,
     "pct_out": 0.04,
-    "total_outages": 23
+    "total_outages": 19
   },
   "outages": [
     {
@@ -19,6 +19,26 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 36.93086,
+      "lng": -76.20503,
+      "customers": 10,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 8:00 AM - 11:00 AM",
+      "incident_id": "34870024",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.46125,
+      "lng": -77.50055,
+      "customers": 3,
+      "cause": "Vehicle Accident",
+      "crew_status": "Dispatched",
+      "etr": "Today at 7:00 AM - 10:00 AM",
+      "incident_id": "34870002",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 36.13305,
       "lng": -77.20289,
       "customers": 1,
@@ -26,16 +46,6 @@
       "crew_status": "Awaiting Assignment",
       "etr": "Today at 4:00 AM - 7:00 AM",
       "incident_id": "34869985",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 36.43935,
-      "lng": -76.8066,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Pending Investigation",
-      "incident_id": "34869837",
       "provider": "Dominion Energy"
     },
     {
@@ -56,16 +66,6 @@
       "crew_status": "Awaiting Assignment",
       "etr": "Pending Investigation",
       "incident_id": "34866578",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 38.38294,
-      "lng": -77.33276,
-      "customers": 1,
-      "cause": "Power Line Damaged",
-      "crew_status": "Working",
-      "etr": "Today at 5:00 AM - 8:00 AM",
-      "incident_id": "34869853",
       "provider": "Dominion Energy"
     }
   ]
