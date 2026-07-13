@@ -1,33 +1,13 @@
 {
-  "pulled_at_utc": "2026-07-13T22:36:56.620996+00:00",
+  "pulled_at_utc": "2026-07-13T23:33:24.703626+00:00",
   "summary": {
-    "report_date": "2026-07-13T22:31:03.675449328Z",
-    "customers_out": 4864,
+    "report_date": "2026-07-13T23:31:00.763864682Z",
+    "customers_out": 4920,
     "total_customers": 2826052,
     "pct_out": 0.18,
-    "total_outages": 65
+    "total_outages": 58
   },
   "outages": [
-    {
-      "lat": 36.59655,
-      "lng": -78.93446,
-      "customers": 80,
-      "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
-      "incident_id": "34872551",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 38.069,
-      "lng": -78.46833,
-      "customers": 16,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 10:00 PM - Tomorrow at 1:00 AM",
-      "incident_id": "34872671",
-      "provider": "Dominion Energy"
-    },
     {
       "lat": 37.13614,
       "lng": -79.25724,
@@ -39,13 +19,23 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.97834,
-      "lng": -77.70877,
-      "customers": 1,
+      "lat": 36.8776,
+      "lng": -76.08064,
+      "customers": 2,
       "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 4:00 PM - 7:00 PM",
-      "incident_id": "34872174",
+      "crew_status": "Dispatched",
+      "etr": "Today at 5:00 PM - 8:00 PM",
+      "incident_id": "34872233",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.43718,
+      "lng": -76.95374,
+      "customers": 1,
+      "cause": "Vehicle Accident",
+      "crew_status": "Dispatched",
+      "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
+      "incident_id": "34872683",
       "provider": "Dominion Energy"
     },
     {
@@ -72,7 +62,7 @@
       "lat": 37.78523,
       "lng": -79.88684,
       "customers": 1,
-      "cause": "Pending Investigation",
+      "cause": "Power Line Damaged",
       "crew_status": "Working",
       "etr": "Today at 6:00 PM - 9:00 PM",
       "incident_id": "34872469",
