@@ -1,33 +1,13 @@
 {
-  "pulled_at_utc": "2026-07-23T07:10:42.202221+00:00",
+  "pulled_at_utc": "2026-07-23T09:36:23.513331+00:00",
   "summary": {
-    "report_date": "2026-07-23T07:02:00.246225664Z",
-    "customers_out": 10588,
+    "report_date": "2026-07-23T09:31:43.432674747Z",
+    "customers_out": 3414,
     "total_customers": 2827305,
-    "pct_out": 0.38,
-    "total_outages": 41
+    "pct_out": 0.13,
+    "total_outages": 40
   },
   "outages": [
-    {
-      "lat": 37.17018,
-      "lng": -78.1174,
-      "customers": 5,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Reassessing Condition",
-      "incident_id": "34887162",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.35289,
-      "lng": -78.79366,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Reassessing Condition",
-      "incident_id": "34887179",
-      "provider": "Dominion Energy"
-    },
     {
       "lat": 36.64236,
       "lng": -76.65627,
@@ -36,36 +16,6 @@
       "crew_status": "Awaiting Assignment",
       "etr": "Pending Investigation",
       "incident_id": "34886919",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.28521,
-      "lng": -76.6895,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 2:00 AM - 5:00 AM",
-      "incident_id": "34887200",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.54621,
-      "lng": -78.37923,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Reassessing Condition",
-      "incident_id": "34887190",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.64441,
-      "lng": -77.8878,
-      "customers": 1,
-      "cause": "EQUIPMENT PROBLEM",
-      "crew_status": "Working",
-      "etr": "Reassessing Condition",
-      "incident_id": "34886732",
       "provider": "Dominion Energy"
     }
   ]
