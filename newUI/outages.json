@@ -1,13 +1,23 @@
 {
-  "pulled_at_utc": "2026-08-07T19:28:49.897848+00:00",
+  "pulled_at_utc": "2026-08-07T20:08:39.563265+00:00",
   "summary": {
-    "report_date": "2026-08-07T19:15:46.271136087Z",
-    "customers_out": 1211,
+    "report_date": "2026-08-07T20:01:48.124386842Z",
+    "customers_out": 2763,
     "total_customers": 2827740,
-    "pct_out": 0.05,
-    "total_outages": 63
+    "pct_out": 0.1,
+    "total_outages": 67
   },
   "outages": [
+    {
+      "lat": 36.37438,
+      "lng": -75.82862,
+      "customers": 1245,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 7:00 PM - 10:00 PM",
+      "incident_id": "34906852",
+      "provider": "Dominion Energy"
+    },
     {
       "lat": 38.15174,
       "lng": -79.06551,
@@ -19,23 +29,33 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.43726,
-      "lng": -78.00573,
-      "customers": 1,
+      "lat": 38.11754,
+      "lng": -78.18572,
+      "customers": 3,
       "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 1:00 PM - 4:00 PM",
-      "incident_id": "34906223",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
+      "incident_id": "34906843",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.75995,
-      "lng": -77.69919,
+      "lat": 36.84318,
+      "lng": -76.02593,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 5:00 PM - 8:00 PM",
-      "incident_id": "34906637",
+      "crew_status": "Reassigning",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34906518",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.40281,
+      "lng": -78.61905,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 6:00 PM - 9:00 PM",
+      "incident_id": "34906824",
       "provider": "Dominion Energy"
     }
   ]
