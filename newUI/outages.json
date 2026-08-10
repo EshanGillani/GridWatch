@@ -1,41 +1,21 @@
 {
-  "pulled_at_utc": "2026-08-10T04:15:36.851306+00:00",
+  "pulled_at_utc": "2026-08-10T05:48:16.115532+00:00",
   "summary": {
-    "report_date": "2026-08-10T04:01:47.045800074Z",
-    "customers_out": 1439,
+    "report_date": "2026-08-10T05:45:44.162561355Z",
+    "customers_out": 635,
     "total_customers": 2827740,
-    "pct_out": 0.06,
-    "total_outages": 24
+    "pct_out": 0.03,
+    "total_outages": 17
   },
   "outages": [
     {
-      "lat": 35.85913,
-      "lng": -76.75564,
-      "customers": 327,
+      "lat": 36.22513,
+      "lng": -77.12016,
+      "customers": 26,
       "cause": "Pending Investigation",
-      "crew_status": "Assessing Damage",
-      "etr": "Today at 9:00 AM - 12:00 PM",
-      "incident_id": "34909110",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.56255,
-      "lng": -78.53712,
-      "customers": 39,
-      "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 12:00 AM - 3:00 AM",
-      "incident_id": "34909017",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.7684,
-      "lng": -79.97135,
-      "customers": 5,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Reassessing Condition",
-      "incident_id": "34908935",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 4:00 AM - 7:00 AM",
+      "incident_id": "34909128",
       "provider": "Dominion Energy"
     },
     {
@@ -74,8 +54,18 @@
       "customers": 2,
       "cause": "Broken Pole",
       "crew_status": "Dispatched",
-      "etr": "Yesterday at 11:00 PM - Today at 2:00 AM",
+      "etr": "Today at 2:00 AM - 5:00 AM",
       "incident_id": "34909006",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.33962,
+      "lng": -76.78522,
+      "customers": 1,
+      "cause": "EQUIPMENT PROBLEM",
+      "crew_status": "Working",
+      "etr": "Today at 1:00 AM - 4:00 AM",
+      "incident_id": "34909067",
       "provider": "Dominion Energy"
     }
   ]
