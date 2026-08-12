@@ -1,41 +1,21 @@
 {
-  "pulled_at_utc": "2026-08-12T15:42:30.177982+00:00",
+  "pulled_at_utc": "2026-08-12T16:38:07.323884+00:00",
   "summary": {
-    "report_date": "2026-08-12T15:30:48.476679309Z",
-    "customers_out": 2668,
+    "report_date": "2026-08-12T16:31:37.483793773Z",
+    "customers_out": 906,
     "total_customers": 2828394,
-    "pct_out": 0.1,
-    "total_outages": 81
+    "pct_out": 0.04,
+    "total_outages": 78
   },
   "outages": [
     {
-      "lat": 36.20152,
-      "lng": -76.24201,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 2:00 PM - 5:00 PM",
-      "incident_id": "34915908",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 35.85039,
-      "lng": -77.04354,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 2:00 PM - 5:00 PM",
-      "incident_id": "34915887",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.0934,
-      "lng": -78.38191,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Assessing Damage",
-      "etr": "Today at 1:00 PM - 4:00 PM",
-      "incident_id": "34915697",
+      "lat": 36.73866,
+      "lng": -76.55833,
+      "customers": 3,
+      "cause": "Power Line Damaged",
+      "crew_status": "Working",
+      "etr": "Today at 3:00 PM - 6:00 PM",
+      "incident_id": "34916082",
       "provider": "Dominion Energy"
     },
     {
@@ -49,13 +29,13 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.15692,
-      "lng": -78.10418,
+      "lat": 36.20152,
+      "lng": -76.24201,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 1:00 PM - 4:00 PM",
-      "incident_id": "34915947",
+      "crew_status": "Assessing Damage",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34915908",
       "provider": "Dominion Energy"
     }
   ]
