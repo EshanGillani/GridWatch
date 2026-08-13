@@ -1,29 +1,19 @@
 {
-  "pulled_at_utc": "2026-08-13T10:41:16.812353+00:00",
+  "pulled_at_utc": "2026-08-13T11:30:23.714644+00:00",
   "summary": {
-    "report_date": "2026-08-13T10:31:25.837567892Z",
-    "customers_out": 100,
+    "report_date": "2026-08-13T11:15:47.222954573Z",
+    "customers_out": 212,
     "total_customers": 2828394,
     "pct_out": 0.01,
-    "total_outages": 15
+    "total_outages": 21
   },
   "outages": [
-    {
-      "lat": 37.37077,
-      "lng": -76.5248,
-      "customers": 43,
-      "cause": "Pending Investigation",
-      "crew_status": "Assessing Damage",
-      "etr": "Today at 8:00 AM - 11:00 AM",
-      "incident_id": "34916837",
-      "provider": "Dominion Energy"
-    },
     {
       "lat": 38.25594,
       "lng": -78.66555,
       "customers": 17,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
+      "crew_status": "Dispatched",
       "etr": "Pending Investigation",
       "incident_id": "34916665",
       "provider": "Dominion Energy"
@@ -33,19 +23,19 @@
       "lng": -77.78299,
       "customers": 16,
       "cause": "Broken Pole",
-      "crew_status": "Awaiting Assignment",
+      "crew_status": "Dispatched",
       "etr": "Today at 10:00 AM - 1:00 PM",
       "incident_id": "34916842",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.82741,
-      "lng": -77.18036,
+      "lat": 37.68833,
+      "lng": -79.47534,
       "customers": 1,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Pending Investigation",
-      "incident_id": "34915678",
+      "crew_status": "Dispatched",
+      "etr": "Today at 8:00 AM - 11:00 AM",
+      "incident_id": "34916857",
       "provider": "Dominion Energy"
     }
   ]
