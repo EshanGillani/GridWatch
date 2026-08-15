@@ -1,23 +1,13 @@
 {
-  "pulled_at_utc": "2026-08-15T21:43:29.530734+00:00",
+  "pulled_at_utc": "2026-08-15T21:58:53.954985+00:00",
   "summary": {
-    "report_date": "2026-08-15T21:30:54.668997606Z",
-    "customers_out": 462,
+    "report_date": "2026-08-15T21:45:40.474217694Z",
+    "customers_out": 466,
     "total_customers": 2828394,
     "pct_out": 0.02,
-    "total_outages": 62
+    "total_outages": 61
   },
   "outages": [
-    {
-      "lat": 38.91055,
-      "lng": -77.41865,
-      "customers": 38,
-      "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 10:00 PM - Tomorrow at 1:00 AM",
-      "incident_id": "34920327",
-      "provider": "Dominion Energy"
-    },
     {
       "lat": 35.84017,
       "lng": -77.06183,
@@ -26,6 +16,16 @@
       "crew_status": "Working",
       "etr": "Today at 8:00 PM - 11:00 PM",
       "incident_id": "34920344",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.39799,
+      "lng": -76.8934,
+      "customers": 4,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 10:00 PM - Tomorrow at 1:00 AM",
+      "incident_id": "34920349",
       "provider": "Dominion Energy"
     },
     {
@@ -43,7 +43,7 @@
       "lng": -77.65373,
       "customers": 2,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
+      "crew_status": "Dispatched",
       "etr": "Today at 9:00 PM - Tomorrow at 12:00 AM",
       "incident_id": "34920358",
       "provider": "Dominion Energy"
@@ -56,6 +56,16 @@
       "crew_status": "Dispatched",
       "etr": "Today at 7:00 PM - 10:00 PM",
       "incident_id": "34920331",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.66726,
+      "lng": -78.08916,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 7:00 PM - 10:00 PM",
+      "incident_id": "34920380",
       "provider": "Dominion Energy"
     },
     {
