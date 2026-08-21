@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-08-21T04:21:50.618137+00:00",
+  "pulled_at_utc": "2026-08-21T05:01:42.960360+00:00",
   "summary": {
-    "report_date": "2026-08-21T04:15:59.447262593Z",
-    "customers_out": 915,
+    "report_date": "2026-08-21T05:01:13.987620177Z",
+    "customers_out": 519,
     "total_customers": 2829273,
-    "pct_out": 0.04,
-    "total_outages": 49
+    "pct_out": 0.02,
+    "total_outages": 42
   },
   "outages": [
     {
@@ -29,13 +29,13 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.27882,
-      "lng": -77.61534,
-      "customers": 17,
-      "cause": "EQUIPMENT PROBLEM",
-      "crew_status": "Working",
-      "etr": "Yesterday at 10:00 PM - Today at 1:00 AM",
-      "incident_id": "34928096",
+      "lat": 37.56508,
+      "lng": -77.43256,
+      "customers": 21,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Reassessing Condition",
+      "incident_id": "34924536",
       "provider": "Dominion Energy"
     },
     {
@@ -49,13 +49,13 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.02876,
-      "lng": -78.9168,
+      "lat": 39.09405,
+      "lng": -77.85403,
       "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Pending Investigation",
-      "incident_id": "34927537",
+      "cause": "Power Line Damaged",
+      "crew_status": "Dispatched",
+      "etr": "Today at 1:00 AM - 6:00 AM",
+      "incident_id": "34927650",
       "provider": "Dominion Energy"
     },
     {
@@ -69,13 +69,13 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 39.09405,
-      "lng": -77.85403,
+      "lat": 37.39652,
+      "lng": -77.67005,
       "customers": 1,
       "cause": "Power Line Damaged",
       "crew_status": "Dispatched",
-      "etr": "Today at 1:00 AM - 6:00 AM",
-      "incident_id": "34927650",
+      "etr": "Today at 3:00 AM - 6:00 AM",
+      "incident_id": "34928494",
       "provider": "Dominion Energy"
     }
   ]
