@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-08-22T01:16:52.324530+00:00",
+  "pulled_at_utc": "2026-08-22T02:28:59.014972+00:00",
   "summary": {
-    "report_date": "2026-08-22T01:15:51.024319181Z",
-    "customers_out": 1181,
+    "report_date": "2026-08-22T02:15:28.583767348Z",
+    "customers_out": 329,
     "total_customers": 2829273,
-    "pct_out": 0.05,
-    "total_outages": 35
+    "pct_out": 0.02,
+    "total_outages": 32
   },
   "outages": [
     {
@@ -13,7 +13,7 @@
       "lng": -77.37584,
       "customers": 65,
       "cause": "Tree On Line",
-      "crew_status": "Assessing Damage",
+      "crew_status": "Dispatched",
       "etr": "Tomorrow at 12:00 AM - 3:00 AM",
       "incident_id": "34929589",
       "provider": "Dominion Energy"
@@ -33,7 +33,7 @@
       "lng": -78.15825,
       "customers": 4,
       "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
+      "crew_status": "Working",
       "etr": "Today at 11:00 PM - Tomorrow at 2:00 AM",
       "incident_id": "34929572",
       "provider": "Dominion Energy"
@@ -43,9 +43,29 @@
       "lng": -78.57986,
       "customers": 3,
       "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
+      "crew_status": "Assessing Damage",
       "etr": "Today at 11:00 PM - Tomorrow at 2:00 AM",
       "incident_id": "34929578",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.43342,
+      "lng": -78.63734,
+      "customers": 2,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Tomorrow at 1:00 AM - 4:00 AM",
+      "incident_id": "34929624",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.90071,
+      "lng": -76.23941,
+      "customers": 1,
+      "cause": "EQUIPMENT PROBLEM",
+      "crew_status": "Dispatched",
+      "etr": "Tomorrow at 12:00 AM - 5:00 AM",
+      "incident_id": "34929627",
       "provider": "Dominion Energy"
     },
     {
