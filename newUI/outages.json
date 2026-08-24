@@ -1,11 +1,11 @@
 {
-  "pulled_at_utc": "2026-08-24T11:50:18.534831+00:00",
+  "pulled_at_utc": "2026-08-24T12:21:23.108388+00:00",
   "summary": {
-    "report_date": "2026-08-24T11:45:28.924045385Z",
-    "customers_out": 225,
-    "total_customers": 2829273,
-    "pct_out": 0.01,
-    "total_outages": 24
+    "report_date": "2026-08-24T12:15:30.322766942Z",
+    "customers_out": 430,
+    "total_customers": 2829906,
+    "pct_out": 0.02,
+    "total_outages": 33
   },
   "outages": [
     {
@@ -29,6 +29,16 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 38.09753,
+      "lng": -78.96312,
+      "customers": 3,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 12:00 PM - 3:00 PM",
+      "incident_id": "34931178",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 37.47117,
       "lng": -76.99808,
       "customers": 2,
@@ -39,16 +49,6 @@
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.62328,
-      "lng": -78.58708,
-      "customers": 2,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 10:00 AM - 1:00 PM",
-      "incident_id": "34931158",
-      "provider": "Dominion Energy"
-    },
-    {
       "lat": 37.06181,
       "lng": -77.61254,
       "customers": 2,
@@ -56,6 +56,26 @@
       "crew_status": "Dispatched",
       "etr": "Today at 11:00 AM - 2:00 PM",
       "incident_id": "34931125",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.10538,
+      "lng": -77.70996,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 11:00 AM - 2:00 PM",
+      "incident_id": "34931188",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.0309,
+      "lng": -77.09666,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 9:00 AM - 12:00 PM",
+      "incident_id": "34931184",
       "provider": "Dominion Energy"
     },
     {
