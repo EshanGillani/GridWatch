@@ -1,31 +1,101 @@
 {
-  "pulled_at_utc": "2026-09-28T07:45:44.663524+00:00",
+  "pulled_at_utc": "2026-09-28T16:04:14.778167+00:00",
   "summary": {
-    "report_date": "2026-09-28T07:32:27.701568855Z",
-    "customers_out": 40,
-    "total_customers": 2831952,
-    "pct_out": 0.01,
-    "total_outages": 10
+    "report_date": "2026-09-28T16:02:05.506067581Z",
+    "customers_out": 1093,
+    "total_customers": 2832162,
+    "pct_out": 0.04,
+    "total_outages": 113
   },
   "outages": [
     {
-      "lat": 36.35009,
-      "lng": -77.30257,
-      "customers": 5,
-      "cause": "EQUIPMENT PROBLEM",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Pending Investigation",
-      "incident_id": "34974277",
+      "lat": 38.07015,
+      "lng": -78.81084,
+      "customers": 8,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Working",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34977419",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 37.83577,
-      "lng": -77.03146,
+      "lat": 38.0183,
+      "lng": -77.98319,
+      "customers": 4,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Working",
+      "etr": "Today at 12:00 PM - 3:00 PM",
+      "incident_id": "34977268",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.96678,
+      "lng": -78.46507,
       "customers": 2,
       "cause": "Pending Investigation",
+      "crew_status": "Assessing Damage",
+      "etr": "Today at 1:00 PM - 4:00 PM",
+      "incident_id": "34977346",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.51684,
+      "lng": -79.69902,
+      "customers": 2,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34977682",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.69843,
+      "lng": -78.91772,
+      "customers": 2,
+      "cause": "Equipment Upgrade",
       "crew_status": "Working",
-      "etr": "Today at 6:00 AM - 9:00 AM",
-      "incident_id": "34976940",
+      "etr": "Today at 1:00 PM - 4:00 PM",
+      "incident_id": "34977462",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.80281,
+      "lng": -79.44944,
+      "customers": 2,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Working",
+      "etr": "Today at 1:00 PM - 4:00 PM",
+      "incident_id": "34977565",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 35.86192,
+      "lng": -76.74333,
+      "customers": 2,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 1:00 PM - 6:00 PM",
+      "incident_id": "34977662",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.63156,
+      "lng": -78.63783,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 3:00 PM - 6:00 PM",
+      "incident_id": "34977705",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.86937,
+      "lng": -77.38718,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 3:00 PM - 6:00 PM",
+      "incident_id": "34977615",
       "provider": "Dominion Energy"
     },
     {
@@ -36,26 +106,6 @@
       "crew_status": "Awaiting Assignment",
       "etr": "Reassessing Condition",
       "incident_id": "34956616",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.2741,
-      "lng": -76.6851,
-      "customers": 1,
-      "cause": "Power Line Damaged",
-      "crew_status": "Working",
-      "etr": "Today at 1:00 AM - 6:00 AM",
-      "incident_id": "34976774",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.39747,
-      "lng": -77.46418,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 1:00 AM - 4:00 AM",
-      "incident_id": "34976866",
       "provider": "Dominion Energy"
     }
   ]
