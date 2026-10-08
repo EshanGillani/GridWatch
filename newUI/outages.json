@@ -1,11 +1,22 @@
 {
-  "pulled_at_utc": "2026-10-08T04:15:25.202313+00:00",
+  "pulled_at_utc": "2026-10-08T11:26:51.741643+00:00",
   "summary": {
-    "report_date": "2026-10-08T04:01:35.328071565Z",
-    "customers_out": 0,
+    "report_date": "2026-10-08T11:15:43.637379345Z",
+    "customers_out": 1,
     "total_customers": 2791252,
-    "pct_out": 0.0,
-    "total_outages": 0
+    "pct_out": 0.01,
+    "total_outages": 1
   },
-  "outages": []
+  "outages": [
+    {
+      "lat": 36.72395,
+      "lng": -76.59009,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Working",
+      "etr": "Today at 8:00 AM - 11:00 AM",
+      "incident_id": "34990381",
+      "provider": "Dominion Energy"
+    }
+  ]
 }
