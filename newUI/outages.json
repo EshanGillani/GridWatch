@@ -1,51 +1,51 @@
 {
-  "pulled_at_utc": "2026-10-14T12:16:55.464673+00:00",
+  "pulled_at_utc": "2026-10-14T17:20:45.202626+00:00",
   "summary": {
-    "report_date": "2026-10-14T12:15:42.219362163Z",
-    "customers_out": 3877,
+    "report_date": "2026-10-14T17:15:33.288722181Z",
+    "customers_out": 563,
     "total_customers": 2832350,
-    "pct_out": 0.14,
-    "total_outages": 27
+    "pct_out": 0.02,
+    "total_outages": 57
   },
   "outages": [
     {
-      "lat": 38.70618,
-      "lng": -77.81121,
-      "customers": 21,
+      "lat": 36.04591,
+      "lng": -75.68015,
+      "customers": 6,
+      "cause": "Pending Investigation",
+      "crew_status": "Working",
+      "etr": "Today at 3:00 PM - 6:00 PM",
+      "incident_id": "34997165",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.13337,
+      "lng": -78.38234,
+      "customers": 3,
       "cause": "Pending Investigation",
       "crew_status": "Dispatched",
-      "etr": "Today at 12:00 PM - 3:00 PM",
-      "incident_id": "34996720",
+      "etr": "Today at 5:00 PM - 8:00 PM",
+      "incident_id": "34997197",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.01283,
-      "lng": -75.71049,
-      "customers": 18,
-      "cause": "Vehicle Accident",
+      "lat": 38.0264,
+      "lng": -77.37044,
+      "customers": 3,
+      "cause": "Equipment Upgrade",
       "crew_status": "Working",
-      "etr": "Today at 9:00 AM - 12:00 PM",
-      "incident_id": "34996683",
+      "etr": "Today at 4:00 PM - 7:00 PM",
+      "incident_id": "34997188",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 38.45723,
-      "lng": -77.45475,
-      "customers": 14,
-      "cause": "Broken Pole",
-      "crew_status": "Reassigning",
-      "etr": "Today at 7:00 AM - 10:00 AM",
-      "incident_id": "34996666",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.63608,
-      "lng": -79.65835,
-      "customers": 10,
-      "cause": "Pending Investigation",
-      "crew_status": "Assessing Damage",
-      "etr": "Today at 9:00 AM - 12:00 PM",
-      "incident_id": "34996677",
+      "lat": 38.93728,
+      "lng": -77.91367,
+      "customers": 2,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Working",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34996899",
       "provider": "Dominion Energy"
     },
     {
@@ -56,6 +56,76 @@
       "crew_status": "Awaiting Assignment",
       "etr": "Reassessing Condition",
       "incident_id": "34993506",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.65368,
+      "lng": -77.22572,
+      "customers": 2,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Working",
+      "etr": "Today at 1:00 PM - 4:00 PM",
+      "incident_id": "34997025",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.85034,
+      "lng": -75.97771,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34997158",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.8386,
+      "lng": -78.36663,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Today at 5:00 PM - 8:00 PM",
+      "incident_id": "34997246",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.05742,
+      "lng": -78.62478,
+      "customers": 1,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Working",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34997057",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.25861,
+      "lng": -77.53959,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Assessing Damage",
+      "etr": "Today at 4:00 PM - 7:00 PM",
+      "incident_id": "34997194",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.55101,
+      "lng": -78.70685,
+      "customers": 1,
+      "cause": "Equipment Upgrade",
+      "crew_status": "Working",
+      "etr": "Today at 2:00 PM - 5:00 PM",
+      "incident_id": "34997037",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.58987,
+      "lng": -77.61696,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 3:00 PM - 6:00 PM",
+      "incident_id": "34997070",
       "provider": "Dominion Energy"
     }
   ]
