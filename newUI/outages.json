@@ -1,13 +1,33 @@
 {
-  "pulled_at_utc": "2026-11-22T02:10:21.845508+00:00",
+  "pulled_at_utc": "2026-11-22T09:47:25.096361+00:00",
   "summary": {
-    "report_date": "2026-11-22T02:01:31.474619597Z",
-    "customers_out": 360,
+    "report_date": "2026-11-22T09:45:34.892860944Z",
+    "customers_out": 445,
     "total_customers": 2826320,
     "pct_out": 0.02,
-    "total_outages": 55
+    "total_outages": 50
   },
   "outages": [
+    {
+      "lat": 38.5669,
+      "lng": -77.8168,
+      "customers": 27,
+      "cause": "Pending Investigation",
+      "crew_status": "Working",
+      "etr": "Reassessing Condition",
+      "incident_id": "40010824",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.19947,
+      "lng": -76.75876,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Working",
+      "etr": "Pending Investigation",
+      "incident_id": "40009690",
+      "provider": "Dominion Energy"
+    },
     {
       "lat": 36.09204,
       "lng": -75.81002,
@@ -39,6 +59,16 @@
       "provider": "Dominion Energy"
     },
     {
+      "lat": 37.22918,
+      "lng": -77.40323,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Assessing Damage",
+      "etr": "Pending Investigation",
+      "incident_id": "40009691",
+      "provider": "Dominion Energy"
+    },
+    {
       "lat": 37.70409,
       "lng": -77.82193,
       "customers": 1,
@@ -56,26 +86,6 @@
       "crew_status": "Dispatched",
       "etr": "Pending Investigation",
       "incident_id": "40009511",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 36.19947,
-      "lng": -76.75876,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Pending Investigation",
-      "incident_id": "40009690",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.79956,
-      "lng": -79.43148,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Reassessing Condition",
-      "incident_id": "40010527",
       "provider": "Dominion Energy"
     }
   ]
