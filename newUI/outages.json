@@ -1,41 +1,101 @@
 {
-  "pulled_at_utc": "2026-11-25T22:44:37.122035+00:00",
+  "pulled_at_utc": "2026-11-26T04:30:45.126790+00:00",
   "summary": {
-    "report_date": "2026-11-25T22:30:44.908954437Z",
-    "customers_out": 2500,
+    "report_date": "2026-11-26T04:15:45.848710919Z",
+    "customers_out": 5929,
     "total_customers": 2829747,
-    "pct_out": 0.09,
-    "total_outages": 64
+    "pct_out": 0.21,
+    "total_outages": 124
   },
   "outages": [
+    {
+      "lat": 36.23668,
+      "lng": -76.64386,
+      "customers": 1775,
+      "cause": "Pending Investigation",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Pending Investigation",
+      "incident_id": "40015733",
+      "provider": "Dominion Energy"
+    },
     {
       "lat": 37.49225,
       "lng": -79.69482,
       "customers": 16,
       "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 8:00 PM - 11:00 PM",
+      "crew_status": "Assessing Damage",
+      "etr": "Tomorrow at 1:00 AM - 4:00 AM",
       "incident_id": "40015550",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.72769,
-      "lng": -75.93715,
-      "customers": 4,
+      "lat": 36.70261,
+      "lng": -76.82366,
+      "customers": 10,
       "cause": "Pending Investigation",
-      "crew_status": "Working",
-      "etr": "Today at 3:00 PM - 6:00 PM",
-      "incident_id": "40015350",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Pending Investigation",
+      "incident_id": "40015825",
       "provider": "Dominion Energy"
     },
     {
-      "lat": 36.30392,
-      "lng": -76.98808,
-      "customers": 1,
+      "lat": 35.86017,
+      "lng": -76.75987,
+      "customers": 6,
       "cause": "Pending Investigation",
       "crew_status": "Reassigning",
-      "etr": "Today at 8:00 PM - 11:00 PM",
-      "incident_id": "40015257",
+      "etr": "Pending Investigation",
+      "incident_id": "40015616",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.83024,
+      "lng": -79.49687,
+      "customers": 4,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Today at 11:00 PM - Tomorrow at 2:00 AM",
+      "incident_id": "40015980",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 36.56482,
+      "lng": -79.11289,
+      "customers": 3,
+      "cause": "Pending Investigation",
+      "crew_status": "Assessing Damage",
+      "etr": "Today at 10:00 PM - Tomorrow at 1:00 AM",
+      "incident_id": "40015875",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.79362,
+      "lng": -79.98176,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Reassessing Condition",
+      "incident_id": "40015436",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 37.30207,
+      "lng": -77.42014,
+      "customers": 1,
+      "cause": "Pending Investigation",
+      "crew_status": "Dispatched",
+      "etr": "Tomorrow at 1:00 AM - 4:00 AM",
+      "incident_id": "40015984",
+      "provider": "Dominion Energy"
+    },
+    {
+      "lat": 38.27116,
+      "lng": -77.49179,
+      "customers": 1,
+      "cause": "EQUIPMENT PROBLEM",
+      "crew_status": "Awaiting Assignment",
+      "etr": "Reassessing Condition",
+      "incident_id": "40015564",
       "provider": "Dominion Energy"
     },
     {
@@ -46,56 +106,6 @@
       "crew_status": "Reassigning",
       "etr": "Pending Investigation",
       "incident_id": "40003677",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 38.64034,
-      "lng": -78.81755,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 4:00 PM - 7:00 PM",
-      "incident_id": "40015391",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.79362,
-      "lng": -79.98176,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Today at 5:00 PM - 8:00 PM",
-      "incident_id": "40015436",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.3227,
-      "lng": -76.74288,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Pending Investigation",
-      "incident_id": "40012550",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 37.70409,
-      "lng": -77.82193,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Awaiting Assignment",
-      "etr": "Pending Investigation",
-      "incident_id": "40009658",
-      "provider": "Dominion Energy"
-    },
-    {
-      "lat": 38.27116,
-      "lng": -77.49179,
-      "customers": 1,
-      "cause": "Pending Investigation",
-      "crew_status": "Dispatched",
-      "etr": "Today at 8:00 PM - 11:00 PM",
-      "incident_id": "40015564",
       "provider": "Dominion Energy"
     }
   ]
